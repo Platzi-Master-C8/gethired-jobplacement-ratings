@@ -4,3 +4,10 @@ html,
 body {
 	font-family: 'Mulish', sans-serif;
 }
+
+.companyTabs {
+    display: flex;
+    a {
+        margin: 0 1rem;
+    }
+}

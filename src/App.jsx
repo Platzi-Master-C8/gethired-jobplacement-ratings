@@ -1,5 +1,5 @@
 import React from 'react';
-import Theme from 'Pages/Theme';
+import Company from 'Pages/Company';
 import { ThemeProvider } from '@mui/material';
 import { THEME } from 'Constants/theme.constant';
 import 'Styles/style.scss';
@@ -7,7 +7,7 @@ import 'Styles/style.scss';
 const App = () => (
     <React.StrictMode>
         <ThemeProvider theme={THEME}>
-            <Theme />
+            <Company />
         </ThemeProvider>
     </React.StrictMode>
 );
