@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Typography, Box } from '@mui/material';
+import { Tabs, Tab, Box, Grid } from '@mui/material';
 import { CompanyReview } from '../CompanyReview';
 
 const TabPanel = ({ children, value, index }) => {
@@ -11,11 +11,7 @@ const TabPanel = ({ children, value, index }) => {
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
         >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
+            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
         </div>
     );
 };
@@ -46,9 +42,13 @@ const CompanyTabs = () => {
                 Overview
             </TabPanel>
             <TabPanel value={value} index={1}>
-                {Reviews.map((review, i) => (
-                    <CompanyReview title={review} ind={i} />
-                ))}
+                <Grid container spacing={2}>
+                    {Reviews.map((review, i) => (
+                        <Grid key={review} item sm={12} md={4} lg={3}>
+                            <CompanyReview title={review} ind={i} />
+                        </Grid>
+                    ))}
+                </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 Jobs
