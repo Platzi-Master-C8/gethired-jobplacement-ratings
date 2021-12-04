@@ -2,9 +2,7 @@ import React from 'react';
 
 import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 import CompanyTabs from '../components/CompanyTabs';
-
-//
-import ReviewTheApplicantForm from '../components/ReviewTheApplicantForm/ReviewTheApplicantForm';
+import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
 
 const Company = () => {
     return (

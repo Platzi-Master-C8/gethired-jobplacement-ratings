@@ -12,15 +12,18 @@ import {
     RadioGroup,
     Radio,
 } from '@mui/material';
+
 import { styled } from '@mui/material/styles';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
 const CustomBox = styled(Box)({
-    '.MuiSvgIcon-root': {
+    display: 'flex',
+
+    '& .MuiSvgIcon-root': {
         fontSize: 30,
         cursor: 'pointer',
-        marginRight: '10%',
+        margin: '0 10px',
     },
 });
 
@@ -41,14 +44,14 @@ const ReviewTheApplicantForm = () => {
     const [open, setOpen] = useState(false);
 
     const [review, setReview] = useState({
-        name: '',
-        hired: null,
-        comunication: undefined,
-        confidence: undefined,
-        negotiation: undefined,
-        motivation: undefined,
-        selfKnowledge: undefined,
-        hardSkills: undefined,
+        applicant_name: '',
+        is_hired: null,
+        communication_rating: undefined,
+        confidence_rating: undefined,
+        negotiation_rating: undefined,
+        motivation_rating: undefined,
+        self_knowledge_rating: undefined,
+        hard_skill_rating: undefined,
     });
 
     const handleOpen = () => setOpen(true);
@@ -88,10 +91,10 @@ const ReviewTheApplicantForm = () => {
                                 </Typography>
                                 <FormControl sx={{ width: '85%' }} required>
                                     <OutlinedInput
-                                        id="name"
-                                        name="name"
+                                        id="applicant_name"
+                                        name="applicant_name"
                                         placeholder="Aplicant name"
-                                        value={review.name}
+                                        value={review.applicant_name}
                                         onChange={handleInput}
                                     />
                                 </FormControl>
@@ -101,9 +104,15 @@ const ReviewTheApplicantForm = () => {
                                     Was he/she hired?
                                 </Typography>
                                 <FormControl component="fieldset" required>
-                                    <RadioGroup id="hired" name="hired" row value={review.hired} onChange={handleInput}>
-                                        <FormControlLabel value control={<Radio />} label="Yes" />
-                                        <FormControlLabel value={false} control={<Radio />} label="No" />
+                                    <RadioGroup
+                                        id="is_hired"
+                                        name="is_hired"
+                                        row
+                                        value={review.is_hired}
+                                        onChange={handleInput}
+                                    >
+                                        <FormControlLabel value={1} control={<Radio />} label="Yes" />
+                                        <FormControlLabel value={0} control={<Radio />} label="No" />
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>
@@ -118,16 +127,17 @@ const ReviewTheApplicantForm = () => {
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
                                             <div>
-                                                {index < review.comunication ? (
+                                                {index < review.communication_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
-                                                            setReview({ ...review, comunication: index + 1 })
+                                                            setReview({ ...review, communication_rating: index + 1 })
                                                         }
+                                                        sx={{ fontSize: 30 }}
                                                     />
                                                 ) : (
                                                     <StarBorderIcon
                                                         onClick={() =>
-                                                            setReview({ ...review, comunication: index + 1 })
+                                                            setReview({ ...review, communication_rating: index + 1 })
                                                         }
                                                     />
                                                 )}
@@ -142,13 +152,17 @@ const ReviewTheApplicantForm = () => {
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
                                             <div>
-                                                {index < review.confidence ? (
+                                                {index < review.confidence_rating ? (
                                                     <StarIcon
-                                                        onClick={() => setReview({ ...review, confidence: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, confidence_rating: index + 1 })
+                                                        }
                                                     />
                                                 ) : (
                                                     <StarBorderIcon
-                                                        onClick={() => setReview({ ...review, confidence: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, confidence_rating: index + 1 })
+                                                        }
                                                     />
                                                 )}
                                             </div>
@@ -162,13 +176,17 @@ const ReviewTheApplicantForm = () => {
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
                                             <div>
-                                                {index < review.negotiation ? (
+                                                {index < review.negotiation_rating ? (
                                                     <StarIcon
-                                                        onClick={() => setReview({ ...review, negotiation: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, negotiation_rating: index + 1 })
+                                                        }
                                                     />
                                                 ) : (
                                                     <StarBorderIcon
-                                                        onClick={() => setReview({ ...review, negotiation: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, negotiation_rating: index + 1 })
+                                                        }
                                                     />
                                                 )}
                                             </div>
@@ -182,13 +200,17 @@ const ReviewTheApplicantForm = () => {
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
                                             <div>
-                                                {index < review.motivation ? (
+                                                {index < review.motivation_rating ? (
                                                     <StarIcon
-                                                        onClick={() => setReview({ ...review, motivation: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, motivation_rating: index + 1 })
+                                                        }
                                                     />
                                                 ) : (
                                                     <StarBorderIcon
-                                                        onClick={() => setReview({ ...review, motivation: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, motivation_rating: index + 1 })
+                                                        }
                                                     />
                                                 )}
                                             </div>
@@ -202,16 +224,16 @@ const ReviewTheApplicantForm = () => {
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
                                             <div>
-                                                {index < review.selfKnowledge ? (
+                                                {index < review.self_knowledge_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
-                                                            setReview({ ...review, selfKnowledge: index + 1 })
+                                                            setReview({ ...review, self_knowledge_rating: index + 1 })
                                                         }
                                                     />
                                                 ) : (
                                                     <StarBorderIcon
                                                         onClick={() =>
-                                                            setReview({ ...review, selfKnowledge: index + 1 })
+                                                            setReview({ ...review, self_knowledge_rating: index + 1 })
                                                         }
                                                     />
                                                 )}
@@ -226,13 +248,17 @@ const ReviewTheApplicantForm = () => {
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
                                             <div>
-                                                {index < review.hardSkills ? (
+                                                {index < review.hard_skill_rating ? (
                                                     <StarIcon
-                                                        onClick={() => setReview({ ...review, hardSkills: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, hard_skill_rating: index + 1 })
+                                                        }
                                                     />
                                                 ) : (
                                                     <StarBorderIcon
-                                                        onClick={() => setReview({ ...review, hardSkills: index + 1 })}
+                                                        onClick={() =>
+                                                            setReview({ ...review, hard_skill_rating: index + 1 })
+                                                        }
                                                     />
                                                 )}
                                             </div>
