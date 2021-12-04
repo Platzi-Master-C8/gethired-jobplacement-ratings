@@ -2,14 +2,14 @@ import React from 'react';
 
 import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 import CompanyTabs from '../components/CompanyTabs';
-import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
+import { Reviews } from '../components/Reviews';
 
 const Company = () => {
     return (
         <main>
             <GeneralCompanyRate />
             <CompanyTabs />
-            <ReviewTheApplicantForm />
+            <Reviews />
         </main>
     );
 };
