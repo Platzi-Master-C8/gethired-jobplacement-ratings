@@ -16,6 +16,7 @@ import {
 import { styled } from '@mui/material/styles';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+// import api from '../../services/api';
 
 const CustomBox = styled(Box)({
     display: 'flex',
@@ -64,7 +65,9 @@ const ReviewTheApplicantForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(review);
+
+        // api.applicantReview.sendReview(review);
+
         setOpen(false);
     };
 
