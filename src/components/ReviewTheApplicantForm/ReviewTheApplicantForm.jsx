@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
     FormControl,
     OutlinedInput,
@@ -12,11 +11,11 @@ import {
     RadioGroup,
     Radio,
 } from '@mui/material';
-
 import { styled } from '@mui/material/styles';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
-// import api from '../../services/api';
+import { SendModal } from '../SendModal';
+import api from '../../services/api';
 
 const CustomBox = styled(Box)({
     display: 'flex',
@@ -38,11 +37,14 @@ const boxStyles = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    overflow: 'hidden',
+    overflow: 'auto',
 };
 
 const ReviewTheApplicantForm = () => {
     const [open, setOpen] = useState(false);
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [sended, setSended] = useState(false);
 
     const [review, setReview] = useState({
         applicant_name: '',
@@ -65,13 +67,27 @@ const ReviewTheApplicantForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // api.applicantReview.sendReview(review);
-
-        setOpen(false);
+        setSended(true);
+        api.companyEvaluations
+            .sendReview(0, review)
+            .then((res) => {
+                console.log(`res: ${res}`);
+                if (res && res.ok) {
+                    setIsLoading(false);
+                    setError(false);
+                } else {
+                    setIsLoading(false);
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log(`error: ${err}`);
+                setIsLoading(false);
+                setError(true);
+            });
     };
 
-    return (
+    return !sended ? (
         <div>
             <Grid md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
                 <Button onClick={handleOpen}>Review the applicant </Button>
@@ -270,7 +286,7 @@ const ReviewTheApplicantForm = () => {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
+                        <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 4 }}>
                             <Grid item md={2} onClick={handleClose}>
                                 <Button variant="outlined">Cancel</Button>
                             </Grid>
@@ -284,6 +300,8 @@ const ReviewTheApplicantForm = () => {
                 </form>
             </Modal>
         </div>
+    ) : (
+        <SendModal loading={isLoading} error={error} handleClose={handleClose} />
     );
 };
 
