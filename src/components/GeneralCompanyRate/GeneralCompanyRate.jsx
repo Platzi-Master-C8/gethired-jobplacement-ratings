@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Card, CardMedia, Grid, Typography } from '@mui/material';
+import { Card, CardMedia, Grid, Typography } from '@mui/material';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
-import './GeneralCompanyRate.scss';
 import { Box } from '@mui/system';
+import { CompanyReviewForm } from '../CompanyReviewForm';
+import './GeneralCompanyRate.scss';
 
 const GeneralCompanyRate = () => (
     <Card>
@@ -29,7 +30,7 @@ const GeneralCompanyRate = () => (
                 </Box>
             </Grid>
             <Grid item sm={12} md={4} sx={{ display: 'grid', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                <Button>Write a review</Button>
+                <CompanyReviewForm />
             </Grid>
         </Grid>
     </Card>

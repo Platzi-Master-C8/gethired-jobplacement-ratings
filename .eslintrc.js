@@ -17,6 +17,7 @@ module.exports = {
         'import/no-unresolved': 'off',
         'arrow-body-style': 'off',
         'react/jsx-fragments': ['error', 'element'],
+        'react/jsx-props-no-spreading': 'off',
         'react/function-component-definition': [
             'error',
             {

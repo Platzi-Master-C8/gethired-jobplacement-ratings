@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, Grid } from '@mui/material';
-import { CompanyReview } from '../CompanyReview';
+import { Tabs, Tab, Box } from '@mui/material';
+import { Reviews } from '../Reviews';
 
 const TabPanel = ({ children, value, index }) => {
     return (
@@ -23,7 +23,6 @@ TabPanel.propTypes = {
 };
 
 const CompanyTabs = () => {
-    const Reviews = ['Good', 'Regular', 'Bad'];
     const [value, setValue] = useState(1);
 
     const handleChange = (event, newValue) => {
@@ -42,13 +41,7 @@ const CompanyTabs = () => {
                 Overview
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Grid container spacing={2}>
-                    {Reviews.map((review, i) => (
-                        <Grid key={review} item sm={12} md={4} lg={3}>
-                            <CompanyReview title={review} ind={i} />
-                        </Grid>
-                    ))}
-                </Grid>
+                <Reviews />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 Jobs
