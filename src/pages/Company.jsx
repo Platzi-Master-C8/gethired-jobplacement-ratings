@@ -1,18 +1,15 @@
 import React from 'react';
+import Container from '@mui/material/Container';
 
 import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 import CompanyTabs from '../components/CompanyTabs';
-import { Reviews } from '../components/Reviews';
-import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
 
 const Company = () => {
     return (
-        <main>
+        <Container>
             <GeneralCompanyRate />
             <CompanyTabs />
-            <Reviews />
-            <ReviewTheApplicantForm />
-        </main>
+        </Container>
     );
 };
 export default Company;
