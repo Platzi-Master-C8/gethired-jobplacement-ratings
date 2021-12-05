@@ -103,19 +103,19 @@ const CompanyReviewFormP2 = ({ review, handleInput }) => {
                             </FormControl>
                             <FormControl sx={{ width: '30%' }} required>
                                 <OutlinedInput
-                                    id="salary_coin"
-                                    name="salary_coin"
+                                    id="currencyType"
+                                    name="currencyType"
                                     placeholder="MXN"
-                                    value={review.salary_coin}
+                                    value={review.currencyType}
                                     onChange={handleInput}
                                 />
                             </FormControl>
                             <FormControl sx={{ width: '30%' }} required>
                                 <Select
-                                    labelId="salary_frequency-label"
-                                    id="salary_frequency"
-                                    name="salary_frequency"
-                                    value={review.salary_frequency}
+                                    labelId="salaryFrequency-label"
+                                    id="salaryFrequency"
+                                    name="salaryFrequency"
+                                    value={review.salaryFrequency}
                                     label="Per"
                                     onChange={handleInput}
                                 >
@@ -200,8 +200,8 @@ CompanyReviewFormP2.propTypes = {
         endDate: PropTypes.string.isRequired,
         isStillWorkingHere: PropTypes.oneOf([0, 1]).isRequired,
         salary: PropTypes.number.isRequired,
-        salary_coin: PropTypes.string.isRequired,
-        salary_frequency: PropTypes.string.isRequired,
+        currencyType: PropTypes.string.isRequired,
+        salaryFrequency: PropTypes.string.isRequired,
         recommendedAFriend: PropTypes.oneOf([0, 1]).isRequired,
         allowsRemoteWork: PropTypes.oneOf([0, 1]).isRequired,
         isLegallyCompany: PropTypes.oneOf([0, 1]).isRequired,

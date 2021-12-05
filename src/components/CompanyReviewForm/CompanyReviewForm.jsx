@@ -12,6 +12,8 @@ import {
     Radio,
 } from '@mui/material';
 import CompanyReviewFormP2 from './CompanyReviewFormP2';
+import { SendModal } from '../SendModal';
+import api from '../../services/api';
 
 const boxStyles = {
     position: 'absolute',
@@ -28,6 +30,9 @@ const boxStyles = {
 
 const CompanyReviewForm = () => {
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [sended, setSended] = useState(false);
 
     const [review, setReview] = useState({
         companyId: 0,
@@ -43,8 +48,8 @@ const CompanyReviewForm = () => {
         endDate: new Date().toISOString(),
         isStillWorkingHere: 0,
         salary: 0,
-        salary_coin: '',
-        salary_frequency: '',
+        currencyType: '',
+        salaryFrequency: '',
         recommendedAFriend: 0,
         allowsRemoteWork: 0,
         isLegallyCompany: 0,
@@ -63,11 +68,29 @@ const CompanyReviewForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setSended(true);
+        setIsLoading(true);
+        api.companyEvaluations
+            .sendReview(0, review)
+            .then((res) => {
+                console.log('res: ', res);
+                if (res && res.ok) {
+                    setIsLoading(false);
+                    setError(false);
+                } else {
+                    setIsLoading(false);
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log('error: ', err);
+                setIsLoading(false);
+                setError(true);
+            });
         console.log(review);
-        setOpen(false);
     };
 
-    return (
+    return !sended ? (
         <div>
             <Grid md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
                 <Button onClick={handleOpen}>Write a Review</Button>
@@ -221,6 +244,8 @@ const CompanyReviewForm = () => {
                 </form>
             </Modal>
         </div>
+    ) : (
+        <SendModal loading={isLoading} error={error} handleClose={handleClose} />
     );
 };
 

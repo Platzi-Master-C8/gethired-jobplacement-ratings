@@ -1,22 +1,32 @@
-// const API_URL = process.env.REACT_APP_API_KEY;
+import config from '../config';
 
-const callApi = async (endpoint, options = {}) => {
-  options.headers = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
+const getData = (endpoint, options) => {
+  const ops = {
+    headers: config.headers,
+    ...options
   };
 
-  const url = `${API_URL}${endpoint}`;
-  const response = await fetch(url, options);
-  const data = await response.json();
-
-  return data;
+  const url = `${config.api}/${endpoint}`;
+  return fetch(url, ops)
 };
+
+const sendData = (endpoint, data) => {
+  const url = `${config.api}/${endpoint}`;
+
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: config.headers
+  });
+}
 
 const api = {
   companyEvaluations: {
-    list() {
-      return callApi(`companyEvaluations/${company_id}`);
+    listReviews(options = {}) {
+      return getData('companyEvaluations', options);
+    },
+    sendReview(companyId, data = {}) {
+      return sendData(`companyEvaluations/${companyId}`, data);
     },
   },
 };
