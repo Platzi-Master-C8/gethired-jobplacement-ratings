@@ -13,6 +13,8 @@ import {
     MenuItem,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import api from '../../services/api';
+import { SendModal } from '../SendModal';
 
 const boxStyles = {
     position: 'absolute',
@@ -29,13 +31,55 @@ const boxStyles = {
 
 const ReviewApplicationProcess = () => {
     const [open, setOpen] = useState(false);
+    const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [sended, setSended] = useState(false);
+
+    const [review, setReview] = useState({
+        job_title: '',
+        salary_rating: null,
+        allows_remote_work: null,
+        response_time_rating: null,
+        job_description_rating: null,
+        is_regulated: null,
+        end_process: 1,
+        time_measurement: 1,
+        improvements: '',
+    });
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    return (
+    const handleInput = (e) => {
+        const { name, value } = e.target;
+        setReview({ ...review, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSended(true);
+        api.companyEvaluations
+            .sendReview(0, review)
+            .then((res) => {
+                console.log(`res: ${res}`);
+                if (res && res.ok) {
+                    setIsLoading(false);
+                    setError(false);
+                } else {
+                    setIsLoading(false);
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log(`error: ${err}`);
+                setIsLoading(false);
+                setError(true);
+            });
+    };
+
+    return !sended ? (
         <div>
-            <Grid>
+            <Grid item md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
                 <Button onClick={handleOpen}>Review your application process</Button>
             </Grid>
             <Modal
@@ -44,7 +88,7 @@ const ReviewApplicationProcess = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <form>
+                <form onSubmit={handleSubmit}>
                     <Box sx={boxStyles}>
                         <Typography variant="h1" align="center" sx={{ fontSize: 28 }}>
                             Review your Application Process
@@ -56,7 +100,14 @@ const ReviewApplicationProcess = () => {
                                         Job title
                                     </Typography>
                                     <FormControl sx={{ width: '100%' }}>
-                                        <OutlinedInput sx={{ width: '100%' }} required />
+                                        <OutlinedInput
+                                            id="job_title"
+                                            name="job_title"
+                                            placeholder="Job title"
+                                            value={review.job_title}
+                                            onChange={handleInput}
+                                            required
+                                        />
                                     </FormControl>
                                 </Grid>
                                 <Grid>
@@ -64,10 +115,16 @@ const ReviewApplicationProcess = () => {
                                         How would you rate the salary?
                                     </Typography>
                                     <FormControl component="fieldset" required>
-                                        <RadioGroup id="salary_rating" name="salary_rating" row>
-                                            <FormControlLabel value={0} control={<Radio />} label="High" />
+                                        <RadioGroup
+                                            id="salary_rating"
+                                            name="salary_rating"
+                                            row
+                                            value={review.salary_rating}
+                                            onChange={handleInput}
+                                        >
+                                            <FormControlLabel value={2} control={<Radio />} label="High" />
                                             <FormControlLabel value={1} control={<Radio />} label="Average" />
-                                            <FormControlLabel value={2} control={<Radio />} label="Low" />
+                                            <FormControlLabel value={0} control={<Radio />} label="Low" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
@@ -76,9 +133,15 @@ const ReviewApplicationProcess = () => {
                                         Does the job allows you to work from home?
                                     </Typography>
                                     <FormControl component="fieldset" required>
-                                        <RadioGroup id="work_from_home" name="work_from_home" row>
-                                            <FormControlLabel value={0} control={<Radio />} label="Yes" />
-                                            <FormControlLabel value={1} control={<Radio />} label="No" />
+                                        <RadioGroup
+                                            id="allows_remote_work"
+                                            name="allows_remote_work"
+                                            row
+                                            value={review.allows_remote_work}
+                                            onChange={handleInput}
+                                        >
+                                            <FormControlLabel value={1} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={0} control={<Radio />} label="No" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
@@ -87,10 +150,16 @@ const ReviewApplicationProcess = () => {
                                         How was the response time?
                                     </Typography>
                                     <FormControl component="fieldset" required>
-                                        <RadioGroup id="response_time_rating" name="response_time_rating" row>
-                                            <FormControlLabel value={0} control={<Radio />} label="Good" />
+                                        <RadioGroup
+                                            id="response_time_rating"
+                                            name="response_time_rating"
+                                            row
+                                            value={review.response_time_rating}
+                                            onChange={handleInput}
+                                        >
+                                            <FormControlLabel value={2} control={<Radio />} label="Good" />
                                             <FormControlLabel value={1} control={<Radio />} label="Regular" />
-                                            <FormControlLabel value={2} control={<Radio />} label="Bad" />
+                                            <FormControlLabel value={0} control={<Radio />} label="Bad" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
@@ -99,21 +168,33 @@ const ReviewApplicationProcess = () => {
                                         How would you rate the job description?
                                     </Typography>
                                     <FormControl component="fieldset" required>
-                                        <RadioGroup id="job_description_rating" name="job_description_rating" row>
-                                            <FormControlLabel value={0} control={<Radio />} label="High" />
+                                        <RadioGroup
+                                            id="job_description_rating"
+                                            name="job_description_rating"
+                                            row
+                                            value={review.job_description_rating}
+                                            onChange={handleInput}
+                                        >
+                                            <FormControlLabel value={2} control={<Radio />} label="High" />
                                             <FormControlLabel value={1} control={<Radio />} label="Average" />
-                                            <FormControlLabel value={2} control={<Radio />} label="Low" />
+                                            <FormControlLabel value={0} control={<Radio />} label="Low" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
                                 <Grid>
                                     <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px 0' }}>
-                                        Is the company legally well reagulated?
+                                        Is the company legally well regulated?
                                     </Typography>
                                     <FormControl component="fieldset" required>
-                                        <RadioGroup id="is_company_reagulated" name="is_company_reagulated" row>
-                                            <FormControlLabel value={0} control={<Radio />} label="Yes" />
-                                            <FormControlLabel value={1} control={<Radio />} label="No" />
+                                        <RadioGroup
+                                            id="is_regulated"
+                                            name="is_regulated"
+                                            row
+                                            value={review.is_regulated}
+                                            onChange={handleInput}
+                                        >
+                                            <FormControlLabel value={1} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={0} control={<Radio />} label="No" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
@@ -123,7 +204,14 @@ const ReviewApplicationProcess = () => {
                                     What part of the process would you like to improve?
                                 </Typography>
                                 <FormControl sx={{ width: '90%' }}>
-                                    <OutlinedInput multiline rows={6} sx={{ width: '100%' }} />
+                                    <OutlinedInput
+                                        multiline
+                                        rows={6}
+                                        id="improvements"
+                                        name="improvements"
+                                        value={review.improvements}
+                                        onChange={handleInput}
+                                    />
                                 </FormControl>
                             </Grid>
                             <Grid item md={12}>
@@ -131,14 +219,21 @@ const ReviewApplicationProcess = () => {
                                     How long it took from the begining to the end of the process?
                                 </Typography>
                                 <FormControl sx={{ width: '20%', marginRight: '10px' }}>
-                                    <OutlinedInput type="number" />
+                                    <OutlinedInput
+                                        type="number"
+                                        id="end_process"
+                                        name="end_process"
+                                        value={review.end_process}
+                                        onChange={handleInput}
+                                    />
                                 </FormControl>
                                 <FormControl sx={{ width: '20%' }} required>
                                     <Select
-                                        labelId="finish_time_rating"
-                                        id="finish_time_rating"
-                                        name="finish_time_rating"
-                                        value={1}
+                                        labelId="time_measurement"
+                                        id="time_measurement"
+                                        name="time_measurement"
+                                        value={review.time_measurement}
+                                        onChange={handleInput}
                                     >
                                         <MenuItem value={0}>Year(s)</MenuItem>
                                         <MenuItem value={1}>Month(s)</MenuItem>
@@ -162,6 +257,8 @@ const ReviewApplicationProcess = () => {
                 </form>
             </Modal>
         </div>
+    ) : (
+        <SendModal loading={isLoading} error={error} handleClose={handleClose} />
     );
 };
 
