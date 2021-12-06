@@ -23,7 +23,7 @@ const SubheaderReview = ({ createdAt, isStillWorkingHere, jobTitle }) => (
     <Box>
         <Typography variant="body2">{jobTitle}</Typography>
         <Typography variant="body2">
-            {`(${isStillWorkingHere ? 'Current Employee' : 'Former Employee'})`} - {createdAt}
+            {`(${isStillWorkingHere === 1 ? 'Current Employee' : 'Former Employee'})`} - {createdAt}
         </Typography>
     </Box>
 );
@@ -88,7 +88,7 @@ HeaderReview.propTypes = {
 SubheaderReview.propTypes = {
     createdAt: PropTypes.string.isRequired,
     jobTitle: PropTypes.string.isRequired,
-    isStillWorkingHere: PropTypes.string.isRequired,
+    isStillWorkingHere: PropTypes.number.isRequired,
 };
 
 ActionsReview.propTypes = {

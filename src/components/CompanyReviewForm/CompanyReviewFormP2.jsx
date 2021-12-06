@@ -120,8 +120,9 @@ const CompanyReviewFormP2 = ({ review, handleInput }) => {
                                     onChange={handleInput}
                                 >
                                     <MenuItem value={0}>Year</MenuItem>
-                                    <MenuItem value={1}>Day</MenuItem>
-                                    <MenuItem value={2}>Hour</MenuItem>
+                                    <MenuItem value={1}>Month</MenuItem>
+                                    <MenuItem value={2}>Day</MenuItem>
+                                    <MenuItem value={3}>Hour</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -199,9 +200,9 @@ CompanyReviewFormP2.propTypes = {
         startDate: PropTypes.string.isRequired,
         endDate: PropTypes.string.isRequired,
         isStillWorkingHere: PropTypes.oneOf([0, 1]).isRequired,
-        salary: PropTypes.number.isRequired,
+        salary: PropTypes.string.isRequired,
         currencyType: PropTypes.string.isRequired,
-        salaryFrequency: PropTypes.string.isRequired,
+        salaryFrequency: PropTypes.number.isRequired,
         recommendedAFriend: PropTypes.oneOf([0, 1]).isRequired,
         allowsRemoteWork: PropTypes.oneOf([0, 1]).isRequired,
         isLegallyCompany: PropTypes.oneOf([0, 1]).isRequired,

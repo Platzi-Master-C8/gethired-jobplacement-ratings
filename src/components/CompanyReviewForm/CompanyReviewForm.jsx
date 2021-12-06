@@ -47,9 +47,9 @@ const CompanyReviewForm = () => {
         startDate: new Date().toISOString(),
         endDate: new Date().toISOString(),
         isStillWorkingHere: 0,
-        salary: 0,
+        salary: '',
         currencyType: '',
-        salaryFrequency: '',
+        salaryFrequency: 0,
         recommendedAFriend: 0,
         allowsRemoteWork: 0,
         isLegallyCompany: 0,
@@ -92,7 +92,7 @@ const CompanyReviewForm = () => {
 
     return !sended ? (
         <div>
-            <Grid md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
+            <Grid item md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
                 <Button onClick={handleOpen}>Write a Review</Button>
             </Grid>
             <Modal

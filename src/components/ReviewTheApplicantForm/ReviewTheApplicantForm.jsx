@@ -89,7 +89,7 @@ const ReviewTheApplicantForm = () => {
 
     return !sended ? (
         <div>
-            <Grid md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
+            <Grid item md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
                 <Button onClick={handleOpen}>Review the applicant </Button>
             </Grid>
             <Modal
@@ -145,7 +145,7 @@ const ReviewTheApplicantForm = () => {
                                 <Grid item md={6} sm={12}>
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
-                                            <div>
+                                            <div key={`Communication-Stars-${star}`}>
                                                 {index < review.communication_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
@@ -170,7 +170,7 @@ const ReviewTheApplicantForm = () => {
                                 <Grid item md={6} sm={12}>
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
-                                            <div>
+                                            <div key={`Confidence-Stars-${star}`}>
                                                 {index < review.confidence_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
@@ -194,7 +194,7 @@ const ReviewTheApplicantForm = () => {
                                 <Grid item md={6}>
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
-                                            <div>
+                                            <div key={`Negotiation-Stars-${star}`}>
                                                 {index < review.negotiation_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
@@ -218,7 +218,7 @@ const ReviewTheApplicantForm = () => {
                                 <Grid item md={6} sm={12}>
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
-                                            <div>
+                                            <div key={`Motivation-Stars-${star}`}>
                                                 {index < review.motivation_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
@@ -242,7 +242,7 @@ const ReviewTheApplicantForm = () => {
                                 <Grid item md={6} sm={12}>
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
-                                            <div>
+                                            <div key={`SelfKnowledge-Stars-${star}`}>
                                                 {index < review.self_knowledge_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
@@ -266,7 +266,7 @@ const ReviewTheApplicantForm = () => {
                                 <Grid item md={6} sm={12}>
                                     <CustomBox>
                                         {[...Array(5)].map((star, index) => (
-                                            <div>
+                                            <div key={`HardSkills-Stars-${star}`}>
                                                 {index < review.hard_skill_rating ? (
                                                     <StarIcon
                                                         onClick={() =>
