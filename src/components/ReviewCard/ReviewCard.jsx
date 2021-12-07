@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Button, Grid, Rating, Typography, Card, CardHeader, CardContent, CardActions } from '@mui/material';
+import { Box, Button, Rating, Typography, Card, CardHeader, CardContent, CardActions } from '@mui/material';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -60,24 +60,22 @@ const ReviewCard = ({ review }) => {
     } = review;
 
     return (
-        <Grid item xs={6}>
-            <Card sx={{ border: 1, minHeight: 350, maxHeight: 350 }}>
-                <CardHeader
-                    title={<HeaderReview rating={weightedAveragePerEvaluation} />}
-                    subheader={
-                        <SubheaderReview
-                            createdAt={createdAt}
-                            isStillWorkingHere={isStillWorkingHere}
-                            jobTitle={jobTitle}
-                        />
-                    }
-                />
-                <CardContent sx={{ minHeight: 100, maxHeight: 100 }}>
-                    <Typography variant="body1">{contentType}</Typography>
-                </CardContent>
-                <ActionsReview nonUtilityCounter={nonUtilityCounter} utilityCounter={utilityCounter} />
-            </Card>
-        </Grid>
+        <Card sx={{ border: 1, minHeight: 350, maxHeight: 350 }}>
+            <CardHeader
+                title={<HeaderReview rating={weightedAveragePerEvaluation} />}
+                subheader={
+                    <SubheaderReview
+                        createdAt={createdAt}
+                        isStillWorkingHere={isStillWorkingHere}
+                        jobTitle={jobTitle}
+                    />
+                }
+            />
+            <CardContent sx={{ minHeight: 100, maxHeight: 100 }}>
+                <Typography variant="body1">{contentType}</Typography>
+            </CardContent>
+            <ActionsReview nonUtilityCounter={nonUtilityCounter} utilityCounter={utilityCounter} />
+        </Card>
     );
 };
 
