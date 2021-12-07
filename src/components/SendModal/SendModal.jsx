@@ -13,17 +13,17 @@ const boxStyles = {
     transform: 'translate(-50%, -50%)',
     width: '30%',
     height: '20%',
-    bgcolor: 'background.paper',
+    bgcolor: 'white',
     boxShadow: 24,
     p: 4,
     overflow: 'auto',
 };
 
-const SendModal = ({ loading, error, handleClose }) => {
+const SendModal = ({ open, loading, error, handleClose }) => {
     if (loading)
         return (
             <Modal
-                open
+                open={open}
                 onClose={handleClose}
                 aria-labelledby="send-modal-title"
                 aria-describedby="send-modal-description"
@@ -40,7 +40,12 @@ const SendModal = ({ loading, error, handleClose }) => {
         );
 
     return (
-        <Modal open onClose={handleClose} aria-labelledby="send-modal-title" aria-describedby="send-modal-description">
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="send-modal-title"
+            aria-describedby="send-modal-description"
+        >
             <Box sx={boxStyles}>
                 <Grid item>
                     <Button variant="text" onClick={handleClose}>
@@ -54,6 +59,7 @@ const SendModal = ({ loading, error, handleClose }) => {
 };
 
 SendModal.propTypes = {
+    open: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
     error: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
