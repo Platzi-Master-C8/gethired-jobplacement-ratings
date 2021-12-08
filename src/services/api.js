@@ -23,7 +23,7 @@ const sendData = (endpoint, data) => {
 
 const api = {
   companyEvaluations: {
-    listReviews(options = {}) {
+    listReviews(companyId, options = {}) {
       return getData(`companyEvaluations/${companyId}`, options);
     },
     sendReview(companyId, data = {}) {
