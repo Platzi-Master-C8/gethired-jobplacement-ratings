@@ -1,32 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import moment from 'moment';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import TextField from '@mui/material/TextField';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import TimePicker from '@mui/lab/TimePicker';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import MobileDatePicker from '@mui/lab/MobileDatePicker';
+import DatePicker from '@mui/lab/DatePicker';
 
-const ShowDesktop = styled.div`
-    display: none;
-    @media (min-width: 768px) {
-        display: contents;
-    }
-`;
-
-const ShowMobile = styled.div`
-    display: contents;
-    @media (min-width: 768px) {
-        display: none;
-    }
-`;
-
-const DateInput = ({ value, onChange, label, name, disabled, withTime, justTime }) => {
+const DateInput = ({ value, onChange, label, name, disabled, withTime, justTime, ...props }) => {
     const handleChange = (val) => {
-        const e = { target: { value: moment(val).toISOString(), name } };
+        const e = { target: { value: moment(val).format(), name } };
         onChange(e);
     };
 
@@ -34,6 +18,7 @@ const DateInput = ({ value, onChange, label, name, disabled, withTime, justTime 
         return (
             <LocalizationProvider dateAdapter={DateAdapter}>
                 <TimePicker
+                    disableFuture
                     id={name}
                     name={name}
                     label={label}
@@ -42,6 +27,7 @@ const DateInput = ({ value, onChange, label, name, disabled, withTime, justTime 
                     onChange={handleChange}
                     sx={{ width: '100%' }}
                     renderInput={(params) => <TextField {...params} />}
+                    {...props}
                 />
             </LocalizationProvider>
         );
@@ -50,6 +36,7 @@ const DateInput = ({ value, onChange, label, name, disabled, withTime, justTime 
         <LocalizationProvider dateAdapter={DateAdapter}>
             {withTime ? (
                 <DateTimePicker
+                    disableFuture
                     id={name}
                     name={name}
                     label={label}
@@ -58,34 +45,21 @@ const DateInput = ({ value, onChange, label, name, disabled, withTime, justTime 
                     onChange={handleChange}
                     sx={{ width: '100%' }}
                     renderInput={(params) => <TextField {...params} />}
+                    {...props}
                 />
             ) : (
-                <Fragment>
-                    <ShowDesktop>
-                        <DesktopDatePicker
-                            id={name}
-                            name={name}
-                            label={label}
-                            value={value}
-                            disabled={disabled}
-                            onChange={handleChange}
-                            sx={{ width: '100%' }}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </ShowDesktop>
-                    <ShowMobile>
-                        <MobileDatePicker
-                            id={name}
-                            name={name}
-                            label={label}
-                            value={value}
-                            disabled={disabled}
-                            onChange={handleChange}
-                            sx={{ width: '100%' }}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </ShowMobile>
-                </Fragment>
+                <DatePicker
+                    disableFuture
+                    id={name}
+                    name={name}
+                    label={label}
+                    value={value}
+                    disabled={disabled}
+                    onChange={handleChange}
+                    sx={{ width: '100%' }}
+                    renderInput={(params) => <TextField {...params} />}
+                    {...props}
+                />
             )}
         </LocalizationProvider>
     );
