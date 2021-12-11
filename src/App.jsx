@@ -1,13 +1,14 @@
 import React from 'react';
-import Company from 'Pages/Company';
-import { ThemeProvider } from '@mui/material';
-import { THEME } from 'Constants/theme.constant';
+import { ThemeProvider } from '@master-c8/theme';
+
+import Routes from 'Routes';
+
 import 'Styles/style.scss';
 
 const App = () => (
     <React.StrictMode>
-        <ThemeProvider theme={THEME}>
-            <Company />
+        <ThemeProvider>
+            <Routes />
         </ThemeProvider>
     </React.StrictMode>
 );
