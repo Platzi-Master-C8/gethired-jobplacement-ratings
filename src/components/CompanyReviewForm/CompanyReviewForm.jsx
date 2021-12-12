@@ -439,7 +439,7 @@ const CompanyReviewForm = () => {
                                     <Button variant="outlined">Cancel</Button>
                                 </Grid>
                                 <Grid item md={2}>
-                                    <Button variant="outlined" type="submit">
+                                    <Button variant="contained" type="submit">
                                         Submit
                                     </Button>
                                 </Grid>
