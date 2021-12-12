@@ -20,6 +20,7 @@ module.exports = {
         'react/jsx-fragments': ['error', 'element'],
         'react/jsx-props-no-spreading': 'off',
         'import/no-extraneous-dependencies': 'off',
+        'camelcase': 'off',
         'react/function-component-definition': [
             'error',
             {

@@ -7,7 +7,7 @@ import { CompanyReviewForm } from '../CompanyReviewForm';
 import './GeneralCompanyRate.scss';
 
 const GeneralCompanyRate = () => (
-    <Card>
+    <Card marginTop={3}>
         <Grid container spacing={2}>
             <Grid item sm={12} md={3}>
                 <CardMedia

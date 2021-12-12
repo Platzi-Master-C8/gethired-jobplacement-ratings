@@ -1494,10 +1494,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@master-c8/commons@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@master-c8/commons/-/commons-0.0.5.tgz#663b96ea7ec709ec4d11fc9bdd38db41eb59c2d2"
-  integrity sha512-k0IiMf0091nHlplcK6SF+V2j0Xjx373ijySg6TGx8mVvZzl8HTMKr9q/WiLbpgh0PVO3qHAdPDSaTvbUMOMnwQ==
+"@master-c8/commons@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@master-c8/commons/-/commons-0.0.6.tgz#d1bb5d2c1d58e7ee2dc4faa7dd9dce16a63beca7"
+  integrity sha512-naolnVjuVVkB9qtSAGxYuvotJX0l3L1NutviqVBnTDgG2qfpqvt0VlymF86690Ayxggck2IJH41R/1sFbbo3uA==
   dependencies:
     "@master-c8/icons" "0.1.0"
     "@master-c8/theme" "0.1.3"
@@ -1511,10 +1511,10 @@
     "@mui/material" "^5.2.1"
     prop-types "15.7.2"
 
-"@master-c8/icons@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@master-c8/icons/-/icons-0.1.1.tgz#f080a9472de624e75165205a39d1cfef928c6d42"
-  integrity sha512-/78u39a5QB6V5jh+6CzVi4X8pDSjChdU0WUpbsptwFKE2yHPxYrpL2A1ObO6Y3Qpl6WnTICx9YHp/WK/+0Yzjg==
+"@master-c8/icons@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@master-c8/icons/-/icons-0.1.2.tgz#96c2356f181efd05d5313feb79008f0403459487"
+  integrity sha512-jSWRbls1VHoq1XvnHsk42FmbuJWOxUpldGbBM6B4cJFwdLOuhkIpDv69Fz+dfSfmv/8FDVeyYt+yPBsgbzJBmA==
   dependencies:
     "@mui/material" "^5.2.1"
     prop-types "15.7.2"
