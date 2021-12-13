@@ -68,7 +68,7 @@ const ReviewTheApplicantModal = ({
                                     <OutlinedInput
                                         id="applicant_name"
                                         name="applicant_name"
-                                        placeholder="Aplicant name"
+                                        placeholder="Applicant name"
                                         value={review.applicant_name}
                                         onChange={handleInput}
                                     />
