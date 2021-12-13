@@ -7,10 +7,11 @@ import { CompanyReviewForm } from '../CompanyReviewForm';
 import './GeneralCompanyRate.scss';
 
 const GeneralCompanyRate = () => (
-    <Card marginTop={3}>
+    <Card elevation={0} sx={{ padding: '40px' }}>
         <Grid container spacing={2}>
             <Grid item sm={12} md={3}>
                 <CardMedia
+                    sx={{ borderRadius: '12px' }}
                     component="img"
                     alt="green iguana"
                     height="140"
