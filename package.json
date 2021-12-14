@@ -66,6 +66,7 @@
         "html-loader": "3.0.1",
         "html-webpack-plugin": "5.5.0",
         "husky": ">=6",
+        "identity-obj-proxy": "^3.0.0",
         "jest": "^27.4.3",
         "lint-staged": ">=10",
         "mini-css-extract-plugin": "2.4.5",
@@ -105,6 +106,7 @@
             "shared"
         ],
         "moduleNameMapper": {
+            "\\.(css|less|scss|sass)$": "identity-obj-proxy",
             "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
             "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
             "^Components(.*)": "<rootDir>/src/components/$1",

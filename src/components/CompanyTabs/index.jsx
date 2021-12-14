@@ -25,7 +25,7 @@ TabPanel.propTypes = {
 const CompanyTabs = () => {
     const [value, setValue] = useState(1);
 
-    const handleChange = (event, newValue) => {
+    const handleChange = (_event, newValue) => {
         setValue(newValue);
     };
     return (

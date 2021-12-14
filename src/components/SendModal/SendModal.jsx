@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Grid, Modal } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Modal, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
@@ -15,12 +14,17 @@ const boxStyles = {
     height: '20%',
     bgcolor: 'white',
     boxShadow: 24,
-    p: 4,
+    borderRadius: '12px',
     overflow: 'auto',
 };
 
+const closeButton = {
+    display: 'flex',
+    justifyContent: 'flex-end',
+};
+
 const SendModal = ({ open, loading, error, handleClose }) => {
-    if (loading)
+    if (loading) {
         return (
             <Modal
                 open={open}
@@ -29,15 +33,30 @@ const SendModal = ({ open, loading, error, handleClose }) => {
                 aria-describedby="send-modal-description"
             >
                 <Box sx={boxStyles}>
-                    <Grid item>
+                    <Grid item sx={closeButton}>
                         <Button variant="text" onClick={handleClose}>
                             <CloseIcon />
                         </Button>
                     </Grid>
-                    <HourglassEmptyIcon fontSize="large" />
+                    <Grid
+                        container
+                        spacing={2}
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{ padding: '20px' }}
+                    >
+                        <Grid item>
+                            <Typography variant="subtitle1">Send applicant review</Typography>
+                        </Grid>
+                        <Grid item>
+                            <CircularProgress color="secondary" />
+                        </Grid>
+                    </Grid>
                 </Box>
             </Modal>
         );
+    }
 
     return (
         <Modal
@@ -47,12 +66,57 @@ const SendModal = ({ open, loading, error, handleClose }) => {
             aria-describedby="send-modal-description"
         >
             <Box sx={boxStyles}>
-                <Grid item>
+                <Grid item sx={closeButton}>
                     <Button variant="text" onClick={handleClose}>
                         <CloseIcon />
                     </Button>
                 </Grid>
-                {error ? <ErrorOutlineIcon fontSize="large" /> : <CheckCircleOutlineIcon fontSize="large" />}
+                {error && (
+                    <Grid
+                        container
+                        spacing={2}
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{ padding: '20px' }}
+                    >
+                        <Grid container item spacing={1}>
+                            <Grid item>
+                                <Typography variant="subtitle1">¡Error!: Try again</Typography>
+                            </Grid>
+                            <Grid item>
+                                <ErrorOutlineIcon color="error" />
+                            </Grid>
+                        </Grid>
+                        <Grid container item>
+                            <Typography variant="subtitle2">There was an error when sending the review</Typography>
+                        </Grid>
+                    </Grid>
+                )}
+                {!error && (
+                    <Grid
+                        container
+                        spacing={2}
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{ padding: '20px' }}
+                    >
+                        <Grid container item spacing={1}>
+                            <Grid item>
+                                <Typography variant="subtitle1">Submitted successfully</Typography>
+                            </Grid>
+                            <Grid item>
+                                <CheckCircleOutlineIcon color="success" />
+                            </Grid>
+                        </Grid>
+                        <Grid container item>
+                            <Typography variant="subtitle2">
+                                The applicant will soon be able to see the feedback of their process
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                )}
             </Box>
         </Modal>
     );
