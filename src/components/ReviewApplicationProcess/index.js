@@ -1,3 +1,3 @@
-import ReviewApplicationProcess from "./ReviewApplicationProcess";
+import ReviewApplicationProcessForm from "./ReviewApplicationProcessForm";
 
-export { ReviewApplicationProcess };
+export { ReviewApplicationProcessForm };
