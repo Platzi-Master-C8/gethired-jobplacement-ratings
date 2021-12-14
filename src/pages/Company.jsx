@@ -6,7 +6,7 @@ import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 import CompanyTabs from '../components/CompanyTabs';
 
 import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
-import { ReviewApplicationProcess } from '../components/ReviewApplicationProcess';
+import { ReviewApplicationProcessForm } from '../components/ReviewApplicationProcess';
 
 const Company = () => {
     return (
@@ -15,7 +15,7 @@ const Company = () => {
             <GeneralCompanyRate />
             <CompanyTabs />
             <ReviewTheApplicantForm />
-            <ReviewApplicationProcess />
+            <ReviewApplicationProcessForm />
         </Container>
     );
 };
