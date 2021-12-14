@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 
 import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 
-describe('<CompanyTabs />', () => {
+describe('<GeneralCompanyRate />', () => {
     test('Component render', () => {
         const { getByText } = render(<GeneralCompanyRate />);
 
@@ -21,9 +21,9 @@ describe('<CompanyTabs />', () => {
     });
 
     test('Open review modal', () => {
-      const { getByText } = render(<GeneralCompanyRate />);
+        const { getByText } = render(<GeneralCompanyRate />);
 
-      fireEvent.click(getByText(/write a review/i));
-      expect(getByText(/review the company/i)).toBeTruthy();
-  });
+        fireEvent.click(getByText(/write a review/i));
+        expect(getByText(/review the company/i)).toBeTruthy();
+    });
 });
