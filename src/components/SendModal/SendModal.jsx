@@ -112,7 +112,7 @@ const SendModal = ({ open, loading, error, handleClose }) => {
                         </Grid>
                         <Grid container item>
                             <Typography variant="subtitle2">
-                                The applicant will soon be able to see the feedback of their process
+                                The review will soon be able in the company page
                             </Typography>
                         </Grid>
                     </Grid>

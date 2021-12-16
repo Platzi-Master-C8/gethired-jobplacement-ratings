@@ -4,6 +4,7 @@ import { Button, Grid } from '@mui/material';
 import { SendModal } from '../SendModal';
 import CompanyReviewModal from './CompanyReviewModal';
 import api from '../../services/api';
+import { baseFive, calculateAverage, labelsToValueRaitings } from '../../utils';
 
 const CompanyReviewForm = () => {
     const [open, setOpen] = useState(false);
@@ -13,7 +14,7 @@ const CompanyReviewForm = () => {
     const [sended, setSended] = useState(false);
 
     const initialReviewState = {
-        company_id: 0,
+        company_id: 1,
         job_title: '',
         applicant_email: '',
         content_type: '',
@@ -22,8 +23,8 @@ const CompanyReviewForm = () => {
         working_environment_rating: '',
         salary_rating: '',
         job_location: '',
-        start_date: moment().subtract(1, 'M').format(),
-        end_date: moment().format(),
+        start_date: moment().subtract(1, 'M').format('YYYY-MM-DD'),
+        end_date: moment().format('YYYY-MM-DD'),
         is_still_working_here: 0,
         salary: '',
         currency_type: '',
@@ -55,11 +56,29 @@ const CompanyReviewForm = () => {
         handleInput(e);
     };
 
+    const averageReview = (oReview) => {
+        const raitings = [
+            labelsToValueRaitings(review.career_development_rating),
+            labelsToValueRaitings(review.diversity_equal_opportunity_rating),
+            labelsToValueRaitings(review.working_environment_rating),
+            labelsToValueRaitings(review.salary_rating),
+        ];
+
+        const avg = calculateAverage(raitings);
+        const weighted_average_per_evaluation = baseFive(avg, 2);
+
+        return {
+            weighted_average_per_evaluation,
+            ...oReview,
+        };
+    };
+
     const handleSubmit = () => {
         setSended(true);
         setIsLoading(true);
+        const body = averageReview(review);
         api.companyEvaluations
-            .sendReview(0, review)
+            .sendReview(0, body)
             .then((res) => {
                 console.log('res: ', res);
                 if (res && res.ok) {
@@ -76,7 +95,6 @@ const CompanyReviewForm = () => {
                 setIsLoading(false);
                 setError(true);
             });
-        console.log(review);
     };
 
     const handleValidate = (e) => {
