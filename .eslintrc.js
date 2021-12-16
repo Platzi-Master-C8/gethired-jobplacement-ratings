@@ -21,6 +21,7 @@ module.exports = {
         'react/jsx-props-no-spreading': 'off',
         'import/no-extraneous-dependencies': 'off',
         'camelcase': 'off',
+        'no-nested-ternary': 'off',
         'react/function-component-definition': [
             'error',
             {

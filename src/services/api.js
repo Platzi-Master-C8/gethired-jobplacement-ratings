@@ -24,10 +24,11 @@ const sendData = (endpoint, data) => {
 const api = {
   companyEvaluations: {
     listReviews(companyId, options = {}) {
-      return getData(`companyEvaluations/${companyId}`, options);
+      // return getData(`companyEvaluations/${companyId}`, options);
+      return getData(`companyEvaluations`, options);
     },
     sendReview(companyId, data = {}) {
-      return sendData(`companyEvaluations/${companyId}`, data);
+      return sendData(`companyEvaluations`, data);
     },
     mockDataList() {
       return list.map((review) => ({
