@@ -107,9 +107,9 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                                     value={review.career_development_rating}
                                     onChange={handleInput}
                                 >
-                                    <FormControlLabel value={0} control={<Radio />} label="Good" />
-                                    <FormControlLabel value={1} control={<Radio />} label="Regular" />
-                                    <FormControlLabel value={2} control={<Radio />} label="Bad" />
+                                    <FormControlLabel value="Good" control={<Radio />} label="Good" />
+                                    <FormControlLabel value="Regular" control={<Radio />} label="Regular" />
+                                    <FormControlLabel value="Bad" control={<Radio />} label="Bad" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
@@ -129,9 +129,9 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                                     value={review.diversity_equal_opportunity_rating}
                                     onChange={handleInput}
                                 >
-                                    <FormControlLabel value={0} control={<Radio />} label="Good" />
-                                    <FormControlLabel value={1} control={<Radio />} label="Regular" />
-                                    <FormControlLabel value={2} control={<Radio />} label="Bad" />
+                                    <FormControlLabel value="Good" control={<Radio />} label="Good" />
+                                    <FormControlLabel value="Regular" control={<Radio />} label="Regular" />
+                                    <FormControlLabel value="Bad" control={<Radio />} label="Bad" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
@@ -151,9 +151,9 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                                     value={review.working_environment_rating}
                                     onChange={handleInput}
                                 >
-                                    <FormControlLabel value={0} control={<Radio />} label="Good" />
-                                    <FormControlLabel value={1} control={<Radio />} label="Regular" />
-                                    <FormControlLabel value={2} control={<Radio />} label="Bad" />
+                                    <FormControlLabel value="Good" control={<Radio />} label="Good" />
+                                    <FormControlLabel value="Regular" control={<Radio />} label="Regular" />
+                                    <FormControlLabel value="Bad" control={<Radio />} label="Bad" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
@@ -173,9 +173,9 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                                     value={review.salary_rating}
                                     onChange={handleInput}
                                 >
-                                    <FormControlLabel value={0} control={<Radio />} label="Good" />
-                                    <FormControlLabel value={1} control={<Radio />} label="Regular" />
-                                    <FormControlLabel value={2} control={<Radio />} label="Bad" />
+                                    <FormControlLabel value="Good" control={<Radio />} label="Good" />
+                                    <FormControlLabel value="Regular" control={<Radio />} label="Regular" />
+                                    <FormControlLabel value="Bad" control={<Radio />} label="Bad" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
@@ -263,10 +263,10 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                                     label="Per"
                                     onChange={handleInput}
                                 >
-                                    <MenuItem value={0}>Year</MenuItem>
-                                    <MenuItem value={1}>Month</MenuItem>
-                                    <MenuItem value={2}>Day</MenuItem>
-                                    <MenuItem value={3}>Hour</MenuItem>
+                                    <MenuItem value="Year">Year</MenuItem>
+                                    <MenuItem value="Month">Month</MenuItem>
+                                    <MenuItem value="Day">Day</MenuItem>
+                                    <MenuItem value="Hour">Hour</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
