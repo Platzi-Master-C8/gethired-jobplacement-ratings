@@ -104,7 +104,6 @@ const ReviewTheApplicantForm = () => {
             ) : (
                 <SendModal open={open} loading={isLoading} error={error} handleClose={handleCloseSended} />
             )}
-            ;
         </div>
     );
 };

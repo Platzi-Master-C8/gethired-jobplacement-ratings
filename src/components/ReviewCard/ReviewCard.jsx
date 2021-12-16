@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, Button, Rating, Typography, Card, CardHeader, CardContent, CardActions } from '@mui/material';
@@ -19,26 +20,27 @@ const HeaderReview = ({ rating }) => (
     </Box>
 );
 
-const SubheaderReview = ({ createdAt, isStillWorkingHere, jobTitle }) => (
+const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
     <Box>
-        <Typography variant="body2">{jobTitle}</Typography>
+        <Typography variant="body2">{job_title}</Typography>
         <Typography variant="body2">
-            {`(${isStillWorkingHere ? 'Current Employee' : 'Former Employee'})`} - {createdAt}
+            {`(${is_still_working_here ? 'Current Employee' : 'Former Employee'})`} -{' '}
+            {moment(created_at).format('MMM YY')}
         </Typography>
     </Box>
 );
 
-const ActionsReview = ({ nonUtilityCounter, utilityCounter }) => (
+const ActionsReview = ({ non_utility_counter, utility_counter }) => (
     <CardContent>
         <Typography variant="body1">Was this review helpful?</Typography>
         <CardActions disableSpacing>
-            <Button>
+            <Button title={utility_counter}>
                 <ThumbUpAltIcon />
-                <Typography variant="button2">Yes {utilityCounter}</Typography>
+                <Typography variant="button2">Yes</Typography>
             </Button>
-            <Button>
+            <Button title={non_utility_counter}>
                 <ThumbDownAltIcon />
-                <Typography variant="button2">No {nonUtilityCounter}</Typography>
+                <Typography variant="button2">No</Typography>
             </Button>
             <Button sx={{ ml: 'auto' }}>
                 <FlagIcon />
@@ -50,31 +52,31 @@ const ActionsReview = ({ nonUtilityCounter, utilityCounter }) => (
 
 const ReviewCard = ({ review }) => {
     const {
-        contentType,
-        createdAt,
-        isStillWorkingHere,
-        jobTitle,
-        nonUtilityCounter,
-        utilityCounter,
-        weightedAveragePerEvaluation,
+        content_type,
+        created_at,
+        is_still_working_here,
+        job_title,
+        non_utility_counter,
+        utility_counter,
+        weighted_average_per_evaluation,
     } = review;
 
     return (
         <Card sx={{ border: 1, minHeight: 350, maxHeight: 350 }}>
             <CardHeader
-                title={<HeaderReview rating={weightedAveragePerEvaluation} />}
+                title={<HeaderReview rating={weighted_average_per_evaluation} />}
                 subheader={
                     <SubheaderReview
-                        createdAt={createdAt}
-                        isStillWorkingHere={isStillWorkingHere}
-                        jobTitle={jobTitle}
+                        created_at={created_at}
+                        is_still_working_here={is_still_working_here}
+                        job_title={job_title}
                     />
                 }
             />
             <CardContent sx={{ minHeight: 100, maxHeight: 100 }}>
-                <Typography variant="body1">{contentType}</Typography>
+                <Typography variant="body1">{content_type}</Typography>
             </CardContent>
-            <ActionsReview nonUtilityCounter={nonUtilityCounter} utilityCounter={utilityCounter} />
+            <ActionsReview non_utility_counter={non_utility_counter} utility_counter={utility_counter} />
         </Card>
     );
 };
@@ -84,25 +86,25 @@ HeaderReview.propTypes = {
 };
 
 SubheaderReview.propTypes = {
-    createdAt: PropTypes.string.isRequired,
-    jobTitle: PropTypes.string.isRequired,
-    isStillWorkingHere: PropTypes.oneOf([0, 1]).isRequired,
+    created_at: PropTypes.string.isRequired,
+    job_title: PropTypes.string.isRequired,
+    is_still_working_here: PropTypes.oneOf([0, 1]).isRequired,
 };
 
 ActionsReview.propTypes = {
-    nonUtilityCounter: PropTypes.number.isRequired,
-    utilityCounter: PropTypes.number.isRequired,
+    non_utility_counter: PropTypes.number.isRequired,
+    utility_counter: PropTypes.number.isRequired,
 };
 
 ReviewCard.propTypes = {
     review: PropTypes.shape({
-        contentType: PropTypes.string.isRequired,
-        createdAt: PropTypes.string.isRequired,
-        isStillWorkingHere: PropTypes.oneOf([0, 1]).isRequired,
-        jobTitle: PropTypes.string.isRequired,
-        nonUtilityCounter: PropTypes.number.isRequired,
-        utilityCounter: PropTypes.number.isRequired,
-        weightedAveragePerEvaluation: PropTypes.number.isRequired,
+        content_type: PropTypes.string.isRequired,
+        created_at: PropTypes.string.isRequired,
+        is_still_working_here: PropTypes.oneOf([0, 1]).isRequired,
+        job_title: PropTypes.string.isRequired,
+        non_utility_counter: PropTypes.number.isRequired,
+        utility_counter: PropTypes.number.isRequired,
+        weighted_average_per_evaluation: PropTypes.number.isRequired,
     }).isRequired,
 };
 

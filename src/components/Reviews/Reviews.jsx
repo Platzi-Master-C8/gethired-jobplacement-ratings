@@ -10,15 +10,17 @@ const Reviews = () => {
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        try {
-            const result = api.companyEvaluations.mockDataList();
-
-            setIsLoaded(true);
-            setList(result);
-        } catch (e) {
-            setIsLoaded(true);
-            setError(e);
-        }
+        api.companyEvaluations
+            .listReviews(1)
+            .then((response) => response.json())
+            .then((result) => {
+                setIsLoaded(true);
+                setList(result);
+            })
+            .catch((e) => {
+                setIsLoaded(true);
+                setError(e);
+            });
     }, []);
 
     if (error) {
