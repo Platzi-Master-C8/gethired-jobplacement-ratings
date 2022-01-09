@@ -1,5 +1,6 @@
 import config from '../config';
 import list from '../data/listReviews';
+import overallReviews from '../data/overallReviews';
 
 const getData = (endpoint, options) => {
   const ops = {
@@ -41,6 +42,9 @@ const api = {
         utilityCounter: review.utility_counter,
         weightedAveragePerEvaluation: review.weighted_average_per_evaluation,
       }));
+    },
+    mockDataOverallReview() {
+      return overallReviews;
     }
   },
 };
