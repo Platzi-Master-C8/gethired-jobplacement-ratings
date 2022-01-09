@@ -7,6 +7,7 @@ import CompanyTabs from '../components/CompanyTabs';
 
 import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
 import { ReviewApplicationProcessForm } from '../components/ReviewApplicationProcess';
+import { SideInfo } from '../components/SideInfo';
 
 const Company = () => {
     return (
@@ -16,6 +17,7 @@ const Company = () => {
             <CompanyTabs />
             <ReviewTheApplicantForm />
             <ReviewApplicationProcessForm />
+            <SideInfo />
         </Container>
     );
 };
