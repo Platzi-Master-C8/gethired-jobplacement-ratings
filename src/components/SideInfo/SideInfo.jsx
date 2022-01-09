@@ -8,6 +8,18 @@ import { Grid, Box, Typography, Button, SwipeableDrawer, LinearProgress } from '
 
 import api from '../../services/api';
 
+const globalStyles = (theme) => ({
+    '.MuiDrawer-root > .MuiPaper-root': {
+        height: '30rem',
+        top: '20%',
+        width: '25rem',
+        borderRadius: '20px',
+        [theme.breakpoints.down('sm')]: {
+            width: '90%',
+        },
+    },
+});
+
 const GridContainer = styled(Grid)(() => ({
     display: 'flex',
     flexDirection: 'column',
@@ -58,16 +70,7 @@ const SideInfo = () => {
 
     return (
         <Box>
-            <Global
-                styles={{
-                    '.MuiDrawer-root > .MuiPaper-root': {
-                        height: '30rem',
-                        top: '20%',
-                        width: '25rem',
-                        borderRadius: '20px',
-                    },
-                }}
-            />
+            <Global styles={globalStyles} />
             <Box sx={{ position: 'fixed', top: '50%', right: '0' }}>
                 <Button onClick={toggleDrawer(true)}>
                     <ArrowLeftIcon sx={{ fontSize: '3rem' }} />
