@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import StarIcon from '@mui/icons-material/Star';
 import { Grid, Box, Typography, Button, SwipeableDrawer, LinearProgress } from '@mui/material';
+
+import api from '../../services/api';
 
 const GridContainer = styled(Grid)(() => ({
     display: 'flex',
@@ -37,10 +39,22 @@ const RatingItem = ({ title, rating }) => (
 
 const SideInfo = () => {
     const [open, setOpen] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [review, setReview] = useState({});
+
+    useEffect(() => {
+        const data = api.companyEvaluations.mockDataOverallReview();
+        setReview(...data);
+        setIsLoaded(true);
+    }, [review]);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
+
+    if (!isLoaded) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Box>
@@ -76,12 +90,12 @@ const SideInfo = () => {
                                 Overall Rating
                             </Typography>
                             <Typography variant="body1" fontSize={16}>
-                                Based on 142 reviews
+                                Based on {review.total_reviews} reviews
                             </Typography>
                         </Grid>
                         <GridFlex item>
                             <Typography variant="h1" fontSize={25} margin="0 7px">
-                                4.5
+                                {review.overall_rating}
                             </Typography>
                             <StarIcon sx={{ color: '#edd309', fontSize: '30px' }} />
                         </GridFlex>
@@ -90,11 +104,11 @@ const SideInfo = () => {
                         <Typography variant="h2" fontSize={17} fontWeight={700}>
                             Rating by category
                         </Typography>
-                        <RatingItem title="Job advancements" rating={4.5} />
-                        <RatingItem title="Benefits and perks" rating={3.0} />
-                        <RatingItem title="Work/life balance" rating={4.5} />
-                        <RatingItem title="Working Enviorment" rating={4.0} />
-                        <RatingItem title="Culture" rating={5.0} />
+                        <RatingItem title="Job advancements" rating={review.job_advancements} />
+                        <RatingItem title="Benefits and perks" rating={review.benefits} />
+                        <RatingItem title="Work/life balance" rating={review.work_life_balance} />
+                        <RatingItem title="Working Enviorment" rating={review.working_eviorment} />
+                        <RatingItem title="Culture" rating={review.culture} />
                     </Grid>
                 </GridContainer>
             </SwipeableDrawer>
