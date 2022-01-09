@@ -14,7 +14,7 @@
         "lint:fix": "eslint ./src/**/*.js[x] --fix && prettier -w \"src/**/*.(jsx|js)\"",
         "prepare": "husky install && git config commit.template .github/GIT_COMMIT_TEMPLATE",
         "precommit": "lint-staged",
-        "test": "jest"
+        "test": "jest --coverage"
     },
     "resolutions": {
         "@mui/utils": "5.2.2",

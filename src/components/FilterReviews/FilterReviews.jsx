@@ -81,7 +81,7 @@ const FilterReviews = ({ handleSearch, sortCriteria, toggleSortCriteria }) => {
                             labelId="filter-select-label"
                             id="filter-select"
                             value={filterValue}
-                            label="Age"
+                            label="Search criteria"
                             onChange={(e) => setFilterValue(e.target.value)}
                         >
                             <MenuItem value="job_title">Job title</MenuItem>
