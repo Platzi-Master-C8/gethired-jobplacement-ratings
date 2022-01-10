@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Button, Rating, Typography, Card, CardHeader, CardContent, CardActions } from '@mui/material';
+import { Box, Card, Button, Rating, Typography, CardHeader, CardContent, CardActions } from '@mui/material';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import FlagIcon from '@mui/icons-material/Flag';
+import { ReportModal } from '../ReportModal';
 
 const StyledRating = styled(Rating)`
     font-size: 1rem;
@@ -30,25 +31,29 @@ const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
     </Box>
 );
 
-const ActionsReview = ({ non_utility_counter, utility_counter }) => (
-    <CardContent>
-        <Typography variant="body1">Was this review helpful?</Typography>
-        <CardActions disableSpacing>
-            <Button title={utility_counter}>
-                <ThumbUpAltIcon />
-                <Typography variant="button2">Yes</Typography>
-            </Button>
-            <Button title={non_utility_counter}>
-                <ThumbDownAltIcon />
-                <Typography variant="button2">No</Typography>
-            </Button>
-            <Button sx={{ ml: 'auto' }}>
-                <FlagIcon />
-                <Typography variant="button2">Report</Typography>
-            </Button>
-        </CardActions>
-    </CardContent>
-);
+const ActionsReview = ({ non_utility_counter, utility_counter }) => {
+    const [openReport, setOpenReport] = useState(false);
+    return (
+        <CardContent>
+            <Typography variant="body1">Was this review helpful?</Typography>
+            <CardActions disableSpacing>
+                <Button title={utility_counter}>
+                    <ThumbUpAltIcon />
+                    <Typography variant="button2">Yes</Typography>
+                </Button>
+                <Button title={non_utility_counter}>
+                    <ThumbDownAltIcon />
+                    <Typography variant="button2">No</Typography>
+                </Button>
+                <Button sx={{ ml: 'auto' }} onClick={() => setOpenReport(true)}>
+                    <FlagIcon />
+                    <Typography variant="button2">Report</Typography>
+                </Button>
+            </CardActions>
+            <ReportModal open={openReport} handleClose={() => setOpenReport(false)} />
+        </CardContent>
+    );
+};
 
 const ReviewCard = ({ review }) => {
     const {
