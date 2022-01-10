@@ -49,8 +49,8 @@ describe('<SendModal />', () => {
         );
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
-        expect(getByText(/submitted successfully/i)).toBeTruthy();
-        expect(getByText(/the applicant will soon be able to see the feedback of their process/i)).toBeTruthy();
+        expect(getByText(/Thank you for your time!/i)).toBeTruthy();
+        expect(getByText(/Return/i)).toBeTruthy();
     });
 
     test('Modal close', () => {
@@ -69,6 +69,25 @@ describe('<SendModal />', () => {
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         fireEvent.click(getByTestId(/closeicon/i));
+        expect(getByText(/test/i)).toBeTruthy();
+    });
+
+    test('Modal close with return button', () => {
+        const Component = () => {
+            const [open, setOpen] = useState(true);
+            const error = false;
+            const loading = false;
+            return (
+                <React.Fragment>
+                    <h1>Test</h1>
+                    <SendModal open={open} error={error} loading={loading} handleClose={() => setOpen(false)} />
+                </React.Fragment>
+            );
+        };
+        const { getByText } = render(<Component />);
+
+        expect(getByText(/Return/i)).toBeTruthy();
+        fireEvent.click(getByText(/Return/i));
         expect(getByText(/test/i)).toBeTruthy();
     });
 
