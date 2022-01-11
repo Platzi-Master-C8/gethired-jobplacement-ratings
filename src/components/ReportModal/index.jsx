@@ -48,7 +48,7 @@ export const ReportModal = ({ open, handleClose }) => {
         <Modal open={open} onClose={handleClose}>
             <Box sx={ReportModalStyle}>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button title="Cerrar modal" onClick={handleClose} aria-label="Cerrar modal">
+                    <Button title="Close modal" onClick={handleClose} aria-label="Close modal">
                         <CloseIcon />
                     </Button>
                 </Box>
@@ -62,12 +62,12 @@ export const ReportModal = ({ open, handleClose }) => {
                         <InputLabel>Select a reason</InputLabel>
                         <Select value={reason} label="Select a reason" onChange={handleChange}>
                             <MenuItem value="">None</MenuItem>
-                            <MenuItem value="value1">Sospechoso, spam o falso</MenuItem>
-                            <MenuItem value="value2">Acoso o incitación al odio</MenuItem>
-                            <MenuItem value="value3">Violencia o agrasión física</MenuItem>
-                            <MenuItem value="value4">Contenido para adultos</MenuItem>
-                            <MenuItem value="value5">Difamación o infracción de la propiedad intelectual</MenuItem>
-                            <MenuItem value="value6">No se aplica ninguna de las razones para denunciar.</MenuItem>
+                            <MenuItem value="value1">Suspicious, spam or fake</MenuItem>
+                            <MenuItem value="value2">Harassment or incitement to hatred</MenuItem>
+                            <MenuItem value="value3">Violence or physical assault</MenuItem>
+                            <MenuItem value="value4">Adult content</MenuItem>
+                            <MenuItem value="value5">Defamation or infringement of intellectual property</MenuItem>
+                            <MenuItem value="value6">None of the reasons for reporting apply</MenuItem>
                         </Select>
                     </FormControl>
                     <Box sx={{ display: 'grid', gap: '8px' }}>
@@ -76,6 +76,7 @@ export const ReportModal = ({ open, handleClose }) => {
                             rows={5}
                             fullWidth
                             multiline
+                            id="User-reason"
                             variant="outlined"
                             value={reasonInput}
                             label="Describe the issue"
@@ -89,6 +90,7 @@ export const ReportModal = ({ open, handleClose }) => {
                             type="email"
                             label="Email"
                             value={email}
+                            id="User-email"
                             variant="outlined"
                             onChange={(e) => setEmail(e.target.value)}
                         />
