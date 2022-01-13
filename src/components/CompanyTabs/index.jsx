@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Box } from '@mui/material';
 import { Reviews } from '../Reviews';
+import { Overview } from '../Overview';
 
 const TabPanel = ({ children, value, index }) => {
     return (
@@ -38,7 +39,7 @@ const CompanyTabs = () => {
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-                Overview
+                <Overview />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Reviews />
