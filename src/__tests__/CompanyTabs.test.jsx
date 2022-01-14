@@ -4,28 +4,37 @@ import '@testing-library/jest-dom';
 
 import CompanyTabs from '../components/CompanyTabs';
 
+const tabsOptions = [
+    { tabKey: 'Overview', tabContent: 'Overview' },
+    { tabKey: 'Reviews', tabContent: 'Reviews' },
+    { tabKey: 'Jobs', tabContent: 'Jobs' },
+];
+
+const defaultProps = { tabsOptions };
+const renderComponent = (props = {}) => render(<CompanyTabs {...defaultProps} {...props} />);
+
 describe('<CompanyTabs />', () => {
     test('Component render', () => {
-        const { asFragment } = render(<CompanyTabs />);
+        const { asFragment } = renderComponent();
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('Change tabs', () => {
-        const { getByText, getByRole } = render(<CompanyTabs />);
+        const { getByText, getByRole } = renderComponent();
 
-        fireEvent.click(getByText(/overview/i));
-        expect(getByRole('tab', { name: /overview/i, selected: true }));
-        expect(getByRole('tab', { name: /reviews/i, selected: false }));
-        expect(getByRole('tab', { name: /jobs/i, selected: false }));
+        fireEvent.click(getByText(tabsOptions[0].tabKey));
+        expect(getByRole('tab', { name: tabsOptions[0].tabKey, selected: true }));
+        expect(getByRole('tab', { name: tabsOptions[1].tabKey, selected: false }));
+        expect(getByRole('tab', { name: tabsOptions[2].tabKey, selected: false }));
 
-        fireEvent.click(getByText(/reviews/i));
-        expect(getByRole('tab', { name: /overview/i, selected: false }));
-        expect(getByRole('tab', { name: /reviews/i, selected: true }));
-        expect(getByRole('tab', { name: /jobs/i, selected: false }));
+        fireEvent.click(getByText(tabsOptions[1].tabKey));
+        expect(getByRole('tab', { name: tabsOptions[0].tabKey, selected: false }));
+        expect(getByRole('tab', { name: tabsOptions[1].tabKey, selected: true }));
+        expect(getByRole('tab', { name: tabsOptions[2].tabKey, selected: false }));
 
-        fireEvent.click(getByText(/jobs/i));
-        expect(getByRole('tab', { name: /overview/i, selected: false }));
-        expect(getByRole('tab', { name: /reviews/i, selected: false }));
-        expect(getByRole('tab', { name: /jobs/i, selected: true }));
+        fireEvent.click(getByText(tabsOptions[2].tabKey));
+        expect(getByRole('tab', { name: tabsOptions[0].tabKey, selected: false }));
+        expect(getByRole('tab', { name: tabsOptions[1].tabKey, selected: false }));
+        expect(getByRole('tab', { name: tabsOptions[2].tabKey, selected: true }));
     });
 });
