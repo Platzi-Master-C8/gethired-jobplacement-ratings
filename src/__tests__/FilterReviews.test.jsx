@@ -58,7 +58,7 @@ describe('Component <FilterReviews/>', () => {
         const sortCriteria = { sortKey: 'utility_counter', orientation: 'asc' };
         const subject = renderComponent({ toggleSortCriteria, sortCriteria });
 
-        const sortByHelpfulnessButton = subject.getByText('Helpfulness');
+        const sortByHelpfulnessButton = subject.container.querySelectorAll('button')[1];
         const arrowDownwardIcon = subject.getByTestId('ArrowDownwardIcon');
 
         expect(sortByHelpfulnessButton.querySelector('svg')).toEqual(arrowDownwardIcon);
@@ -72,7 +72,7 @@ describe('Component <FilterReviews/>', () => {
         const sortCriteria = { sortKey: 'utility_counter', orientation: 'desc' };
         const subject = renderComponent({ sortCriteria });
 
-        const sortByHelpfulnessButton = subject.getByText('Helpfulness');
+        const sortByHelpfulnessButton = subject.container.querySelectorAll('button')[1];
         const arrowUpwardIcon = subject.getByTestId('ArrowUpwardIcon');
 
         expect(sortByHelpfulnessButton.querySelector('svg')).toEqual(arrowUpwardIcon);
@@ -83,7 +83,7 @@ describe('Component <FilterReviews/>', () => {
         const sortCriteria = { sortKey: 'weighted_average_per_evaluation', orientation: 'asc' };
         const subject = renderComponent({ toggleSortCriteria, sortCriteria });
 
-        const sortByRaitingButton = subject.getByText('Rating');
+        const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
         const arrowDownwardIcon = subject.getByTestId('ArrowDownwardIcon');
 
         expect(sortByRaitingButton.querySelector('svg')).toEqual(arrowDownwardIcon);
@@ -97,7 +97,7 @@ describe('Component <FilterReviews/>', () => {
         const sortCriteria = { sortKey: 'weighted_average_per_evaluation', orientation: 'desc' };
         const subject = renderComponent({ sortCriteria });
 
-        const sortByRaitingButton = subject.getByText('Rating');
+        const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
         const arrowUpwardIcon = subject.getByTestId('ArrowUpwardIcon');
 
         expect(sortByRaitingButton.querySelector('svg')).toEqual(arrowUpwardIcon);
@@ -107,7 +107,7 @@ describe('Component <FilterReviews/>', () => {
         const toggleSortCriteria = jest.fn();
         const subject = renderComponent({ toggleSortCriteria });
 
-        const sortByDateButton = subject.getByText('Date');
+        const sortByDateButton = subject.container.querySelectorAll('button')[3];
         const arrowDownwardIcon = subject.getByTestId('ArrowDownwardIcon');
 
         expect(sortByDateButton.querySelector('svg')).toEqual(arrowDownwardIcon);
@@ -121,7 +121,7 @@ describe('Component <FilterReviews/>', () => {
         const sortCriteria = { sortKey: 'created_at', orientation: 'desc' };
         const subject = renderComponent({ sortCriteria });
 
-        const sortByDateButton = subject.getByText('Date');
+        const sortByDateButton = subject.container.querySelectorAll('button')[3];
         const arrowUpwardIcon = subject.getByTestId('ArrowUpwardIcon');
 
         expect(sortByDateButton.querySelector('svg')).toEqual(arrowUpwardIcon);

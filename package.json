@@ -15,7 +15,8 @@
         "prepare": "husky install && git config commit.template .github/GIT_COMMIT_TEMPLATE",
         "precommit": "lint-staged",
         "test": "jest --coverage",
-        "test:update": "jest --coverage --updateSnapshot"
+        "test:update": "jest --coverage --updateSnapshot",
+        "test:watch": "jest -u --watch"
     },
     "resolutions": {
         "@mui/utils": "5.2.2",

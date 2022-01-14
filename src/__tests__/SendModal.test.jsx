@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -43,41 +43,21 @@ describe('<SendModal />', () => {
         expect(getByText(/Return/i)).toBeTruthy();
     });
 
-    test('Modal close', () => {
-        const Component = () => {
-            const [open, setOpen] = useState(true);
-            const error = false;
-            const loading = false;
-            return (
-                <React.Fragment>
-                    <h1>Test</h1>
-                    <SendModal open={open} error={error} loading={loading} handleClose={() => setOpen(false)} />
-                </React.Fragment>
-            );
-        };
-        const { getByText, getByTestId } = render(<Component />);
+    test('it calls the close function', () => {
+        const handleClose = jest.fn();
+        const { getByTestId } = renderComponent({ handleClose });
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         fireEvent.click(getByTestId(/closeicon/i));
-        expect(getByText(/test/i)).toBeTruthy();
+        expect(handleClose).toBeCalled();
     });
 
     test('Modal close with return button', () => {
-        const Component = () => {
-            const [open, setOpen] = useState(true);
-            const error = false;
-            const loading = false;
-            return (
-                <React.Fragment>
-                    <h1>Test</h1>
-                    <SendModal open={open} error={error} loading={loading} handleClose={() => setOpen(false)} />
-                </React.Fragment>
-            );
-        };
-        const { getByText } = render(<Component />);
+        const handleClose = jest.fn();
+        const { getByText } = renderComponent({ handleClose });
 
         expect(getByText(/Return/i)).toBeTruthy();
         fireEvent.click(getByText(/Return/i));
-        expect(getByText(/test/i)).toBeTruthy();
+        expect(handleClose).toBeCalled();
     });
 });

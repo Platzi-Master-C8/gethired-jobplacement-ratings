@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render, fireEvent, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -26,25 +26,17 @@ describe('<ReportModal />', () => {
         fireEvent.mouseDown(getByRole('button', { expanded: false }));
         const listbox = within(getByRole('listbox'));
 
-        fireEvent.click(listbox.getByText(/sospechoso, spam o falso/i));
+        fireEvent.click(listbox.getByText(/Suspicious, spam or fake/i));
         fireEvent.change(reasonInput, { target: { value: 'Example test' } });
         fireEvent.change(emailInput, { target: { value: 'example@test.com' } });
         fireEvent.click(getByText(/submit/i));
     });
 
-    test('Modal close', () => {
-        const Component = () => {
-            const [open, setOpen] = useState(true);
-            return (
-                <React.Fragment>
-                    <h1>Test</h1>
-                    <ReportModal open={open} handleClose={() => setOpen(false)} />
-                </React.Fragment>
-            );
-        };
-        const { getByTitle, getByText } = render(<Component />);
+    test('it calls the close function', () => {
+        const handleClose = jest.fn();
+        const { getByTitle } = renderComponent({ handleClose });
 
-        fireEvent.click(getByTitle(/close modal/i));
-        expect(getByText(/test/i)).toBeTruthy();
+        fireEvent.click(getByTitle('Close modal'));
+        expect(handleClose).toBeCalled();
     });
 });
