@@ -8,6 +8,7 @@ import CompanyTabs from '../components/CompanyTabs';
 import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
 import { ReviewApplicationProcessForm } from '../components/ReviewApplicationProcess';
 import { SideInfo } from '../components/SideInfo';
+import { useMediaQuery } from '../hooks';
 
 // Tabs
 import { Reviews } from '../components/Reviews';
@@ -19,6 +20,8 @@ const tabsOptions = [
 ];
 
 const Company = () => {
+    const isMobile = useMediaQuery('(max-width: 480px)');
+
     return (
         <Container>
             <Header isLogged />
@@ -26,7 +29,7 @@ const Company = () => {
             <CompanyTabs tabsOptions={tabsOptions} />
             <ReviewTheApplicantForm />
             <ReviewApplicationProcessForm />
-            <SideInfo />
+            <SideInfo isMobile={isMobile} />
         </Container>
     );
 };
