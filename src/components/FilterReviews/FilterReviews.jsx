@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -54,6 +54,8 @@ const SortBox = styled(RowBox)`
     }
 `;
 
+const sortOptions = ['utility_counter', 'weighted_average_per_evaluation', 'created_at'];
+
 const FilterReviews = ({ handleSearch, sortCriteria, toggleSortCriteria }) => {
     const [filterValue, setFilterValue] = useState('job_title');
     const [searchQuery, setSearchQuery] = useState('');
@@ -62,99 +64,82 @@ const FilterReviews = ({ handleSearch, sortCriteria, toggleSortCriteria }) => {
         if (e.key === 'Enter') handleSearch(searchQuery, filterValue);
     };
 
+    const sortName = (sortKey) => {
+        return sortKey === 'created_at' ? 'Date' : sortKey === 'utility_counter' ? 'Helpfulness' : 'Rating';
+    };
+
     return (
-        <FilterReviewsWrapper>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    borderBottom: '2px solid #FFF',
-                }}
-            >
-                <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                    Search Reviews
-                </Typography>
-                <RowBox sx={{ mb: 2 }}>
-                    <FormControlS>
-                        <InputLabel id="filter-select-label">Search criteria</InputLabel>
-                        <Select
-                            labelId="filter-select-label"
-                            id="filter-select"
-                            value={filterValue}
-                            label="Search criteria"
-                            onChange={(e) => setFilterValue(e.target.value)}
-                        >
-                            <MenuItem value="job_title">Job title</MenuItem>
-                            <MenuItem value="content_type">Review content</MenuItem>
-                            <MenuItem value="job_location">Location</MenuItem>
-                        </Select>
-                    </FormControlS>
-                    <TextFieldS
-                        id="search-input"
-                        label="Search Reviews"
-                        variant="outlined"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onKeyPress={handleEnter}
-                    />
-                    <Button variant="contained" onClick={() => handleSearch(searchQuery, filterValue)}>
-                        Search
-                    </Button>
+        <Fragment>
+            <FilterReviewsWrapper>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        borderBottom: '2px solid #FFF',
+                    }}
+                >
+                    <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                        Search Reviews
+                    </Typography>
+                    <RowBox sx={{ mb: 2 }}>
+                        <FormControlS>
+                            <InputLabel id="filter-select-label">Search criteria</InputLabel>
+                            <Select
+                                labelId="filter-select-label"
+                                id="filter-select"
+                                value={filterValue}
+                                label="Search criteria"
+                                onChange={(e) => setFilterValue(e.target.value)}
+                            >
+                                <MenuItem value="job_title">Job title</MenuItem>
+                                <MenuItem value="content_type">Review content</MenuItem>
+                                <MenuItem value="job_location">Location</MenuItem>
+                            </Select>
+                        </FormControlS>
+                        <TextFieldS
+                            id="search-input"
+                            label="Search Reviews"
+                            variant="outlined"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyPress={handleEnter}
+                        />
+                        <Button variant="contained" onClick={() => handleSearch(searchQuery, filterValue)}>
+                            Search
+                        </Button>
+                    </RowBox>
+                </Box>
+                <RowBox sx={{ mt: 2 }}>
+                    <Typography variant="subtitle1" sx={{ mr: 2 }}>
+                        Sort by:
+                    </Typography>
+                    <SortBox>
+                        {sortOptions.map((sortOption) => (
+                            <Button
+                                key={`sortOption-${sortOption}`}
+                                variant={sortCriteria.sortKey === sortOption ? 'contained' : 'outlined'}
+                                endIcon={
+                                    sortCriteria.sortKey === sortOption ? (
+                                        sortCriteria.orientation === 'desc' ? (
+                                            <ArrowUpwardIcon />
+                                        ) : (
+                                            <ArrowDownwardIcon />
+                                        )
+                                    ) : null
+                                }
+                                onClick={() => toggleSortCriteria(sortOption)}
+                            >
+                                {sortName(sortOption)}
+                            </Button>
+                        ))}
+                    </SortBox>
                 </RowBox>
-            </Box>
-            <RowBox sx={{ mt: 2 }}>
-                <Typography variant="subtitle1" sx={{ mr: 2 }}>
-                    Sort by:
-                </Typography>
-                <SortBox>
-                    <Button
-                        variant={sortCriteria.sortKey === 'utility_counter' ? 'contained' : 'outlined'}
-                        endIcon={
-                            sortCriteria.sortKey === 'utility_counter' ? (
-                                sortCriteria.orientation === 'desc' ? (
-                                    <ArrowUpwardIcon />
-                                ) : (
-                                    <ArrowDownwardIcon />
-                                )
-                            ) : null
-                        }
-                        onClick={() => toggleSortCriteria('utility_counter')}
-                    >
-                        Helpfulness
-                    </Button>
-                    <Button
-                        variant={sortCriteria.sortKey === 'weighted_average_per_evaluation' ? 'contained' : 'outlined'}
-                        endIcon={
-                            sortCriteria.sortKey === 'weighted_average_per_evaluation' ? (
-                                sortCriteria.orientation === 'desc' ? (
-                                    <ArrowUpwardIcon />
-                                ) : (
-                                    <ArrowDownwardIcon />
-                                )
-                            ) : null
-                        }
-                        onClick={() => toggleSortCriteria('weighted_average_per_evaluation')}
-                    >
-                        Rating
-                    </Button>
-                    <Button
-                        variant={sortCriteria.sortKey === 'created_at' ? 'contained' : 'outlined'}
-                        endIcon={
-                            sortCriteria.sortKey === 'created_at' ? (
-                                sortCriteria.orientation === 'desc' ? (
-                                    <ArrowUpwardIcon />
-                                ) : (
-                                    <ArrowDownwardIcon />
-                                )
-                            ) : null
-                        }
-                        onClick={() => toggleSortCriteria('created_at')}
-                    >
-                        Date
-                    </Button>
-                </SortBox>
-            </RowBox>
-        </FilterReviewsWrapper>
+            </FilterReviewsWrapper>
+            <Typography variant="text">
+                Showing <strong>NNN</strong> of <strong>NNN</strong> reviews sorted by{' '}
+                <strong>{sortName(sortCriteria.sortKey)}</strong>
+            </Typography>
+        </Fragment>
     );
 };
 

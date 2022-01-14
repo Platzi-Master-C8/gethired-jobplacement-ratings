@@ -26,7 +26,7 @@ const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
         <Typography variant="body2">{job_title}</Typography>
         <Typography variant="body2">
             {`(${is_still_working_here ? 'Current Employee' : 'Former Employee'})`} -{' '}
-            {moment(created_at).format('MMM YY')}
+            {moment(created_at).format('MMM DD, YYYY')}
         </Typography>
     </Box>
 );
