@@ -4,21 +4,21 @@ import '@testing-library/jest-dom';
 
 import { ReportModal } from '../components/ReportModal';
 
+const defaultProps = {
+    open: true,
+    handleClose: () => {},
+};
+
+const renderComponent = (props = {}) => render(<ReportModal {...defaultProps} {...props} />);
+
 describe('<ReportModal />', () => {
     test('Component render', () => {
-        const { getByText, getByTitle, getByLabelText } = render(<ReportModal open handleClose={() => {}} />);
-
-        expect(getByTitle(/close modal/i)).toBeTruthy();
-        expect(getByText(/help us understand what is happening/i)).toBeTruthy();
-        expect(getByText(/what was the issue with this review/i)).toBeTruthy();
-        expect(getByLabelText(/describe the issue/i)).toBeTruthy();
-        expect(getByText(/your email address/i)).toBeTruthy();
-        expect(getByLabelText(/email/i)).toBeTruthy();
-        expect(getByText(/submit/i)).toBeTruthy();
+        const { asFragment } = renderComponent({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('Modal fill form', () => {
-        const { getByText, getByRole, getByLabelText } = render(<ReportModal open handleClose={() => {}} />);
+        const { getByText, getByRole, getByLabelText } = renderComponent({});
 
         const reasonInput = getByLabelText(/describe the issue/i);
         const emailInput = getByLabelText(/email/i);

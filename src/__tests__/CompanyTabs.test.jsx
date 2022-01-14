@@ -6,11 +6,8 @@ import CompanyTabs from '../components/CompanyTabs';
 
 describe('<CompanyTabs />', () => {
     test('Component render', () => {
-        const { getByText } = render(<CompanyTabs />);
-
-        expect(getByText(/overview/i)).toBeTruthy();
-        expect(getByText(/reviews/i)).toBeTruthy();
-        expect(getByText(/jobs/i)).toBeTruthy();
+        const { asFragment } = render(<CompanyTabs />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('Change tabs', () => {

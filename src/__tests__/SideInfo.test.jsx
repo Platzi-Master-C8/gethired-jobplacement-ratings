@@ -3,6 +3,11 @@ import { render, fireEvent } from '@testing-library/react';
 import SideInfo from '../components/SideInfo/SideInfo';
 
 describe('component <SideInfo/>', () => {
+    test('renders SideInfo', () => {
+        const { asFragment } = render(<SideInfo />);
+        expect(asFragment()).toMatchSnapshot();
+    });
+
     test('renders the button', () => {
         const component = render(<SideInfo />);
         component.getByRole('button');

@@ -4,25 +4,23 @@ import '@testing-library/jest-dom';
 
 import { SendModal } from '../components/SendModal';
 
-describe('<SendModal />', () => {
-    test('Component render', () => {
-        const error = false;
-        const loading = true;
-        const { getByText, getByTestId, getByRole } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+const defaultProps = {
+    open: true,
+    error: false,
+    loading: false,
+    handleClose: () => {},
+};
 
-        expect(getByTestId(/closeicon/i)).toBeTruthy();
-        expect(getByText(/send applicant review/i)).toBeTruthy();
-        expect(getByRole('progressbar')).toBeTruthy();
+const renderComponent = (props = {}) => render(<SendModal {...defaultProps} {...props} />);
+
+describe('<SendModal />', () => {
+    test('render Component', () => {
+        const { asFragment } = renderComponent({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('Modal loading', () => {
-        const error = false;
-        const loading = true;
-        const { getByText, getByTestId, getByRole } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+        const { getByText, getByTestId, getByRole } = renderComponent({ loading: true });
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         expect(getByText(/send applicant review/i)).toBeTruthy();
@@ -30,11 +28,7 @@ describe('<SendModal />', () => {
     });
 
     test('Modal error', () => {
-        const error = true;
-        const loading = false;
-        const { getByText, getByTestId } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+        const { getByText, getByTestId } = renderComponent({ error: true });
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         expect(getByText(/¡error!: Try again/i)).toBeTruthy();
@@ -42,11 +36,7 @@ describe('<SendModal />', () => {
     });
 
     test('Modal success', () => {
-        const error = false;
-        const loading = false;
-        const { getByText, getByTestId } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+        const { getByText, getByTestId } = renderComponent({});
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         expect(getByText(/Thank you for your time!/i)).toBeTruthy();
@@ -90,23 +80,4 @@ describe('<SendModal />', () => {
         fireEvent.click(getByText(/Return/i));
         expect(getByText(/test/i)).toBeTruthy();
     });
-
-    // test('Change tabs', () => {
-    //     const { getByText, getByRole } = render(<SendModal />);
-
-    //     fireEvent.click(getByText(/overview/i));
-    //     expect(getByRole('tab', { name: /overview/i, selected: true }));
-    //     expect(getByRole('tab', { name: /reviews/i, selected: false }));
-    //     expect(getByRole('tab', { name: /jobs/i, selected: false }));
-
-    //     fireEvent.click(getByText(/reviews/i));
-    //     expect(getByRole('tab', { name: /overview/i, selected: false }));
-    //     expect(getByRole('tab', { name: /reviews/i, selected: true }));
-    //     expect(getByRole('tab', { name: /jobs/i, selected: false }));
-
-    //     fireEvent.click(getByText(/jobs/i));
-    //     expect(getByRole('tab', { name: /overview/i, selected: false }));
-    //     expect(getByRole('tab', { name: /reviews/i, selected: false }));
-    //     expect(getByRole('tab', { name: /jobs/i, selected: true }));
-    // });
 });
