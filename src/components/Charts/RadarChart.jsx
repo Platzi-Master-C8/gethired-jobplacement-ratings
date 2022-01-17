@@ -42,6 +42,7 @@ const RadarOptions = {
             max: 5,
         },
     },
+    responsive: true,
     maintainAspectRatio: false,
 
     plugins: {
@@ -52,7 +53,7 @@ const RadarOptions = {
 };
 
 const RadarChart = () => {
-    return <Radar data={RadarData} width="400px" height="400px" options={RadarOptions} />;
+    return <Radar data={RadarData} options={RadarOptions} />;
 };
 
 export default RadarChart;

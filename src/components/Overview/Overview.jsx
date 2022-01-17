@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Avatar, Rating } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import styled from 'styled-components';
 import { RadarChart } from '../Charts';
 
+import { RatingItem } from '../RatingItem';
+
+import api from '../../services/api';
+
+const ChartContainer = styled(Grid)`
+    position: relative;
+    height: 400px;
+    width: 100%;
+
+    @media (max-width: 580px) {
+        width: 85vw;
+    }
+`;
+
 const Overview = () => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [review, setReview] = useState({});
+
+    useEffect(() => {
+        const data = api.companyEvaluations.mockDataOverallReview();
+        setReview(...data);
+        setIsLoaded(true);
+    }, [review]);
+
+    if (!isLoaded) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Grid container spacing={2} textAlign="center">
             <Grid item md={3} sm={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -20,17 +49,25 @@ const Overview = () => {
                 </Grid>
             </Grid>
             <Grid item md={6} sm={12}>
-                <Grid>
+                <ChartContainer>
                     <RadarChart />
-                </Grid>
+                </ChartContainer>
                 <Grid>
-                    <Typography variant="h1">4.0</Typography>
-                    <Rating readOnly value={4} />
-                    <Typography>142 ratings</Typography>
+                    <Typography variant="h1">{review.overall_rating}</Typography>
+                    <Rating readOnly value={review.overall_rating} precision={0.5} />
+                    <Typography>{review.total_reviews} ratings</Typography>
+                    <ArrowDropDownIcon sx={{ fontSize: '4rem' }} />
                 </Grid>
             </Grid>
-            <Grid item md={3} sm={12}>
-                Side component
+            <Grid item md={3} sm={12} xs={12}>
+                <Typography variant="h1" fontSize={20} fontWeight={700}>
+                    Rating by category
+                </Typography>
+                <RatingItem title="Job advancements" rating={review.job_advancements} />
+                <RatingItem title="Benefits and perks" rating={review.benefits} />
+                <RatingItem title="Work/life balance" rating={review.work_life_balance} />
+                <RatingItem title="Working Enviorment" rating={review.working_eviorment} />
+                <RatingItem title="Culture" rating={review.culture} />
             </Grid>
         </Grid>
     );
