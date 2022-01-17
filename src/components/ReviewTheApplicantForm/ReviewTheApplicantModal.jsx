@@ -81,6 +81,7 @@ const ReviewTheApplicantModal = ({
                                 <FormControl component="fieldset" required>
                                     <RadioGroup
                                         id="is_hired"
+                                        data-testid="is_hired"
                                         name="is_hired"
                                         row
                                         value={review.is_hired}
@@ -101,6 +102,7 @@ const ReviewTheApplicantModal = ({
                                 <Grid item md={6} sm={12}>
                                     <StyledRating
                                         value={review.communication_rating}
+                                        data-testid="communication_rating"
                                         onChange={(event, newValue) => {
                                             setReview({ ...review, communication_rating: newValue });
                                         }}
@@ -112,6 +114,7 @@ const ReviewTheApplicantModal = ({
                                 <Grid item md={6} sm={12}>
                                     <StyledRating
                                         value={review.confidence_rating}
+                                        data-testid="confidence_rating"
                                         onChange={(event, newValue) => {
                                             setReview({ ...review, confidence_rating: newValue });
                                         }}
@@ -123,6 +126,7 @@ const ReviewTheApplicantModal = ({
                                 <Grid item md={6}>
                                     <StyledRating
                                         value={review.negotiation_rating}
+                                        data-testid="negotiation_rating"
                                         onChange={(event, newValue) => {
                                             setReview({ ...review, negotiation_rating: newValue });
                                         }}
@@ -134,6 +138,7 @@ const ReviewTheApplicantModal = ({
                                 <Grid item md={6} sm={12}>
                                     <StyledRating
                                         value={review.motivation_rating}
+                                        data-testid="motivation_rating"
                                         onChange={(event, newValue) => {
                                             setReview({ ...review, motivation_rating: newValue });
                                         }}
@@ -145,6 +150,7 @@ const ReviewTheApplicantModal = ({
                                 <Grid item md={6} sm={12}>
                                     <StyledRating
                                         value={review.self_knowledge_rating}
+                                        data-testid="self_knowledge_rating"
                                         onChange={(event, newValue) => {
                                             setReview({ ...review, self_knowledge_rating: newValue });
                                         }}
@@ -156,6 +162,7 @@ const ReviewTheApplicantModal = ({
                                 <Grid item md={6} sm={12}>
                                     <StyledRating
                                         value={review.hard_skill_rating}
+                                        data-testid="hard_skill_rating"
                                         onChange={(event, newValue) => {
                                             setReview({ ...review, hard_skill_rating: newValue });
                                         }}

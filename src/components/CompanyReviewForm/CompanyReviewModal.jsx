@@ -40,7 +40,6 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
     >
         <form onSubmit={handleValidate}>
             <Box sx={boxStyles}>
-                {modalError && <Alert severity="error">{modalError}</Alert>}
                 <Typography variant="h1" align="center" sx={{ fontSize: 28 }}>
                     Review the Company
                 </Typography>
@@ -102,6 +101,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                             <FormControl component="fieldset">
                                 <RadioGroup
                                     id="career_development_rating"
+                                    data-testid="career_development_rating"
                                     name="career_development_rating"
                                     row
                                     value={review.career_development_rating}
@@ -124,6 +124,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                             <FormControl component="fieldset">
                                 <RadioGroup
                                     id="diversity_equal_opportunity_rating"
+                                    data-testid="diversity_equal_opportunity_rating"
                                     name="diversity_equal_opportunity_rating"
                                     row
                                     value={review.diversity_equal_opportunity_rating}
@@ -146,6 +147,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                             <FormControl component="fieldset">
                                 <RadioGroup
                                     id="working_environment_rating"
+                                    data-testid="working_environment_rating"
                                     name="working_environment_rating"
                                     row
                                     value={review.working_environment_rating}
@@ -168,6 +170,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                             <FormControl component="fieldset">
                                 <RadioGroup
                                     id="salary_rating"
+                                    data-testid="salary_rating"
                                     name="salary_rating"
                                     row
                                     value={review.salary_rating}
@@ -325,6 +328,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                         </Grid>
                     </Grid>
                 </Grid>
+                {modalError && <Alert severity="error">{modalError}</Alert>}
                 <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
                     <Grid item md={2} onClick={handleClose}>
                         <Button variant="outlined">Cancel</Button>
