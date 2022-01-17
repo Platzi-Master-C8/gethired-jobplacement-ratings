@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography, Avatar, Rating } from '@mui/material';
+import { Grid, Typography, Avatar, Rating, IconButton } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import styled from 'styled-components';
 import { RadarChart } from '../Charts';
@@ -56,7 +56,9 @@ const Overview = () => {
                     <Typography variant="h1">{review.overall_rating}</Typography>
                     <Rating readOnly value={review.overall_rating} precision={0.5} />
                     <Typography>{review.total_reviews} ratings</Typography>
-                    <ArrowDropDownIcon sx={{ fontSize: '4rem' }} />
+                    <IconButton>
+                        <ArrowDropDownIcon sx={{ fontSize: '4rem' }} />
+                    </IconButton>
                 </Grid>
             </Grid>
             <Grid item md={3} sm={12} xs={12}>
