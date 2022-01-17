@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { SendModal } from '../components/SendModal';
 
-describe('<SendModal />', () => {
-    test('Component render', () => {
-        const error = false;
-        const loading = true;
-        const { getByText, getByTestId, getByRole } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+const defaultProps = {
+    open: true,
+    error: false,
+    loading: false,
+    handleClose: () => {},
+};
 
-        expect(getByTestId(/closeicon/i)).toBeTruthy();
-        expect(getByText(/send applicant review/i)).toBeTruthy();
-        expect(getByRole('progressbar')).toBeTruthy();
+const renderComponent = (props = {}) => render(<SendModal {...defaultProps} {...props} />);
+
+describe('<SendModal />', () => {
+    test('render Component', () => {
+        const { asFragment } = renderComponent({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('Modal loading', () => {
-        const error = false;
-        const loading = true;
-        const { getByText, getByTestId, getByRole } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+        const { getByText, getByTestId, getByRole } = renderComponent({ loading: true });
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         expect(getByText(/send applicant review/i)).toBeTruthy();
@@ -30,11 +28,7 @@ describe('<SendModal />', () => {
     });
 
     test('Modal error', () => {
-        const error = true;
-        const loading = false;
-        const { getByText, getByTestId } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+        const { getByText, getByTestId } = renderComponent({ error: true });
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         expect(getByText(/¡error!: Try again/i)).toBeTruthy();
@@ -42,71 +36,28 @@ describe('<SendModal />', () => {
     });
 
     test('Modal success', () => {
-        const error = false;
-        const loading = false;
-        const { getByText, getByTestId } = render(
-            <SendModal open error={error} loading={loading} handleClose={() => {}} />,
-        );
+        const { getByText, getByTestId } = renderComponent({});
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         expect(getByText(/Thank you for your time!/i)).toBeTruthy();
         expect(getByText(/Return/i)).toBeTruthy();
     });
 
-    test('Modal close', () => {
-        const Component = () => {
-            const [open, setOpen] = useState(true);
-            const error = false;
-            const loading = false;
-            return (
-                <React.Fragment>
-                    <h1>Test</h1>
-                    <SendModal open={open} error={error} loading={loading} handleClose={() => setOpen(false)} />
-                </React.Fragment>
-            );
-        };
-        const { getByText, getByTestId } = render(<Component />);
+    test('it calls the close function', () => {
+        const handleClose = jest.fn();
+        const { getByTestId } = renderComponent({ handleClose });
 
         expect(getByTestId(/closeicon/i)).toBeTruthy();
         fireEvent.click(getByTestId(/closeicon/i));
-        expect(getByText(/test/i)).toBeTruthy();
+        expect(handleClose).toBeCalled();
     });
 
     test('Modal close with return button', () => {
-        const Component = () => {
-            const [open, setOpen] = useState(true);
-            const error = false;
-            const loading = false;
-            return (
-                <React.Fragment>
-                    <h1>Test</h1>
-                    <SendModal open={open} error={error} loading={loading} handleClose={() => setOpen(false)} />
-                </React.Fragment>
-            );
-        };
-        const { getByText } = render(<Component />);
+        const handleClose = jest.fn();
+        const { getByText } = renderComponent({ handleClose });
 
         expect(getByText(/Return/i)).toBeTruthy();
         fireEvent.click(getByText(/Return/i));
-        expect(getByText(/test/i)).toBeTruthy();
+        expect(handleClose).toBeCalled();
     });
-
-    // test('Change tabs', () => {
-    //     const { getByText, getByRole } = render(<SendModal />);
-
-    //     fireEvent.click(getByText(/overview/i));
-    //     expect(getByRole('tab', { name: /overview/i, selected: true }));
-    //     expect(getByRole('tab', { name: /reviews/i, selected: false }));
-    //     expect(getByRole('tab', { name: /jobs/i, selected: false }));
-
-    //     fireEvent.click(getByText(/reviews/i));
-    //     expect(getByRole('tab', { name: /overview/i, selected: false }));
-    //     expect(getByRole('tab', { name: /reviews/i, selected: true }));
-    //     expect(getByRole('tab', { name: /jobs/i, selected: false }));
-
-    //     fireEvent.click(getByText(/jobs/i));
-    //     expect(getByRole('tab', { name: /overview/i, selected: false }));
-    //     expect(getByRole('tab', { name: /reviews/i, selected: false }));
-    //     expect(getByRole('tab', { name: /jobs/i, selected: true }));
-    // });
 });

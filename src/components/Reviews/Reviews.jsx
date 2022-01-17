@@ -61,6 +61,7 @@ const Reviews = () => {
                     gap: 2,
                     gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 25rem), 1fr))',
                     p: 1,
+                    my: 2,
                 }}
             >
                 {list.map((review) => (

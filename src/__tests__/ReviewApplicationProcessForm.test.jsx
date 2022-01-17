@@ -4,9 +4,8 @@ import { ReviewApplicationProcessForm } from '../components/ReviewApplicationPro
 
 describe('Component <ReviewApplicationProcessForm/>', () => {
     test('renders ReviewApplicationProcessForm', () => {
-        const component = render(<ReviewApplicationProcessForm />);
-
-        component.getByText('Review your application process');
+        const { asFragment } = render(<ReviewApplicationProcessForm />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('the modal opens correctly', () => {
