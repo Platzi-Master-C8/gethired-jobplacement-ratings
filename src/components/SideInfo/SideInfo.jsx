@@ -4,7 +4,9 @@ import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import StarIcon from '@mui/icons-material/Star';
-import { Grid, Box, Typography, Button, SwipeableDrawer, LinearProgress } from '@mui/material';
+import { Grid, Box, Typography, Button, SwipeableDrawer } from '@mui/material';
+
+import { RatingItem } from '../RatingItem';
 
 import api from '../../services/api';
 
@@ -30,26 +32,6 @@ const GridFlex = styled(Grid)(() => ({
     justifyContent: 'space-between',
     alignItems: 'center',
 }));
-
-const RatingItem = ({ title, rating }) => (
-    <Grid item sx={{ margin: '0.8rem 0 1.3rem' }}>
-        <GridFlex>
-            <Typography>{title}</Typography>
-            <GridFlex item>
-                <Typography variant="h2" fontSize={17}>
-                    {rating.toFixed(1)}
-                </Typography>
-                <StarIcon color="primary" fontSize="17px" />
-            </GridFlex>
-        </GridFlex>
-        <LinearProgress variant="determinate" value={(rating * 100) / 5} sx={{ height: 8, borderRadius: 5 }} />
-    </Grid>
-);
-
-RatingItem.propTypes = {
-    title: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-};
 
 const SideInfo = ({ isMobile }) => {
     const [open, setOpen] = useState(false);

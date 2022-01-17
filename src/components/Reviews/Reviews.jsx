@@ -2,6 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { ReviewCard } from '../ReviewCard';
 import { FilterReviews } from '../FilterReviews';
+import { SideInfo } from '../SideInfo';
+
+import { useMediaQuery } from '../../hooks';
 
 import api from '../../services/api';
 
@@ -11,6 +14,7 @@ const Reviews = () => {
     const [list, setList] = useState([]);
     const [data, setData] = useState([]);
     const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'asc' });
+    const isMobile = useMediaQuery('(max-width: 480px)');
 
     useEffect(() => {
         api.companyEvaluations
@@ -68,6 +72,7 @@ const Reviews = () => {
                     <ReviewCard key={review.id} review={review} />
                 ))}
             </Box>
+            <SideInfo isMobile={isMobile} />
         </Fragment>
     );
 };
