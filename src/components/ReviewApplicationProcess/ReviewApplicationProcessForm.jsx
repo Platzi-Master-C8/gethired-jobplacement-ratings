@@ -70,7 +70,6 @@ const ReviewApplicationProcessForm = () => {
             is_regulated,
             end_process,
             time_measurement,
-            improvements,
         } = review;
 
         if (
@@ -81,8 +80,7 @@ const ReviewApplicationProcessForm = () => {
             !job_description_rating ||
             !is_regulated ||
             !end_process ||
-            !time_measurement ||
-            !improvements
+            !time_measurement
         ) {
             setErrorMessage('Please Complete all the fields');
         } else {

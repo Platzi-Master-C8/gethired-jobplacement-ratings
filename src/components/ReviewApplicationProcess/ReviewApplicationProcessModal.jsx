@@ -67,6 +67,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
                                             id="salary_rating"
+                                            data-testid="salary_rating"
                                             name="salary_rating"
                                             row
                                             value={review.salary_rating}
@@ -85,6 +86,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
                                             id="allows_remote_work"
+                                            data-testid="allows_remote_work"
                                             name="allows_remote_work"
                                             row
                                             value={review.allows_remote_work}
@@ -102,6 +104,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
                                             id="response_time_rating"
+                                            data-testid="response_time_rating"
                                             name="response_time_rating"
                                             row
                                             value={review.response_time_rating}
@@ -120,6 +123,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
                                             id="job_description_rating"
+                                            data-testid="job_description_rating"
                                             name="job_description_rating"
                                             row
                                             value={review.job_description_rating}
@@ -138,6 +142,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
                                             id="is_regulated"
+                                            data-testid="is_regulated"
                                             name="is_regulated"
                                             row
                                             value={review.is_regulated}
