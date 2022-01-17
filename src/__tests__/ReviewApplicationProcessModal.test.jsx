@@ -15,8 +15,8 @@ describe('component <ReviewApplicationProcessModal/>', () => {
     const renderComponent = (props = {}) => render(<ReviewApplicationProcessModal {...defaultProps} {...props} />);
 
     test('renders ReviewApplicationProcessModal', () => {
-        const component = renderComponent();
-        component.getByText('Review your Application Process');
+        const { asFragment } = renderComponent({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('input works', () => {

@@ -6,10 +6,8 @@ import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 
 describe('<GeneralCompanyRate />', () => {
     test('Component render', () => {
-        const { getByText } = render(<GeneralCompanyRate />);
-
-        expect(getByText(/reviews/i)).toBeTruthy();
-        expect(getByText(/write a review/i)).toBeTruthy();
+        const { asFragment } = render(<GeneralCompanyRate />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('Get components', () => {

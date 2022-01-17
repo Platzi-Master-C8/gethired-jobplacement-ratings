@@ -4,9 +4,8 @@ import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
 
 describe('Component <ReviewTheApplicantForm/>', () => {
     test('renders ReviewTheApplicantForm', () => {
-        const component = render(<ReviewTheApplicantForm />);
-
-        component.getByText('Review the applicant');
+        const { asFragment } = render(<ReviewTheApplicantForm />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('the modal opens correctly', () => {

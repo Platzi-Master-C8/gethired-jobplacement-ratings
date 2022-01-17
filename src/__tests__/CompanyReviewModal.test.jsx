@@ -17,8 +17,8 @@ const render = (props = {}) => driver.render(<CompanyReviewModal {...defaultProp
 
 describe('Component <CompanyReviewModal/>', () => {
     test('renders CompanyReviewModal', () => {
-        const subject = render();
-        expect(subject.getByText(/Review the Company/i)).toBeInTheDocument();
+        const { asFragment } = render({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('it does close the Modal', () => {

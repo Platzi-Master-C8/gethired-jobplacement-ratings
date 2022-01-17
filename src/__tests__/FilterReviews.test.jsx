@@ -9,16 +9,16 @@ const defaultProps = {
     toggleSortCriteria: () => {},
 };
 
-const render = (props = {}) => driver.render(<FilterReviews {...defaultProps} {...props} />);
+const renderComponent = (props = {}) => driver.render(<FilterReviews {...defaultProps} {...props} />);
 
 describe('Component <FilterReviews/>', () => {
     test('renders FilterReviews', () => {
-        const { asFragment } = render({});
+        const { asFragment } = renderComponent({});
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('it allows write the search query', () => {
-        const subject = render({});
+        const subject = renderComponent({});
 
         const searchInput = subject.container.querySelector('#search-input');
         driver.fireEvent.change(searchInput, { target: { value: '1234' } });
@@ -28,7 +28,7 @@ describe('Component <FilterReviews/>', () => {
 
     test('it allows to search the writed text', () => {
         const handleSearch = jest.fn();
-        const subject = render({ handleSearch });
+        const subject = renderComponent({ handleSearch });
 
         const searchInput = subject.container.querySelector('#search-input');
         const searchButton = subject.getByText('Search');
@@ -40,7 +40,7 @@ describe('Component <FilterReviews/>', () => {
 
     it('it searchs the user press the Enter key', () => {
         const handleSearch = jest.fn();
-        const subject = render({ handleSearch });
+        const subject = renderComponent({ handleSearch });
 
         const searchInput = subject.container.querySelector('#search-input');
 
@@ -56,9 +56,9 @@ describe('Component <FilterReviews/>', () => {
     test('it allows to sort the list of reviews by Helpfulness', () => {
         const toggleSortCriteria = jest.fn();
         const sortCriteria = { sortKey: 'utility_counter', orientation: 'asc' };
-        const subject = render({ toggleSortCriteria, sortCriteria });
+        const subject = renderComponent({ toggleSortCriteria, sortCriteria });
 
-        const sortByHelpfulnessButton = subject.getByText('Helpfulness');
+        const sortByHelpfulnessButton = subject.container.querySelectorAll('button')[1];
         const arrowDownwardIcon = subject.getByTestId('ArrowDownwardIcon');
 
         expect(sortByHelpfulnessButton.querySelector('svg')).toEqual(arrowDownwardIcon);
@@ -70,9 +70,9 @@ describe('Component <FilterReviews/>', () => {
 
     test('once the list is sorted the helpfulness the button changes', () => {
         const sortCriteria = { sortKey: 'utility_counter', orientation: 'desc' };
-        const subject = render({ sortCriteria });
+        const subject = renderComponent({ sortCriteria });
 
-        const sortByHelpfulnessButton = subject.getByText('Helpfulness');
+        const sortByHelpfulnessButton = subject.container.querySelectorAll('button')[1];
         const arrowUpwardIcon = subject.getByTestId('ArrowUpwardIcon');
 
         expect(sortByHelpfulnessButton.querySelector('svg')).toEqual(arrowUpwardIcon);
@@ -81,9 +81,9 @@ describe('Component <FilterReviews/>', () => {
     test('it allows to sort the list of reviews by Rating', () => {
         const toggleSortCriteria = jest.fn();
         const sortCriteria = { sortKey: 'weighted_average_per_evaluation', orientation: 'asc' };
-        const subject = render({ toggleSortCriteria, sortCriteria });
+        const subject = renderComponent({ toggleSortCriteria, sortCriteria });
 
-        const sortByRaitingButton = subject.getByText('Rating');
+        const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
         const arrowDownwardIcon = subject.getByTestId('ArrowDownwardIcon');
 
         expect(sortByRaitingButton.querySelector('svg')).toEqual(arrowDownwardIcon);
@@ -95,9 +95,9 @@ describe('Component <FilterReviews/>', () => {
 
     test('once the list is sorted the rating the button changes', () => {
         const sortCriteria = { sortKey: 'weighted_average_per_evaluation', orientation: 'desc' };
-        const subject = render({ sortCriteria });
+        const subject = renderComponent({ sortCriteria });
 
-        const sortByRaitingButton = subject.getByText('Rating');
+        const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
         const arrowUpwardIcon = subject.getByTestId('ArrowUpwardIcon');
 
         expect(sortByRaitingButton.querySelector('svg')).toEqual(arrowUpwardIcon);
@@ -105,9 +105,9 @@ describe('Component <FilterReviews/>', () => {
 
     test('it allows to sort the list of reviews by Date', () => {
         const toggleSortCriteria = jest.fn();
-        const subject = render({ toggleSortCriteria });
+        const subject = renderComponent({ toggleSortCriteria });
 
-        const sortByDateButton = subject.getByText('Date');
+        const sortByDateButton = subject.container.querySelectorAll('button')[3];
         const arrowDownwardIcon = subject.getByTestId('ArrowDownwardIcon');
 
         expect(sortByDateButton.querySelector('svg')).toEqual(arrowDownwardIcon);
@@ -119,9 +119,9 @@ describe('Component <FilterReviews/>', () => {
 
     test('once the list is sorted the date the button changes', () => {
         const sortCriteria = { sortKey: 'created_at', orientation: 'desc' };
-        const subject = render({ sortCriteria });
+        const subject = renderComponent({ sortCriteria });
 
-        const sortByDateButton = subject.getByText('Date');
+        const sortByDateButton = subject.container.querySelectorAll('button')[3];
         const arrowUpwardIcon = subject.getByTestId('ArrowUpwardIcon');
 
         expect(sortByDateButton.querySelector('svg')).toEqual(arrowUpwardIcon);

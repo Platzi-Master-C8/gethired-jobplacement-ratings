@@ -5,8 +5,8 @@ import { CompanyReviewForm } from 'Components/CompanyReviewForm';
 
 describe('Component <CompanyReviewForm/>', () => {
     test('renders CompanyReviewForm', () => {
-        const subject = render(<CompanyReviewForm />);
-        expect(subject.getByText(/Write a Review/i)).toBeInTheDocument();
+        const { asFragment } = render(<CompanyReviewForm />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('it opens the modal', () => {

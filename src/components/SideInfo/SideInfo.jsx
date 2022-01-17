@@ -9,15 +9,12 @@ import { RatingItem } from '../RatingItem';
 
 import api from '../../services/api';
 
-const globalStyles = (theme) => ({
+const globalStyles = (isMobile) => ({
     '.MuiDrawer-root > .MuiPaper-root': {
         height: '30rem',
         top: '20%',
-        width: '25rem',
         borderRadius: '20px',
-        [theme.breakpoints.down('sm')]: {
-            width: '90%',
-        },
+        width: isMobile ? '90%' : '25rem',
     },
 });
 
@@ -35,7 +32,7 @@ const GridFlex = styled(Grid)(() => ({
     alignItems: 'center',
 }));
 
-const SideInfo = () => {
+const SideInfo = ({ isMobile }) => {
     const [open, setOpen] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [review, setReview] = useState({});
@@ -56,7 +53,7 @@ const SideInfo = () => {
 
     return (
         <Box>
-            <Global styles={globalStyles} />
+            <Global styles={globalStyles(isMobile)} />
             <Box sx={{ position: 'fixed', top: '50%', right: '0' }}>
                 <Button onClick={toggleDrawer(true)}>
                     <ArrowLeftIcon sx={{ fontSize: '3rem' }} />
@@ -103,6 +100,10 @@ const SideInfo = () => {
             </SwipeableDrawer>
         </Box>
     );
+};
+
+SideInfo.propTypes = {
+    isMobile: PropTypes.bool.isRequired,
 };
 
 export default SideInfo;
