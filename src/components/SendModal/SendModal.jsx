@@ -22,7 +22,7 @@ const closeButton = {
     justifyContent: 'flex-end',
 };
 
-const SendModal = ({ open, loading, error, handleClose }) => {
+const SendModal = ({ open, error, loading, handleClose, message = 'Thank you for your time!' }) => {
     if (loading) {
         return (
             <Modal
@@ -102,7 +102,7 @@ const SendModal = ({ open, loading, error, handleClose }) => {
                         sx={{ padding: '20px', textAlign: 'center' }}
                     >
                         <Grid item>
-                            <Typography variant="subtitle1">Thank you for your time!</Typography>
+                            <Typography variant="subtitle1">{message}</Typography>
                         </Grid>
                         <Grid item>
                             <Button variant="contained" onClick={handleClose}>
@@ -121,6 +121,7 @@ SendModal.propTypes = {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
+    message: PropTypes.string.isRequired,
 };
 
 export default SendModal;

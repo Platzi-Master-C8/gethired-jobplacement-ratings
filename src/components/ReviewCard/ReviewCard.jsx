@@ -7,6 +7,7 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import FlagIcon from '@mui/icons-material/Flag';
 import { ReportModal } from '../ReportModal';
+import { SendModal } from '../SendModal';
 
 const StyledRating = styled(Rating)`
     font-size: 1rem;
@@ -31,8 +32,18 @@ const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
     </Box>
 );
 
-const ActionsReview = ({ non_utility_counter, utility_counter }) => {
+const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => {
     const [openReport, setOpenReport] = useState(false);
+    const [openSuccessModal, setOpenSuccessModal] = useState(false);
+
+    const handleReportModal = () => {
+        setOpenReport(false);
+        setOpenSuccessModal(true);
+    };
+
+    const handleCloseSended = () => {
+        setOpenSuccessModal(false);
+    };
     return (
         <CardContent>
             <Typography variant="body1">Was this review helpful?</Typography>
@@ -50,19 +61,25 @@ const ActionsReview = ({ non_utility_counter, utility_counter }) => {
                     <Typography variant="button2">Report</Typography>
                 </Button>
             </CardActions>
-            <ReportModal open={openReport} handleClose={() => setOpenReport(false)} />
+            <ReportModal open={openReport} company_id={company_id} handleClose={handleReportModal} />
+            <SendModal
+                open={openSuccessModal}
+                handleClose={handleCloseSended}
+                message="The report was sent correctly"
+            />
         </CardContent>
     );
 };
 
 const ReviewCard = ({ review }) => {
     const {
-        content_type,
-        created_at,
-        is_still_working_here,
         job_title,
-        non_utility_counter,
+        created_at,
+        company_id,
+        content_type,
         utility_counter,
+        non_utility_counter,
+        is_still_working_here,
         weighted_average_per_evaluation,
     } = review;
 
@@ -81,7 +98,11 @@ const ReviewCard = ({ review }) => {
             <CardContent sx={{ minHeight: 100, maxHeight: 100 }}>
                 <Typography variant="body1">{content_type}</Typography>
             </CardContent>
-            <ActionsReview non_utility_counter={non_utility_counter} utility_counter={utility_counter} />
+            <ActionsReview
+                company_id={company_id}
+                utility_counter={utility_counter}
+                non_utility_counter={non_utility_counter}
+            />
         </Card>
     );
 };
@@ -97,12 +118,14 @@ SubheaderReview.propTypes = {
 };
 
 ActionsReview.propTypes = {
-    non_utility_counter: PropTypes.number.isRequired,
+    company_id: PropTypes.string.isRequired,
     utility_counter: PropTypes.number.isRequired,
+    non_utility_counter: PropTypes.number.isRequired,
 };
 
 ReviewCard.propTypes = {
     review: PropTypes.shape({
+        company_id: PropTypes.string.isRequired,
         content_type: PropTypes.string.isRequired,
         created_at: PropTypes.string.isRequired,
         is_still_working_here: PropTypes.oneOf([0, 1]).isRequired,

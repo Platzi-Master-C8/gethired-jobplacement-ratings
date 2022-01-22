@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Modal, Select, Button, MenuItem, TextField, Typography, InputLabel, FormControl } from '@mui/material';
+import {
+    Box,
+    Fade,
+    Modal,
+    Select,
+    Button,
+    MenuItem,
+    TextField,
+    Typography,
+    InputLabel,
+    FormControl,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LoadingButton from '@mui/lab/LoadingButton';
+import api from '../../services/api';
 
 const ReportModalStyle = {
     p: 4,
@@ -23,25 +35,41 @@ const FormModalStyle = {
     display: 'grid',
 };
 
-export const ReportModal = ({ open, handleClose }) => {
-    const [email, setEmail] = useState('');
-    const [reason, setReason] = useState('');
-    // const [error, setError] = useState(false); // Error with fetch
+export const ReportModal = ({ open, handleClose, company_id }) => {
+    const [form, setForm] = useState({
+        email: '',
+        reason: '',
+        description: '',
+    });
+    const [error, setError] = useState(false); // Error with fetch
     const [loading, setLoading] = useState(false);
-    const [reasonInput, setReasonInput] = useState('');
 
-    const handleChange = (event) => {
-        setReason(event.target.value);
+    const handleInput = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
     };
 
     // TODO: Connect to backend
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        api.companyReports
+            .sendReport(company_id, form)
+            .then((res) => {
+                if (res && res.ok) {
+                    setError(false);
+                } else {
+                    setError(true);
+                }
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setError(true);
+            });
         setTimeout(() => {
-            setLoading(false);
-            handleClose();
-        }, 2500);
+            setError(false);
+        }, 4000);
     };
 
     return (
@@ -56,11 +84,16 @@ export const ReportModal = ({ open, handleClose }) => {
                     <Typography variant="h6" component="h6">
                         Help us understand what is happening
                     </Typography>
+                    <Fade in={error} style={{ height: error ? 'initial' : 0 }}>
+                        <Typography variant="body1" component="p" color="error">
+                            An error occurred, please try again
+                        </Typography>
+                    </Fade>
                 </Box>
                 <form onSubmit={handleSubmit} style={FormModalStyle}>
                     <FormControl fullWidth>
                         <InputLabel>Select a reason</InputLabel>
-                        <Select value={reason} label="Select a reason" onChange={handleChange}>
+                        <Select name="reason" value={form.reason} onChange={handleInput} label="Select a reason">
                             <MenuItem value="">None</MenuItem>
                             <MenuItem value="value1">Suspicious, spam or fake</MenuItem>
                             <MenuItem value="value2">Harassment or incitement to hatred</MenuItem>
@@ -77,10 +110,11 @@ export const ReportModal = ({ open, handleClose }) => {
                             fullWidth
                             multiline
                             id="User-reason"
+                            name="description"
                             variant="outlined"
-                            value={reasonInput}
+                            onChange={handleInput}
+                            value={form.description}
                             label="Describe the issue"
-                            onChange={(e) => setReasonInput(e.target.value)}
                         />
                     </Box>
                     <Box sx={{ display: 'grid', gap: '8px' }}>
@@ -88,11 +122,12 @@ export const ReportModal = ({ open, handleClose }) => {
                         <TextField
                             fullWidth
                             type="email"
+                            name="email"
                             label="Email"
-                            value={email}
                             id="User-email"
                             variant="outlined"
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={form.email}
+                            onChange={handleInput}
                         />
                     </Box>
                     {loading && (
@@ -114,6 +149,7 @@ export const ReportModal = ({ open, handleClose }) => {
 ReportModal.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
+    company_id: PropTypes.string.isRequired,
 };
 
 export default ReportModal;
