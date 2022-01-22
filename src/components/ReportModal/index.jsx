@@ -41,7 +41,7 @@ export const ReportModal = ({ open, handleClose, company_id }) => {
         reason: '',
         description: '',
     });
-    const [error, setError] = useState(false); // Error with fetch
+    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleInput = (e) => {
@@ -58,6 +58,7 @@ export const ReportModal = ({ open, handleClose, company_id }) => {
             .then((res) => {
                 if (res && res.ok) {
                     setError(false);
+                    handleClose(true);
                 } else {
                     setError(true);
                 }

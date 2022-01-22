@@ -36,9 +36,11 @@ const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => 
     const [openReport, setOpenReport] = useState(false);
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
 
-    const handleReportModal = () => {
+    const handleReportModal = (success) => {
         setOpenReport(false);
-        setOpenSuccessModal(true);
+        if (success) {
+            setOpenSuccessModal(true);
+        }
     };
 
     const handleCloseSended = () => {
@@ -61,7 +63,11 @@ const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => 
                     <Typography variant="button2">Report</Typography>
                 </Button>
             </CardActions>
-            <ReportModal open={openReport} company_id={company_id} handleClose={handleReportModal} />
+            <ReportModal
+                open={openReport}
+                company_id={company_id}
+                handleClose={handleReportModal}
+            />
             <SendModal
                 open={openSuccessModal}
                 handleClose={handleCloseSended}
