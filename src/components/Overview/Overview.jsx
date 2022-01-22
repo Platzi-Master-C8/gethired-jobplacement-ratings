@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Avatar, Rating, IconButton } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import styled from 'styled-components';
-import { RadarChart } from '../Charts';
+import { RadarChart, LineChart } from '../Charts';
 
 import { RatingItem } from '../RatingItem';
 
@@ -21,6 +21,7 @@ const ChartContainer = styled(Grid)`
 const Overview = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [review, setReview] = useState({});
+    const [display, setDisplay] = useState('none');
 
     useEffect(() => {
         const data = api.companyEvaluations.mockDataOverallReview();
@@ -31,6 +32,20 @@ const Overview = () => {
     if (!isLoaded) {
         return <div>Loading...</div>;
     }
+
+    const handleClick = () => {
+        switch (display) {
+            case 'none':
+                setDisplay('block');
+                break;
+            case 'block':
+                setDisplay('none');
+                break;
+            default:
+                setDisplay('none');
+                break;
+        }
+    };
 
     return (
         <Grid container spacing={2} textAlign="center">
@@ -56,7 +71,7 @@ const Overview = () => {
                     <Typography variant="h1">{review.overall_rating}</Typography>
                     <Rating readOnly value={review.overall_rating} precision={0.5} />
                     <Typography>{review.total_reviews} ratings</Typography>
-                    <IconButton>
+                    <IconButton onClick={handleClick}>
                         <ArrowDropDownIcon sx={{ fontSize: '4rem' }} />
                     </IconButton>
                 </Grid>
@@ -70,6 +85,9 @@ const Overview = () => {
                 <RatingItem title="Work/life balance" rating={review.work_life_balance} />
                 <RatingItem title="Working Enviorment" rating={review.working_eviorment} />
                 <RatingItem title="Culture" rating={review.culture} />
+            </Grid>
+            <Grid item md={12} sx={{ display }}>
+                <LineChart />
             </Grid>
         </Grid>
     );
