@@ -58,7 +58,7 @@ export const ReportModal = ({ open, handleClose, company_id }) => {
             .then((res) => {
                 if (res && res.ok) {
                     setError(false);
-                    handleClose(true);
+                    handleClose(null, true);
                 } else {
                     setError(true);
                 }

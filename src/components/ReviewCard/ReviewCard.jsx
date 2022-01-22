@@ -2,7 +2,18 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Card, Button, Rating, Typography, CardHeader, CardContent, CardActions } from '@mui/material';
+import {
+    Box,
+    Card,
+    Button,
+    Rating,
+    Typography,
+    CardHeader,
+    CardContent,
+    CardActions,
+    ToggleButtonGroup,
+    ToggleButton,
+} from '@mui/material';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -33,41 +44,51 @@ const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
 );
 
 const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => {
+    const [utility, setUtility] = useState('');
     const [openReport, setOpenReport] = useState(false);
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
 
-    const handleReportModal = (success) => {
+    const handleReportModal = (e, success) => {
         setOpenReport(false);
         if (success) {
             setOpenSuccessModal(true);
         }
     };
 
+    const handleLikes = (e, newValue) => {
+        setUtility(newValue);
+    };
+
     const handleCloseSended = () => {
         setOpenSuccessModal(false);
     };
+
     return (
         <CardContent>
             <Typography variant="body1">Was this review helpful?</Typography>
             <CardActions disableSpacing>
-                <Button title={utility_counter}>
-                    <ThumbUpAltIcon />
-                    <Typography variant="button2">Yes</Typography>
-                </Button>
-                <Button title={non_utility_counter}>
-                    <ThumbDownAltIcon />
-                    <Typography variant="button2">No</Typography>
-                </Button>
-                <Button sx={{ ml: 'auto' }} onClick={() => setOpenReport(true)}>
+                <ToggleButtonGroup
+                    exclusive
+                    color="primary"
+                    value={utility}
+                    sx={{ '.MuiToggleButtonGroup-grouped': { border: 'none' } }}
+                    onChange={handleLikes}
+                >
+                    <ToggleButton title={utility_counter} value="like">
+                        <ThumbUpAltIcon />
+                        <Typography variant="button2">Yes</Typography>
+                    </ToggleButton>
+                    <ToggleButton color="error" title={non_utility_counter} value="dislike">
+                        <ThumbDownAltIcon />
+                        <Typography variant="button2">No</Typography>
+                    </ToggleButton>
+                </ToggleButtonGroup>
+                <Button color="info" sx={{ ml: 'auto' }} onClick={() => setOpenReport(true)}>
                     <FlagIcon />
                     <Typography variant="button2">Report</Typography>
                 </Button>
             </CardActions>
-            <ReportModal
-                open={openReport}
-                company_id={company_id}
-                handleClose={handleReportModal}
-            />
+            <ReportModal open={openReport} company_id={company_id} handleClose={handleReportModal} />
             <SendModal
                 open={openSuccessModal}
                 handleClose={handleCloseSended}
