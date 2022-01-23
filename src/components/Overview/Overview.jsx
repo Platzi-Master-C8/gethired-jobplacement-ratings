@@ -21,31 +21,30 @@ const ChartContainer = styled(Grid)`
 const Overview = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [review, setReview] = useState({});
-    const [display, setDisplay] = useState('none');
+    const [display, setDisplay] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const data = api.companyEvaluations.mockDataOverallReview();
-        setReview(...data);
-        setIsLoaded(true);
-    }, [review]);
+        api.companyEvaluations
+            .mockDataOverallReview()
+            .then((res) => res)
+            .then((data) => {
+                setReview(...data);
+                setIsLoaded(true);
+            })
+            .catch((err) => {
+                setIsLoaded(true);
+                setError(err);
+            });
+    }, []);
 
     if (!isLoaded) {
         return <div>Loading...</div>;
     }
 
-    const handleClick = () => {
-        switch (display) {
-            case 'none':
-                setDisplay('block');
-                break;
-            case 'block':
-                setDisplay('none');
-                break;
-            default:
-                setDisplay('none');
-                break;
-        }
-    };
+    if (error) {
+        return <div>Error</div>;
+    }
 
     return (
         <Grid container spacing={2} textAlign="center">
@@ -71,7 +70,7 @@ const Overview = () => {
                     <Typography variant="h1">{review.overall_rating}</Typography>
                     <Rating readOnly value={review.overall_rating} precision={0.5} />
                     <Typography>{review.total_reviews} ratings</Typography>
-                    <IconButton onClick={handleClick}>
+                    <IconButton onClick={() => setDisplay(!display)}>
                         <ArrowDropDownIcon sx={{ fontSize: '4rem' }} />
                     </IconButton>
                 </Grid>
@@ -86,9 +85,11 @@ const Overview = () => {
                 <RatingItem title="Working Enviorment" rating={review.working_eviorment} />
                 <RatingItem title="Culture" rating={review.culture} />
             </Grid>
-            <Grid item md={12} sx={{ display }}>
-                <LineChart />
-            </Grid>
+            {display && (
+                <Grid item md={12} sx={{ display }}>
+                    <LineChart yearlyData={review.yearlyData} />
+                </Grid>
+            )}
         </Grid>
     );
 };

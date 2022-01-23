@@ -37,12 +37,21 @@ const SideInfo = ({ isMobile }) => {
     const [open, setOpen] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [review, setReview] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const data = api.companyEvaluations.mockDataOverallReview();
-        setReview(...data);
-        setIsLoaded(true);
-    }, [review]);
+        api.companyEvaluations
+            .mockDataOverallReview()
+            .then((res) => res)
+            .then((data) => {
+                setReview(...data);
+                setIsLoaded(true);
+            })
+            .catch((err) => {
+                setIsLoaded(true);
+                setError(err);
+            });
+    }, []);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -50,6 +59,10 @@ const SideInfo = ({ isMobile }) => {
 
     if (!isLoaded) {
         return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error</div>;
     }
 
     return (
