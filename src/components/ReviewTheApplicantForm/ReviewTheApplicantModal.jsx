@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     FormControl,
     OutlinedInput,
@@ -14,7 +15,8 @@ import {
     Alert,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import PropTypes from 'prop-types';
+
+import { TermsMessage } from '../TermsMessage';
 
 const StyledRating = styled(Rating)`
     font-size: 2.2rem;
@@ -170,6 +172,7 @@ const ReviewTheApplicantModal = ({
                                 </Grid>
                             </Grid>
                         </Grid>
+                        <TermsMessage />
                         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                         <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 4 }}>
                             <Grid item md={2} onClick={handleClose}>

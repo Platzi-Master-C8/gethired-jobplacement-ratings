@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component <TermsMessage/> renders TermsMessage 1`] = `
+<DocumentFragment>
+  <span
+    class="MuiTypography-root MuiTypography-caption css-1i6gjti-MuiTypography-root"
+  >
+    Al enviar este formulario estas aceptando nuestros 
+    <div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-12 css-oav0mg-MuiGrid-root"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-caption MuiLink-root MuiLink-underlineNone css-v181wt-MuiTypography-root-MuiLink-root"
+        >
+          Terminos y Condiciones
+        </a>
+      </div>
+    </div>
+     y la 
+    <div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-12 css-oav0mg-MuiGrid-root"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-caption MuiLink-root MuiLink-underlineNone css-v181wt-MuiTypography-root-MuiLink-root"
+        >
+          Politica de Privacidad
+        </a>
+      </div>
+    </div>
+  </span>
+</DocumentFragment>
+`;

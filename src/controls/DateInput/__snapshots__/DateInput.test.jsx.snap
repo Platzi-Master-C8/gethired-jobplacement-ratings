@@ -18,13 +18,13 @@ exports[`Component <DateInput/> renders DateInput 1`] = `
     >
       <input
         aria-invalid="false"
-        aria-label="Choose date, selected date is Dec 16, 2021"
+        aria-label="Choose date, selected date is Dec 24, 2021"
         aria-readonly="true"
         class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
         id="mui-1"
         readonly=""
         type="text"
-        value="12/16/2021"
+        value="12/24/2021"
       />
       <fieldset
         aria-hidden="true"

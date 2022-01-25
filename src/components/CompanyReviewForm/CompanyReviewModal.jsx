@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import { DateInput } from '../../controls/DateInput';
 
+import { TermsMessage } from '../TermsMessage';
+
 const boxStyles = {
     position: 'absolute',
     top: '50%',
@@ -328,6 +330,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                         </Grid>
                     </Grid>
                 </Grid>
+                <TermsMessage />
                 {modalError && <Alert severity="error">{modalError}</Alert>}
                 <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
                     <Grid item md={2} onClick={handleClose}>
