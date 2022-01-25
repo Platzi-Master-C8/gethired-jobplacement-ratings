@@ -29,7 +29,7 @@ const Overview = () => {
             .mockDataOverallReview()
             .then((res) => res)
             .then((data) => {
-                setReview(...data);
+                setReview(data);
                 setIsLoaded(true);
             })
             .catch((err) => {

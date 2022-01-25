@@ -44,12 +44,12 @@ const SideInfo = ({ isMobile }) => {
             .mockDataOverallReview()
             .then((res) => res)
             .then((data) => {
-                setReview(...data);
+                setReview(data);
                 setIsLoaded(true);
             })
             .catch((err) => {
-                setIsLoaded(true);
                 setError(err);
+                setIsLoaded(true);
             });
     }, []);
 
@@ -69,7 +69,7 @@ const SideInfo = ({ isMobile }) => {
         <Box>
             <Global styles={globalStyles(isMobile)} />
             <Box sx={{ position: 'fixed', top: '50%', right: '0' }}>
-                <Button onClick={toggleDrawer(true)}>
+                <Button onClick={toggleDrawer(true)} role="button">
                     <ArrowLeftIcon sx={{ fontSize: '3rem' }} />
                 </Button>
             </Box>

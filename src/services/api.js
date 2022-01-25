@@ -44,7 +44,7 @@ const api = {
       }));
     },
     mockDataOverallReview() {
-      return new Promise(resolve => resolve(overallReviews));
+      return new Promise(resolve => resolve(...overallReviews));
     }
   },
 };
