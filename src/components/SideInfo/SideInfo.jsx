@@ -37,12 +37,21 @@ const SideInfo = ({ isMobile }) => {
     const [open, setOpen] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [review, setReview] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const data = api.companyEvaluations.mockDataOverallReview();
-        setReview(...data);
-        setIsLoaded(true);
-    }, [review]);
+        api.companyEvaluations
+            .mockDataOverallReview()
+            .then((res) => res)
+            .then((data) => {
+                setReview(data);
+                setIsLoaded(true);
+            })
+            .catch((err) => {
+                setError(err);
+                setIsLoaded(true);
+            });
+    }, []);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -52,11 +61,15 @@ const SideInfo = ({ isMobile }) => {
         return <div>Loading...</div>;
     }
 
+    if (error) {
+        return <div>Error</div>;
+    }
+
     return (
         <Box>
             <Global styles={globalStyles(isMobile)} />
             <Box sx={{ position: 'fixed', top: '50%', right: '0' }}>
-                <Button onClick={toggleDrawer(true)}>
+                <Button onClick={toggleDrawer(true)} role="button">
                     <ArrowLeftIcon sx={{ fontSize: '3rem' }} />
                 </Button>
             </Box>
