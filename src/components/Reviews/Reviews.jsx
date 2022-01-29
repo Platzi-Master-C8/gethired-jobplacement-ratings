@@ -11,6 +11,7 @@ import api from '../../services/api';
 const Reviews = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [reviewsCount, setReviewsCount] = useState(0);
     const [list, setList] = useState([]);
     const [data, setData] = useState([]);
     const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'asc' });
@@ -22,8 +23,9 @@ const Reviews = () => {
             .then((response) => response.json())
             .then((result) => {
                 setIsLoaded(true);
-                setList(result);
-                setData(result);
+                setList(result.items);
+                setData(result.items);
+                setReviewsCount(result.total);
             })
             .catch((e) => {
                 setIsLoaded(true);
@@ -55,6 +57,8 @@ const Reviews = () => {
     return (
         <Fragment>
             <FilterReviews
+                reviewsQuantity={list.length}
+                reviewsCount={reviewsCount}
                 handleSearch={handleSearch}
                 sortCriteria={sortCriteria}
                 toggleSortCriteria={toggleSortCriteria}

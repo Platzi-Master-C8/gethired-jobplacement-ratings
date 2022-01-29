@@ -8,12 +8,12 @@ const getData = (endpoint, options) => {
     ...options
   };
 
-  const url = `${config.api}/${endpoint}`;
+  const url = `${config.api}${endpoint}`;
   return fetch(url, ops)
 };
 
 const sendData = (endpoint, data) => {
-  const url = `${config.api}/${endpoint}`;
+  const url = `${config.api}${endpoint}`;
 
   return fetch(url, {
     method: 'POST',
@@ -24,12 +24,11 @@ const sendData = (endpoint, data) => {
 
 const api = {
   companyEvaluations: {
-    listReviews(companyId, options = {}) {
-      // return getData(`companyEvaluations/${companyId}`, options);
-      return getData(`companyEvaluations`, options);
+    listReviews(companyId, page, options = {}) {
+      return getData(`companies/${companyId}/company-evaluations?page=${page}&size=10`, options);
     },
     sendReview(companyId, data = {}) {
-      return sendData(`companyEvaluations`, data);
+      return sendData(`companies/${companyId}/company-evaluation`, data);
     },
     mockDataList() {
       return list.map((review) => ({

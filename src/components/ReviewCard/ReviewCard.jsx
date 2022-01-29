@@ -15,9 +15,9 @@ const StyledRating = styled(Rating)`
 const HeaderReview = ({ rating }) => (
     <Box>
         <Typography sx={{ ml: 3 }} variant="subtitle1">
-            {rating.toFixed(1)}
+            {rating > 0 ? rating.toFixed(1) : 'NA'}
         </Typography>
-        <StyledRating name="read-only" value={rating} readOnly />
+        <StyledRating name="read-only" value={rating > 0 ? rating : 0} readOnly />
     </Box>
 );
 
@@ -69,7 +69,7 @@ const ReviewCard = ({ review }) => {
     return (
         <Card sx={{ border: 1, minHeight: 350, maxHeight: 350 }}>
             <CardHeader
-                title={<HeaderReview rating={weighted_average_per_evaluation} />}
+                title={<HeaderReview rating={weighted_average_per_evaluation || -1} />}
                 subheader={
                     <SubheaderReview
                         created_at={created_at}
@@ -109,7 +109,7 @@ ReviewCard.propTypes = {
         job_title: PropTypes.string.isRequired,
         non_utility_counter: PropTypes.number.isRequired,
         utility_counter: PropTypes.number.isRequired,
-        weighted_average_per_evaluation: PropTypes.number.isRequired,
+        weighted_average_per_evaluation: PropTypes.number,
     }).isRequired,
 };
 
