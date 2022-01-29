@@ -4,7 +4,7 @@ exports[`Component <ReviewTheApplicantForm/> renders ReviewTheApplicantForm 1`] 
 <DocumentFragment>
   <div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-12 css-oav0mg-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-12 css-hagxv6-MuiGrid-root"
     >
       <button
         class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"

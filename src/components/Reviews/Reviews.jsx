@@ -1,35 +1,42 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import PropTypes from 'prop-types';
+import { Box, Pagination, Stack } from '@mui/material';
 import { ReviewCard } from '../ReviewCard';
 import { FilterReviews } from '../FilterReviews';
 import { SideInfo } from '../SideInfo';
 
-import { useMediaQuery } from '../../hooks';
-
 import api from '../../services/api';
 
-const Reviews = () => {
+const Reviews = ({ isMobile }) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [page, setPage] = useState(1);
+    const [reviewsCount, setReviewsCount] = useState(0);
     const [list, setList] = useState([]);
     const [data, setData] = useState([]);
     const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'asc' });
-    const isMobile = useMediaQuery('(max-width: 480px)');
 
     useEffect(() => {
         api.companyEvaluations
-            .listReviews(1)
+            .listReviews(1, page)
             .then((response) => response.json())
             .then((result) => {
                 setIsLoaded(true);
-                setList(result);
-                setData(result);
+                setList(result.items);
+                setData(result.items);
+                setReviewsCount(result.total);
             })
             .catch((e) => {
                 setIsLoaded(true);
                 setError(e);
             });
-    }, []);
+    }, [page]);
+
+    const handlePage = (e, v) => {
+        setIsLoaded(false);
+        setPage(v);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     const handleSearch = (query, attribute) => {
         setList(data.filter((x) => x[attribute].toLowerCase().includes(query.toLowerCase().trim())));
@@ -55,6 +62,8 @@ const Reviews = () => {
     return (
         <Fragment>
             <FilterReviews
+                reviewsQuantity={list.length}
+                reviewsCount={reviewsCount}
                 handleSearch={handleSearch}
                 sortCriteria={sortCriteria}
                 toggleSortCriteria={toggleSortCriteria}
@@ -73,8 +82,29 @@ const Reviews = () => {
                 ))}
             </Box>
             <SideInfo isMobile={isMobile} />
+            <Box
+                sx={{
+                    mb: 3,
+                    display: 'grid',
+                    justifyContent: 'center',
+                }}
+            >
+                <Stack spacing={2}>
+                    <Pagination
+                        color="secondary"
+                        count={Math.ceil(reviewsCount / 10)}
+                        disabled={Math.ceil(reviewsCount / 10) < 1}
+                        page={page}
+                        onChange={handlePage}
+                    />
+                </Stack>
+            </Box>
         </Fragment>
     );
+};
+
+Reviews.propTypes = {
+    isMobile: PropTypes.bool.isRequired,
 };
 
 export default Reviews;
