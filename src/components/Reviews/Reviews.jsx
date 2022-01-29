@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Pagination, Stack } from '@mui/material';
 import { ReviewCard } from '../ReviewCard';
 import { FilterReviews } from '../FilterReviews';
 import { SideInfo } from '../SideInfo';
@@ -11,6 +11,7 @@ import api from '../../services/api';
 const Reviews = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [page, setPage] = useState(1);
     const [reviewsCount, setReviewsCount] = useState(0);
     const [list, setList] = useState([]);
     const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ const Reviews = () => {
 
     useEffect(() => {
         api.companyEvaluations
-            .listReviews(1)
+            .listReviews(1, page)
             .then((response) => response.json())
             .then((result) => {
                 setIsLoaded(true);
@@ -31,7 +32,12 @@ const Reviews = () => {
                 setIsLoaded(true);
                 setError(e);
             });
-    }, []);
+    }, [page]);
+
+    const handlePage = (e, v) => {
+        setPage(v);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     const handleSearch = (query, attribute) => {
         setList(data.filter((x) => x[attribute].toLowerCase().includes(query.toLowerCase().trim())));
@@ -77,6 +83,23 @@ const Reviews = () => {
                 ))}
             </Box>
             <SideInfo isMobile={isMobile} />
+            <Box
+                sx={{
+                    mb: 3,
+                    display: 'grid',
+                    justifyContent: 'center',
+                }}
+            >
+                <Stack spacing={2}>
+                    <Pagination
+                        color="secondary"
+                        count={Math.ceil(reviewsCount / 10)}
+                        disabled={Math.ceil(reviewsCount / 10) < 1}
+                        page={page}
+                        onChange={handlePage}
+                    />
+                </Stack>
+            </Box>
         </Fragment>
     );
 };

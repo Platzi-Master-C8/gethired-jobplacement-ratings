@@ -5,17 +5,15 @@ import { Header } from '@master-c8/commons';
 import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 import CompanyTabs from '../components/CompanyTabs';
 
-import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
-import { ReviewApplicationProcessForm } from '../components/ReviewApplicationProcess';
-
 // Tabs
 import { Reviews } from '../components/Reviews';
 import { Overview } from '../components/Overview';
+import { Jobs } from '../components/Jobs';
 
 const tabsOptions = [
     { tabKey: 'Overview', tabContent: <Overview /> },
     { tabKey: 'Reviews', tabContent: <Reviews /> },
-    { tabKey: 'Jobs', tabContent: 'Jobs' },
+    { tabKey: 'Jobs', tabContent: <Jobs /> },
 ];
 
 const Company = () => {
@@ -24,8 +22,6 @@ const Company = () => {
             <Header isLogged />
             <GeneralCompanyRate />
             <CompanyTabs tabsOptions={tabsOptions} />
-            <ReviewTheApplicantForm />
-            <ReviewApplicationProcessForm />
         </Container>
     );
 };
