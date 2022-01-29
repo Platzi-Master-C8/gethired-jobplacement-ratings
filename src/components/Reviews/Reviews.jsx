@@ -1,14 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Box, Pagination, Stack } from '@mui/material';
 import { ReviewCard } from '../ReviewCard';
 import { FilterReviews } from '../FilterReviews';
 import { SideInfo } from '../SideInfo';
 
-import { useMediaQuery } from '../../hooks';
-
 import api from '../../services/api';
 
-const Reviews = () => {
+const Reviews = ({ isMobile }) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [page, setPage] = useState(1);
@@ -16,7 +15,6 @@ const Reviews = () => {
     const [list, setList] = useState([]);
     const [data, setData] = useState([]);
     const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'asc' });
-    const isMobile = useMediaQuery('(max-width: 480px)');
 
     useEffect(() => {
         api.companyEvaluations
@@ -35,6 +33,7 @@ const Reviews = () => {
     }, [page]);
 
     const handlePage = (e, v) => {
+        setIsLoaded(false);
         setPage(v);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -102,6 +101,10 @@ const Reviews = () => {
             </Box>
         </Fragment>
     );
+};
+
+Reviews.propTypes = {
+    isMobile: PropTypes.bool.isRequired,
 };
 
 export default Reviews;
