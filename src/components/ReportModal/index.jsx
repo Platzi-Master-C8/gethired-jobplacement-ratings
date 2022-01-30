@@ -35,7 +35,7 @@ const FormModalStyle = {
     display: 'grid',
 };
 
-export const ReportModal = ({ open, handleClose, company_id }) => {
+export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
     const [form, setForm] = useState({
         email: '',
         reason: '',
@@ -96,12 +96,11 @@ export const ReportModal = ({ open, handleClose, company_id }) => {
                         <InputLabel>Select a reason</InputLabel>
                         <Select name="reason" value={form.reason} onChange={handleInput} label="Select a reason">
                             <MenuItem value="">None</MenuItem>
-                            <MenuItem value="value1">Suspicious, spam or fake</MenuItem>
-                            <MenuItem value="value2">Harassment or incitement to hatred</MenuItem>
-                            <MenuItem value="value3">Violence or physical assault</MenuItem>
-                            <MenuItem value="value4">Adult content</MenuItem>
-                            <MenuItem value="value5">Defamation or infringement of intellectual property</MenuItem>
-                            <MenuItem value="value6">None of the reasons for reporting apply</MenuItem>
+                            {reasons?.map((item) => (
+                                <MenuItem key={`Reason-${item.id}`} value={item.id}>
+                                    {item.name}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     <Box sx={{ display: 'grid', gap: '8px' }}>
@@ -151,6 +150,7 @@ ReportModal.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
     company_id: PropTypes.string.isRequired,
+    reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ReportModal;

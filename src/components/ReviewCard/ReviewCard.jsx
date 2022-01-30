@@ -17,8 +17,10 @@ import {
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import FlagIcon from '@mui/icons-material/Flag';
+import { UtilityModal } from '../UtilityModal';
 import { ReportModal } from '../ReportModal';
 import { SendModal } from '../SendModal';
+import config from '../../config';
 
 const StyledRating = styled(Rating)`
     font-size: 1rem;
@@ -43,7 +45,9 @@ const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
     </Box>
 );
 
-const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => {
+const ActionsReview = ({ company_id, non_utility_counter, utility_counter, reasons }) => {
+    const [utilityError, setUtilityError] = useState(false);
+    const [utilitySuccess, setUtilitySuccess] = useState(false);
     const [utility, setUtility] = useState('');
     const [openReport, setOpenReport] = useState(false);
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
@@ -56,11 +60,25 @@ const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => 
     };
 
     const handleLikes = (e, newValue) => {
+        const route = `increase-${newValue === 'like' ? 'utility' : 'non-utility'}-rating`;
+        const url = `${config.api}company-evaluations/${company_id}/${route}`;
+        fetch(url, {
+            method: 'PATCH',
+            headers: config.headers,
+        })
+            .then((res) => res.json())
+            .then((data) => (data?.id ? setUtilitySuccess(true) : setUtilityError(true)))
+            .catch(() => setUtilityError(true));
         setUtility(newValue);
     };
 
     const handleCloseSended = () => {
         setOpenSuccessModal(false);
+    };
+
+    const handleUtilityModal = () => {
+        setUtilityError(false);
+        setUtilitySuccess(false);
     };
 
     return (
@@ -88,7 +106,12 @@ const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => 
                     <Typography variant="button2">Report</Typography>
                 </Button>
             </CardActions>
-            <ReportModal open={openReport} company_id={company_id} handleClose={handleReportModal} />
+            <ReportModal open={openReport} reasons={reasons} company_id={company_id} handleClose={handleReportModal} />
+            <UtilityModal
+                handleClose={handleUtilityModal}
+                open={utilityError || utilitySuccess}
+                message={utilitySuccess ? 'Thank you for your time!' : 'An error occurred, please try again'}
+            />
             <SendModal
                 open={openSuccessModal}
                 handleClose={handleCloseSended}
@@ -98,7 +121,7 @@ const ActionsReview = ({ company_id, non_utility_counter, utility_counter }) => 
     );
 };
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({ review, reasons }) => {
     const {
         job_title,
         created_at,
@@ -126,6 +149,7 @@ const ReviewCard = ({ review }) => {
                 <Typography variant="body1">{content_type}</Typography>
             </CardContent>
             <ActionsReview
+                reasons={reasons}
                 company_id={company_id}
                 utility_counter={utility_counter}
                 non_utility_counter={non_utility_counter}
@@ -148,9 +172,11 @@ ActionsReview.propTypes = {
     company_id: PropTypes.string.isRequired,
     utility_counter: PropTypes.number.isRequired,
     non_utility_counter: PropTypes.number.isRequired,
+    reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 ReviewCard.propTypes = {
+    reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
     review: PropTypes.shape({
         company_id: PropTypes.string.isRequired,
         content_type: PropTypes.string.isRequired,
