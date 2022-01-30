@@ -15,23 +15,40 @@ import {
     Alert,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import { styled } from '@mui/material/styles';
 
 import { TermsMessage } from '../TermsMessage';
 
-const boxStyles = {
+import { useMediaQuery } from '../../hooks';
+
+const boxStyles = (isMobile) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '45%',
-    height: '75%',
+    width: isMobile ? '70%' : '45%',
+    height: isMobile ? '60%' : '75%',
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
     overflow: 'auto',
-};
+    textAlign: isMobile ? 'center' : 'unset',
+    justifyContent: isMobile ? 'center' : 'unset',
+});
+
+const StyledGrid = styled(Grid)`
+    @media (max-width: 600px) {
+        margin: 20px 0;
+
+        .MuiFormControlLabel-label {
+            font-size: 15px;
+        }
+    }
+`;
 
 const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review, handleValidate, errorMessage }) => {
+    const isMobile = useMediaQuery('(max-width: 900px)');
+
     return (
         <div>
             <Modal
@@ -41,12 +58,16 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                 aria-describedby="modal-modal-description"
             >
                 <form onSubmit={handleValidate}>
-                    <Box sx={boxStyles}>
-                        <Typography variant="h1" align="center" sx={{ fontSize: 28 }}>
+                    <Box sx={boxStyles(isMobile)}>
+                        <Typography
+                            variant="h1"
+                            align="center"
+                            sx={{ fontSize: isMobile ? 20 : 28, lineHeight: isMobile && '30px' }}
+                        >
                             Review your Application Process
                         </Typography>
                         <Grid container marginTop={3}>
-                            <Grid item md={6}>
+                            <Grid item md={6} sm={12} xs={12}>
                                 <Grid item>
                                     <Typography variant="subtitle1" sx={{ fontSize: '16px', margin: '10px 0' }}>
                                         Job title
@@ -62,8 +83,8 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid>
-                                    <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px 0' }}>
+                                <StyledGrid item xs={12}>
+                                    <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px auto' }}>
                                         How would you rate the salary?
                                     </Typography>
                                     <FormControl component="fieldset" required>
@@ -80,8 +101,8 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                             <FormControlLabel value={0} control={<Radio />} label="Low" />
                                         </RadioGroup>
                                     </FormControl>
-                                </Grid>
-                                <Grid>
+                                </StyledGrid>
+                                <StyledGrid>
                                     <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px 0' }}>
                                         Does the job allows you to work from home?
                                     </Typography>
@@ -98,8 +119,8 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                             <FormControlLabel value={0} control={<Radio />} label="No" />
                                         </RadioGroup>
                                     </FormControl>
-                                </Grid>
-                                <Grid>
+                                </StyledGrid>
+                                <StyledGrid>
                                     <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px 0' }}>
                                         How was the response time?
                                     </Typography>
@@ -117,8 +138,8 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                             <FormControlLabel value={0} control={<Radio />} label="Bad" />
                                         </RadioGroup>
                                     </FormControl>
-                                </Grid>
-                                <Grid>
+                                </StyledGrid>
+                                <StyledGrid>
                                     <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px 0' }}>
                                         How would you rate the job description?
                                     </Typography>
@@ -136,8 +157,8 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                             <FormControlLabel value={0} control={<Radio />} label="Low" />
                                         </RadioGroup>
                                     </FormControl>
-                                </Grid>
-                                <Grid>
+                                </StyledGrid>
+                                <StyledGrid>
                                     <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px 0' }}>
                                         Is the company legally well regulated?
                                     </Typography>
@@ -154,10 +175,13 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                             <FormControlLabel value={0} control={<Radio />} label="No" />
                                         </RadioGroup>
                                     </FormControl>
-                                </Grid>
+                                </StyledGrid>
                             </Grid>
-                            <Grid item md={6} sx={{ paddingLeft: '30px' }}>
-                                <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '10px 0' }}>
+                            <Grid item lg={6} md={12} sx={{ paddingLeft: !isMobile && '30px' }}>
+                                <Typography
+                                    variant="subtitle1"
+                                    sx={{ fontSize: 16, margin: isMobile ? '0 0 10px  0' : '10px 0' }}
+                                >
                                     What part of the process would you like to improve?
                                 </Typography>
                                 <FormControl sx={{ width: '90%' }}>
@@ -172,7 +196,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                 </FormControl>
                             </Grid>
                             <Grid item md={12}>
-                                <Typography variant="subtitle1" sx={{ fontSize: 16, marginBottom: '15px' }}>
+                                <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '15px 0' }}>
                                     How long it took from the begining to the end of the process?
                                 </Typography>
                                 <FormControl sx={{ width: '20%', marginRight: '10px' }}>
@@ -184,7 +208,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                         onChange={handleInput}
                                     />
                                 </FormControl>
-                                <FormControl sx={{ width: '20%' }} required>
+                                <FormControl sx={{ width: isMobile ? '50%' : '20%' }} required>
                                     <Select
                                         labelId="time_measurement"
                                         id="time_measurement"
@@ -200,17 +224,19 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                 </FormControl>
                             </Grid>
                         </Grid>
-                        <TermsMessage />
+                        <Grid sx={{ margin: '15px' }}>
+                            <TermsMessage />
+                        </Grid>
                         {errorMessage && (
                             <Alert style={{ marginTop: '15px' }} severity="error">
                                 {errorMessage}
                             </Alert>
                         )}
                         <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 4 }}>
-                            <Grid item md={2} onClick={handleClose}>
+                            <Grid item lg={2} md={3} sm={3} xs={4} onClick={handleClose}>
                                 <Button variant="outlined">Cancel</Button>
                             </Grid>
-                            <Grid item md={2}>
+                            <Grid item lg={2} md={3} sm={3} xs={4}>
                                 <Button variant="contained" type="submit">
                                     Submit
                                 </Button>
