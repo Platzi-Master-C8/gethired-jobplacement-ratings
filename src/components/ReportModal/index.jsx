@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Modal, Select, Button, MenuItem, TextField, Typography, InputLabel, FormControl } from '@mui/material';
+import {
+    Box,
+    Fade,
+    Modal,
+    Select,
+    Button,
+    MenuItem,
+    TextField,
+    Typography,
+    InputLabel,
+    FormControl,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { UtilityModal } from '../UtilityModal';
+import config from '../../config';
 
 const ReportModalStyle = {
     p: 4,
@@ -23,25 +36,61 @@ const FormModalStyle = {
     display: 'grid',
 };
 
-export const ReportModal = ({ open, handleClose }) => {
-    const [email, setEmail] = useState('');
-    const [reason, setReason] = useState('');
-    // const [error, setError] = useState(false); // Error with fetch
+export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
+    const [form, setForm] = useState({
+        email: '',
+        reason: '',
+        description: '',
+    });
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [reasonInput, setReasonInput] = useState('');
+    const [formError, setFormError] = useState(false);
 
-    const handleChange = (event) => {
-        setReason(event.target.value);
+    const handleInput = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
     };
 
-    // TODO: Connect to backend
+    const handleReportModal = () => {
+        if (error) {
+            setError(false);
+            return;
+        }
+        setError(false);
+        setSuccess(false);
+        handleClose();
+    };
+
+    const validateForm = () => {
+        if (!form.reason || !form.email || !form.description) {
+            setFormError(true);
+            setLoading(false);
+            return false;
+        }
+        setFormError(false);
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            handleClose();
-        }, 2500);
+        if (!validateForm()) return;
+        const url = `${config.api}company-evaluation/${company_id}/complaints`;
+        const body = {
+            email: form.email,
+            problem_description: form.description,
+            reporting_reason_type_id: form.reason,
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: config.headers,
+            body: JSON.stringify(body),
+        })
+            .then((res) => res.json())
+            .then((data) => (data.id ? setSuccess(true) : setError(true)))
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -56,43 +105,57 @@ export const ReportModal = ({ open, handleClose }) => {
                     <Typography variant="h6" component="h6">
                         Help us understand what is happening
                     </Typography>
+                    <Fade in={formError} style={{ height: formError ? 'initial' : 0 }}>
+                        <Typography variant="body1" component="p" color="error">
+                            Complete the form to continue
+                        </Typography>
+                    </Fade>
                 </Box>
                 <form onSubmit={handleSubmit} style={FormModalStyle}>
                     <FormControl fullWidth>
                         <InputLabel>Select a reason</InputLabel>
-                        <Select value={reason} label="Select a reason" onChange={handleChange}>
+                        <Select
+                            name="reason"
+                            required
+                            value={form.reason}
+                            onChange={handleInput}
+                            label="Select a reason"
+                        >
                             <MenuItem value="">None</MenuItem>
-                            <MenuItem value="value1">Suspicious, spam or fake</MenuItem>
-                            <MenuItem value="value2">Harassment or incitement to hatred</MenuItem>
-                            <MenuItem value="value3">Violence or physical assault</MenuItem>
-                            <MenuItem value="value4">Adult content</MenuItem>
-                            <MenuItem value="value5">Defamation or infringement of intellectual property</MenuItem>
-                            <MenuItem value="value6">None of the reasons for reporting apply</MenuItem>
+                            {reasons?.map((item) => (
+                                <MenuItem key={`Reason-${item.id}`} value={item.id}>
+                                    {item.name}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     <Box sx={{ display: 'grid', gap: '8px' }}>
                         <Typography>What was the issue with this review?</Typography>
                         <TextField
                             rows={5}
+                            required
                             fullWidth
                             multiline
                             id="User-reason"
+                            name="description"
                             variant="outlined"
-                            value={reasonInput}
+                            onChange={handleInput}
+                            value={form.description}
                             label="Describe the issue"
-                            onChange={(e) => setReasonInput(e.target.value)}
                         />
                     </Box>
                     <Box sx={{ display: 'grid', gap: '8px' }}>
                         <Typography>Your email address *</Typography>
                         <TextField
+                            required
                             fullWidth
                             type="email"
+                            name="email"
                             label="Email"
-                            value={email}
                             id="User-email"
                             variant="outlined"
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={form.email}
+                            onChange={handleInput}
                         />
                     </Box>
                     {loading && (
@@ -106,6 +169,15 @@ export const ReportModal = ({ open, handleClose }) => {
                         </Button>
                     )}
                 </form>
+                <UtilityModal
+                    open={success || error}
+                    handleClose={handleReportModal}
+                    message={
+                        success
+                            ? 'The report was sent correctly, thank you for your time'
+                            : 'An error has occurred, please try again'
+                    }
+                />
             </Box>
         </Modal>
     );
@@ -114,6 +186,8 @@ export const ReportModal = ({ open, handleClose }) => {
 ReportModal.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
+    company_id: PropTypes.string.isRequired,
+    reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ReportModal;

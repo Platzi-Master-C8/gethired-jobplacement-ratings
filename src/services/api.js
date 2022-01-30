@@ -46,6 +46,11 @@ const api = {
       return new Promise(resolve => resolve(...overallReviews));
     }
   },
+  companyReports: {
+    sendReport(companyId, data = {}) {
+      return sendData(`companyReport/${companyId}`, data);
+    },
+  }
 };
 
 export default api;
