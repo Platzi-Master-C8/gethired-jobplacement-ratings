@@ -1,2 +1,3 @@
 import RadarChart from "./RadarChart";
-export { RadarChart }
+import LineChart from "./LineChart";
+export { RadarChart, LineChart }

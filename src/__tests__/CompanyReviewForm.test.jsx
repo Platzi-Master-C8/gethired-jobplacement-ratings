@@ -26,7 +26,7 @@ describe('Component <CompanyReviewForm/>', () => {
                         currency_type: 'USD',
                         salary_frequency: 0,
                         recommended_a_friend: 0,
-                        remote_work_allowed: 0,
+                        allows_remote_work: 0,
                         is_legally_company: 0,
                         utility_counter: 0,
                         non_utility_counter: 0,

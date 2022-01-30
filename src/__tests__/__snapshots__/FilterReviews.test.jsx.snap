@@ -181,13 +181,9 @@ exports[`Component <FilterReviews/> renders FilterReviews 1`] = `
     class="MuiTypography-root MuiTypography-text css-37jdci-MuiTypography-root"
   >
     Showing 
-    <strong>
-      NNN
-    </strong>
+    <strong />
      of 
-    <strong>
-      NNN
-    </strong>
+    <strong />
      reviews sorted by 
     <strong>
       Date

@@ -4,7 +4,7 @@ import { Button, Grid } from '@mui/material';
 import { SendModal } from '../SendModal';
 import CompanyReviewModal from './CompanyReviewModal';
 import api from '../../services/api';
-import { baseFive, calculateAverage, labelsToValueRaitings } from '../../utils';
+// import { baseFive, calculateAverage, labelsToValueRaitings } from '../../utils';
 
 const CompanyReviewForm = () => {
     const [open, setOpen] = useState(false);
@@ -28,13 +28,10 @@ const CompanyReviewForm = () => {
         is_still_working_here: 0,
         salary: '',
         currency_type: '',
-        salary_frequency: 0,
+        salary_frequency: '',
         recommended_a_friend: 0,
-        remote_work_allowed: 0,
+        allows_remote_work: 0,
         is_legally_company: 0,
-        utility_counter: 0,
-        non_utility_counter: 0,
-        created_at: moment().format(),
     };
 
     const [review, setReview] = useState(initialReviewState);
@@ -56,31 +53,30 @@ const CompanyReviewForm = () => {
         handleInput(e);
     };
 
-    const averageReview = (oReview) => {
-        const raitings = [
-            labelsToValueRaitings(review.career_development_rating),
-            labelsToValueRaitings(review.diversity_equal_opportunity_rating),
-            labelsToValueRaitings(review.working_environment_rating),
-            labelsToValueRaitings(review.salary_rating),
-        ];
+    // const averageReview = (oReview) => {
+    //     const raitings = [
+    //         labelsToValueRaitings(review.career_development_rating),
+    //         labelsToValueRaitings(review.diversity_equal_opportunity_rating),
+    //         labelsToValueRaitings(review.working_environment_rating),
+    //         labelsToValueRaitings(review.salary_rating),
+    //     ];
 
-        const avg = calculateAverage(raitings);
-        const weighted_average_per_evaluation = baseFive(avg, 2);
+    //     const avg = calculateAverage(raitings);
+    //     const weighted_average_per_evaluation = baseFive(avg, 2);
 
-        return {
-            weighted_average_per_evaluation,
-            ...oReview,
-        };
-    };
+    //     return {
+    //         weighted_average_per_evaluation,
+    //         ...oReview,
+    //     };
+    // };
 
     const handleSubmit = () => {
         setSended(true);
         setIsLoading(true);
-        const body = averageReview(review);
+        // const body = averageReview(review);
         api.companyEvaluations
-            .sendReview(0, body)
+            .sendReview(1, review)
             .then((res) => {
-                console.log('res: ', res);
                 if (res && res.ok) {
                     setIsLoading(false);
                     setError(false);
@@ -90,8 +86,7 @@ const CompanyReviewForm = () => {
                 }
                 setReview(initialReviewState);
             })
-            .catch((err) => {
-                console.log('error: ', err);
+            .catch(() => {
                 setIsLoading(false);
                 setError(true);
             });

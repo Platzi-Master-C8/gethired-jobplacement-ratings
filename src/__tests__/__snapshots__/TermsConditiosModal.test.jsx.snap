@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component <TermsConditiosModal/> renders TermsConditiosModal 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-12 css-oav0mg-MuiGrid-root"
+    >
+      <a
+        class="MuiTypography-root MuiTypography-caption MuiLink-root MuiLink-underlineNone css-v181wt-MuiTypography-root-MuiLink-root"
+      >
+        Terminos y Condiciones
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

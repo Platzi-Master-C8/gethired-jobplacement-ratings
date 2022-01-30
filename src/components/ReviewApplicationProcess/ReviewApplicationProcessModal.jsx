@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     Button,
     FormControl,
@@ -14,7 +15,8 @@ import {
     Alert,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import PropTypes from 'prop-types';
+
+import { TermsMessage } from '../TermsMessage';
 
 const boxStyles = {
     position: 'absolute',
@@ -198,6 +200,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                 </FormControl>
                             </Grid>
                         </Grid>
+                        <TermsMessage />
                         {errorMessage && (
                             <Alert style={{ marginTop: '15px' }} severity="error">
                                 {errorMessage}

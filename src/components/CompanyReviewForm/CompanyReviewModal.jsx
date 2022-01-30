@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import { DateInput } from '../../controls/DateInput';
 
+import { TermsMessage } from '../TermsMessage';
+
 const boxStyles = {
     position: 'absolute',
     top: '50%',
@@ -298,10 +300,10 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                             </Typography>
                             <FormControl component="fieldset" required>
                                 <RadioGroup
-                                    id="remote_work_allowed"
-                                    name="remote_work_allowed"
+                                    id="allows_remote_work"
+                                    name="allows_remote_work"
                                     row
-                                    value={review.remote_work_allowed}
+                                    value={review.allows_remote_work}
                                     onChange={handleInput}
                                 >
                                     <FormControlLabel value={1} control={<Radio />} label="Yes" />
@@ -328,6 +330,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                         </Grid>
                     </Grid>
                 </Grid>
+                <TermsMessage />
                 {modalError && <Alert severity="error">{modalError}</Alert>}
                 <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
                     <Grid item md={2} onClick={handleClose}>

@@ -88,7 +88,7 @@ const ReviewTheApplicantForm = () => {
 
     return (
         <div>
-            <Grid item md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
+            <Grid item md={12}>
                 <Button onClick={handleOpen}>Review the applicant </Button>
             </Grid>
             {!sended ? (

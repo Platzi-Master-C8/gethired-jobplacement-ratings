@@ -56,7 +56,7 @@ const SortBox = styled(RowBox)`
 
 const sortOptions = ['utility_counter', 'weighted_average_per_evaluation', 'created_at'];
 
-const FilterReviews = ({ handleSearch, sortCriteria, toggleSortCriteria }) => {
+const FilterReviews = ({ reviewsQuantity, reviewsCount, handleSearch, sortCriteria, toggleSortCriteria }) => {
     const [filterValue, setFilterValue] = useState('job_title');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -136,7 +136,7 @@ const FilterReviews = ({ handleSearch, sortCriteria, toggleSortCriteria }) => {
                 </RowBox>
             </FilterReviewsWrapper>
             <Typography variant="text">
-                Showing <strong>NNN</strong> of <strong>NNN</strong> reviews sorted by{' '}
+                Showing <strong>{reviewsQuantity}</strong> of <strong>{reviewsCount}</strong> reviews sorted by{' '}
                 <strong>{sortName(sortCriteria.sortKey)}</strong>
             </Typography>
         </Fragment>
@@ -144,6 +144,8 @@ const FilterReviews = ({ handleSearch, sortCriteria, toggleSortCriteria }) => {
 };
 
 FilterReviews.propTypes = {
+    reviewsQuantity: PropTypes.number.isRequired,
+    reviewsCount: PropTypes.number.isRequired,
     handleSearch: PropTypes.func.isRequired,
     sortCriteria: PropTypes.shape({
         sortKey: PropTypes.string.isRequired,
