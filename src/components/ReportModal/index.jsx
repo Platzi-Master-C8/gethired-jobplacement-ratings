@@ -14,7 +14,8 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LoadingButton from '@mui/lab/LoadingButton';
-import api from '../../services/api';
+import { UtilityModal } from '../UtilityModal';
+import config from '../../config';
 
 const ReportModalStyle = {
     p: 4,
@@ -42,35 +43,54 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
         description: '',
     });
     const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [formError, setFormError] = useState(false);
 
     const handleInput = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
 
-    // TODO: Connect to backend
+    const handleReportModal = () => {
+        if (error) {
+            setError(false);
+            return;
+        }
+        setError(false);
+        setSuccess(false);
+        handleClose();
+    };
+
+    const validateForm = () => {
+        if (!form.reason || !form.email || !form.description) {
+            setFormError(true);
+            setLoading(false);
+            return false;
+        }
+        setFormError(false);
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        api.companyReports
-            .sendReport(company_id, form)
-            .then((res) => {
-                if (res && res.ok) {
-                    setError(false);
-                    handleClose(null, true);
-                } else {
-                    setError(true);
-                }
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-                setError(true);
-            });
-        setTimeout(() => {
-            setError(false);
-        }, 4000);
+        if (!validateForm()) return;
+        const url = `${config.api}company-evaluation/${company_id}/complaints`;
+        const body = {
+            email: form.email,
+            problem_description: form.description,
+            reporting_reason_type_id: form.reason,
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: config.headers,
+            body: JSON.stringify(body),
+        })
+            .then((res) => res.json())
+            .then((data) => (data.id ? setSuccess(true) : setError(true)))
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -85,16 +105,22 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
                     <Typography variant="h6" component="h6">
                         Help us understand what is happening
                     </Typography>
-                    <Fade in={error} style={{ height: error ? 'initial' : 0 }}>
+                    <Fade in={formError} style={{ height: formError ? 'initial' : 0 }}>
                         <Typography variant="body1" component="p" color="error">
-                            An error occurred, please try again
+                            Complete the form to continue
                         </Typography>
                     </Fade>
                 </Box>
                 <form onSubmit={handleSubmit} style={FormModalStyle}>
                     <FormControl fullWidth>
                         <InputLabel>Select a reason</InputLabel>
-                        <Select name="reason" value={form.reason} onChange={handleInput} label="Select a reason">
+                        <Select
+                            name="reason"
+                            required
+                            value={form.reason}
+                            onChange={handleInput}
+                            label="Select a reason"
+                        >
                             <MenuItem value="">None</MenuItem>
                             {reasons?.map((item) => (
                                 <MenuItem key={`Reason-${item.id}`} value={item.id}>
@@ -107,6 +133,7 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
                         <Typography>What was the issue with this review?</Typography>
                         <TextField
                             rows={5}
+                            required
                             fullWidth
                             multiline
                             id="User-reason"
@@ -120,6 +147,7 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
                     <Box sx={{ display: 'grid', gap: '8px' }}>
                         <Typography>Your email address *</Typography>
                         <TextField
+                            required
                             fullWidth
                             type="email"
                             name="email"
@@ -141,6 +169,15 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
                         </Button>
                     )}
                 </form>
+                <UtilityModal
+                    open={success || error}
+                    handleClose={handleReportModal}
+                    message={
+                        success
+                            ? 'The report was sent correctly, thank you for your time'
+                            : 'An error has occurred, please try again'
+                    }
+                />
             </Box>
         </Modal>
     );
