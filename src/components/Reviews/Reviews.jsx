@@ -5,8 +5,10 @@ import { FilterReviews } from '../FilterReviews';
 import { SideInfo } from '../SideInfo';
 
 import api from '../../services/api';
+import config from '../../config';
 
 const Reviews = () => {
+    const [reasons, setReasons] = useState([]);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [page, setPage] = useState(1);
@@ -14,6 +16,12 @@ const Reviews = () => {
     const [list, setList] = useState([]);
     const [data, setData] = useState([]);
     const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'asc' });
+
+    useEffect(() => {
+        fetch(`${config.api}reporting-reason-types`)
+            .then((res) => res.json())
+            .then((obj) => setReasons(obj));
+    }, []);
 
     useEffect(() => {
         api.companyEvaluations
@@ -77,7 +85,7 @@ const Reviews = () => {
                 }}
             >
                 {list.map((review) => (
-                    <ReviewCard key={review.id} review={review} />
+                    <ReviewCard key={review.id} review={review} reasons={reasons} />
                 ))}
             </Box>
             <SideInfo />
