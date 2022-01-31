@@ -21,20 +21,20 @@ import { DateInput } from '../../controls/DateInput';
 
 import { TermsMessage } from '../TermsMessage';
 
-import { useMediaQuery } from '../../hooks';
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
 
 const boxStyles = (isMobile) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: isMobile ? '75%' : '65%',
+    width: isMobile.medium ? '75%' : '65%',
     height: '75%',
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
     overflow: 'auto',
-    textAlign: isMobile ? 'center' : 'unset',
+    textAlign: isMobile.medium ? 'center' : 'unset',
 });
 
 const StyledGrid = styled(Grid)`
@@ -58,7 +58,7 @@ const subtitleStyles = {
 };
 
 const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, review, handleInput, handleCheck }) => {
-    const isMobile = useMediaQuery('(max-width: 900px)');
+    const isMobile = useMediaQueryContext();
 
     return (
         <Modal

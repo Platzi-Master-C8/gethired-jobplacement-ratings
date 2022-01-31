@@ -15,7 +15,7 @@ import {
     Alert,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useMediaQuery } from '../../hooks';
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
 
 import { TermsMessage } from '../TermsMessage';
 
@@ -32,13 +32,13 @@ const boxStyles = (isMobile) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: isMobile ? '70%' : '50%',
-    height: isMobile ? '60%' : '80%',
+    width: isMobile.medium ? '70%' : '50%',
+    height: isMobile.medium ? '60%' : '80%',
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
     overflow: 'auto',
-    textAlign: 'center',
+    textAlign: isMobile.medium ? 'center' : 'unset',
 });
 
 const ReviewTheApplicantModal = ({
@@ -50,7 +50,7 @@ const ReviewTheApplicantModal = ({
     setReview,
     errorMessage,
 }) => {
-    const isMobile = useMediaQuery('(max-width: 900px)');
+    const isMobile = useMediaQueryContext();
 
     return (
         <div>
@@ -83,7 +83,7 @@ const ReviewTheApplicantModal = ({
                             <Grid item md={6} sm={12} xs={12}>
                                 <Typography
                                     variant="subtitle1"
-                                    margin={isMobile ? '20px 0 20px 0' : '0 0 30px 0'}
+                                    margin={isMobile.medium ? '20px 0 20px 0' : '0 0 30px 0'}
                                     sx={{ fontSize: 18 }}
                                 >
                                     Was he/she hired?
@@ -105,7 +105,7 @@ const ReviewTheApplicantModal = ({
                         </Grid>
                         <Grid marginTop={3}>
                             <Typography variant="h2">Skill Assessment</Typography>
-                            <Grid container rowSpacing={isMobile ? 2 : 1} alignItems="center" marginTop="5px">
+                            <Grid container rowSpacing={isMobile.medium ? 2 : 1} alignItems="center" marginTop="5px">
                                 <Grid item md={5} sm={12} xs={12}>
                                     <Typography variant="subtitle2">Communication</Typography>
                                 </Grid>

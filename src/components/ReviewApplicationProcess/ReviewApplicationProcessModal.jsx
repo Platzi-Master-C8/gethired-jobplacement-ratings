@@ -19,21 +19,21 @@ import { styled } from '@mui/material/styles';
 
 import { TermsMessage } from '../TermsMessage';
 
-import { useMediaQuery } from '../../hooks';
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
 
 const boxStyles = (isMobile) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: isMobile ? '70%' : '45%',
-    height: isMobile ? '60%' : '75%',
+    width: isMobile.medium ? '70%' : '45%',
+    height: isMobile.medium ? '60%' : '75%',
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
     overflow: 'auto',
-    textAlign: isMobile ? 'center' : 'unset',
-    justifyContent: isMobile ? 'center' : 'unset',
+    textAlign: isMobile.medium ? 'center' : 'unset',
+    justifyContent: isMobile.medium ? 'center' : 'unset',
 });
 
 const StyledGrid = styled(Grid)`
@@ -47,7 +47,7 @@ const StyledGrid = styled(Grid)`
 `;
 
 const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review, handleValidate, errorMessage }) => {
-    const isMobile = useMediaQuery('(max-width: 900px)');
+    const isMobile = useMediaQueryContext();
 
     return (
         <div>
@@ -62,7 +62,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                         <Typography
                             variant="h1"
                             align="center"
-                            sx={{ fontSize: isMobile ? 20 : 28, lineHeight: isMobile && '30px' }}
+                            sx={{ fontSize: isMobile.medium ? 20 : 28, lineHeight: isMobile.medium && '30px' }}
                         >
                             Review your Application Process
                         </Typography>
@@ -177,10 +177,10 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     </FormControl>
                                 </StyledGrid>
                             </Grid>
-                            <Grid item lg={6} md={12} sx={{ paddingLeft: !isMobile && '30px' }}>
+                            <Grid item lg={6} md={12} sx={{ paddingLeft: !isMobile.medium && '30px' }}>
                                 <Typography
                                     variant="subtitle1"
-                                    sx={{ fontSize: 16, margin: isMobile ? '0 0 10px  0' : '10px 0' }}
+                                    sx={{ fontSize: 16, margin: isMobile.medium ? '0 0 10px  0' : '10px 0' }}
                                 >
                                     What part of the process would you like to improve?
                                 </Typography>
@@ -208,7 +208,7 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                         onChange={handleInput}
                                     />
                                 </FormControl>
-                                <FormControl sx={{ width: isMobile ? '50%' : '20%' }} required>
+                                <FormControl sx={{ width: isMobile.medium ? '50%' : '20%' }} required>
                                     <Select
                                         labelId="time_measurement"
                                         id="time_measurement"
