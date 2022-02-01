@@ -36,12 +36,14 @@ const FormModalStyle = {
     display: 'grid',
 };
 
-export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
-    const [form, setForm] = useState({
-        email: '',
-        reason: '',
-        description: '',
-    });
+const initialState = {
+    email: '',
+    reason: '',
+    description: '',
+};
+
+export const ReportModal = ({ open, handleClose, review_id, reasons }) => {
+    const [form, setForm] = useState(initialState);
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -76,7 +78,7 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
         e.preventDefault();
         setLoading(true);
         if (!validateForm()) return;
-        const url = `${config.api}company-evaluation/${company_id}/complaints`;
+        const url = `${config.api}company-evaluation/${review_id}/complaints`;
         const body = {
             email: form.email,
             problem_description: form.description,
@@ -88,7 +90,11 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
             body: JSON.stringify(body),
         })
             .then((res) => res.json())
-            .then((data) => (data.id ? setSuccess(true) : setError(true)))
+            .then((data) => {
+                if (data.id) setSuccess(true);
+                else setError(true);
+                setForm(initialState);
+            })
             .catch(() => setError(true))
             .finally(() => setLoading(false));
     };
@@ -186,7 +192,7 @@ export const ReportModal = ({ open, handleClose, company_id, reasons }) => {
 ReportModal.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
-    company_id: PropTypes.string.isRequired,
+    review_id: PropTypes.string.isRequired,
     reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
