@@ -23,6 +23,16 @@ const Reviews = () => {
             .then((obj) => setReasons(obj));
     }, []);
 
+    const toggleSortCriteria = (sortKey) => {
+        const orientation =
+            sortCriteria.sortKey === sortKey ? (sortCriteria.orientation === 'asc' ? 'desc' : 'asc') : 'asc';
+        const sortedList = list.sort((a, b) =>
+            a[sortKey] > b[sortKey] ? (orientation === 'asc' ? 1 : -1) : orientation === 'asc' ? -1 : 1,
+        );
+        setList(sortedList);
+        setSortCriteria({ sortKey, orientation });
+    };
+
     useEffect(() => {
         api.companyEvaluations
             .listReviews(1, page)
@@ -37,6 +47,8 @@ const Reviews = () => {
                 setIsLoaded(true);
                 setError(e);
             });
+        toggleSortCriteria(sortCriteria.sortKey);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
 
     const handlePage = (e, v) => {
@@ -47,16 +59,6 @@ const Reviews = () => {
 
     const handleSearch = (query, attribute) => {
         setList(data.filter((x) => x[attribute].toLowerCase().includes(query.toLowerCase().trim())));
-    };
-
-    const toggleSortCriteria = (sortKey) => {
-        const orientation =
-            sortCriteria.sortKey === sortKey ? (sortCriteria.orientation === 'asc' ? 'desc' : 'asc') : 'asc';
-        const sortedList = list.sort((a, b) =>
-            a[sortKey] > b[sortKey] ? (orientation === 'asc' ? 1 : -1) : orientation === 'asc' ? -1 : 1,
-        );
-        setList(sortedList);
-        setSortCriteria({ sortKey, orientation });
     };
 
     if (error) {

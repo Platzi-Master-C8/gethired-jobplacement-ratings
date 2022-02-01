@@ -45,7 +45,7 @@ const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
     </Box>
 );
 
-const ActionsReview = ({ company_id, non_utility_counter, utility_counter, reasons }) => {
+const ActionsReview = ({ review_id, non_utility_counter, utility_counter, reasons }) => {
     const [utilityError, setUtilityError] = useState(false);
     const [utilitySuccess, setUtilitySuccess] = useState(false);
     const [utility, setUtility] = useState('');
@@ -61,7 +61,7 @@ const ActionsReview = ({ company_id, non_utility_counter, utility_counter, reaso
 
     const handleLikes = (e, newValue) => {
         const route = `increase-${newValue === 'like' ? 'utility' : 'non-utility'}-rating`;
-        const url = `${config.api}company-evaluations/${company_id}/${route}`;
+        const url = `${config.api}company-evaluations/${review_id}/${route}`;
         fetch(url, {
             method: 'PATCH',
             headers: config.headers,
@@ -106,7 +106,7 @@ const ActionsReview = ({ company_id, non_utility_counter, utility_counter, reaso
                     <Typography variant="button2">Report</Typography>
                 </Button>
             </CardActions>
-            <ReportModal open={openReport} reasons={reasons} company_id={company_id} handleClose={handleReportModal} />
+            <ReportModal open={openReport} reasons={reasons} review_id={review_id} handleClose={handleReportModal} />
             <UtilityModal
                 handleClose={handleUtilityModal}
                 open={utilityError || utilitySuccess}
@@ -125,7 +125,7 @@ const ReviewCard = ({ review, reasons }) => {
     const {
         job_title,
         created_at,
-        company_id,
+        id,
         content_type,
         utility_counter,
         non_utility_counter,
@@ -150,7 +150,7 @@ const ReviewCard = ({ review, reasons }) => {
             </CardContent>
             <ActionsReview
                 reasons={reasons}
-                company_id={company_id}
+                review_id={id}
                 utility_counter={utility_counter}
                 non_utility_counter={non_utility_counter}
             />
@@ -169,7 +169,7 @@ SubheaderReview.propTypes = {
 };
 
 ActionsReview.propTypes = {
-    company_id: PropTypes.string.isRequired,
+    review_id: PropTypes.string.isRequired,
     utility_counter: PropTypes.number.isRequired,
     non_utility_counter: PropTypes.number.isRequired,
     reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -178,6 +178,7 @@ ActionsReview.propTypes = {
 ReviewCard.propTypes = {
     reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
     review: PropTypes.shape({
+        id: PropTypes.string.isRequired,
         company_id: PropTypes.string.isRequired,
         content_type: PropTypes.string.isRequired,
         created_at: PropTypes.string.isRequired,
