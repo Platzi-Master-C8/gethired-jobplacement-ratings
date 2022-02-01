@@ -15,6 +15,7 @@ import {
     Alert,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
 
 import { TermsMessage } from '../TermsMessage';
 
@@ -26,18 +27,19 @@ const StyledRating = styled(Rating)`
     }
 `;
 
-const boxStyles = {
+const boxStyles = (isMobile) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '45%',
-    height: '80%',
+    width: isMobile.medium ? '70%' : '50%',
+    height: isMobile.medium ? '60%' : '80%',
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
     overflow: 'auto',
-};
+    textAlign: isMobile.medium ? 'center' : 'unset',
+});
 
 const ReviewTheApplicantModal = ({
     open,
@@ -48,6 +50,8 @@ const ReviewTheApplicantModal = ({
     setReview,
     errorMessage,
 }) => {
+    const isMobile = useMediaQueryContext();
+
     return (
         <div>
             <Modal
@@ -57,12 +61,12 @@ const ReviewTheApplicantModal = ({
                 aria-describedby="modal-modal-description"
             >
                 <form onSubmit={handleValidate}>
-                    <Box sx={boxStyles}>
+                    <Box sx={boxStyles(isMobile)}>
                         <Typography variant="h1" align="center" sx={{ fontSize: 28 }}>
                             Review the Applicant
                         </Typography>
                         <Grid container marginTop={5}>
-                            <Grid item md={6}>
+                            <Grid item md={6} sm={12} xs={12}>
                                 <Typography variant="subtitle1" marginBottom="20px" sx={{ fontSize: 18 }}>
                                     Applicant name
                                 </Typography>
@@ -76,8 +80,12 @@ const ReviewTheApplicantModal = ({
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item md={6}>
-                                <Typography variant="subtitle1" marginBottom="30px" sx={{ fontSize: 18 }}>
+                            <Grid item md={6} sm={12} xs={12}>
+                                <Typography
+                                    variant="subtitle1"
+                                    margin={isMobile.medium ? '20px 0 20px 0' : '0 0 30px 0'}
+                                    sx={{ fontSize: 18 }}
+                                >
                                     Was he/she hired?
                                 </Typography>
                                 <FormControl component="fieldset" required>
@@ -97,11 +105,11 @@ const ReviewTheApplicantModal = ({
                         </Grid>
                         <Grid marginTop={3}>
                             <Typography variant="h2">Skill Assessment</Typography>
-                            <Grid container rowSpacing={1} alignItems="center" marginTop="5px">
-                                <Grid item md={5} sm={12}>
+                            <Grid container rowSpacing={isMobile.medium ? 2 : 1} alignItems="center" marginTop="5px">
+                                <Grid item md={5} sm={12} xs={12}>
                                     <Typography variant="subtitle2">Communication</Typography>
                                 </Grid>
-                                <Grid item md={6} sm={12}>
+                                <Grid item md={6} sm={12} xs={12}>
                                     <StyledRating
                                         value={review.communication_rating}
                                         data-testid="communication_rating"
@@ -110,10 +118,10 @@ const ReviewTheApplicantModal = ({
                                         }}
                                     />
                                 </Grid>
-                                <Grid item md={5} sm={12}>
+                                <Grid item md={5} sm={12} xs={12}>
                                     <Typography variant="subtitle2">Confidence</Typography>
                                 </Grid>
-                                <Grid item md={6} sm={12}>
+                                <Grid item md={6} sm={12} xs={12}>
                                     <StyledRating
                                         value={review.confidence_rating}
                                         data-testid="confidence_rating"
@@ -122,10 +130,10 @@ const ReviewTheApplicantModal = ({
                                         }}
                                     />
                                 </Grid>
-                                <Grid item md={5} sm={12}>
+                                <Grid item md={5} sm={12} xs={12}>
                                     <Typography variant="subtitle2">Negotiation</Typography>
                                 </Grid>
-                                <Grid item md={6}>
+                                <Grid item md={6} sm={12} xs={12}>
                                     <StyledRating
                                         value={review.negotiation_rating}
                                         data-testid="negotiation_rating"
@@ -134,10 +142,10 @@ const ReviewTheApplicantModal = ({
                                         }}
                                     />
                                 </Grid>
-                                <Grid item md={5} sm={12}>
+                                <Grid item md={5} sm={12} xs={12}>
                                     <Typography variant="subtitle2">Motivation</Typography>
                                 </Grid>
-                                <Grid item md={6} sm={12}>
+                                <Grid item md={6} sm={12} xs={12}>
                                     <StyledRating
                                         value={review.motivation_rating}
                                         data-testid="motivation_rating"
@@ -146,10 +154,10 @@ const ReviewTheApplicantModal = ({
                                         }}
                                     />
                                 </Grid>
-                                <Grid item md={5} sm={12}>
+                                <Grid item md={5} sm={12} xs={12}>
                                     <Typography variant="subtitle2">Self-knowledge</Typography>
                                 </Grid>
-                                <Grid item md={6} sm={12}>
+                                <Grid item md={6} sm={12} xs={12}>
                                     <StyledRating
                                         value={review.self_knowledge_rating}
                                         data-testid="self_knowledge_rating"
@@ -158,10 +166,10 @@ const ReviewTheApplicantModal = ({
                                         }}
                                     />
                                 </Grid>
-                                <Grid item md={5} sm={12}>
+                                <Grid item md={5} sm={12} xs={12}>
                                     <Typography variant="subtitle2">Hard Skills</Typography>
                                 </Grid>
-                                <Grid item md={6} sm={12}>
+                                <Grid item md={6} sm={12} xs={12}>
                                     <StyledRating
                                         value={review.hard_skill_rating}
                                         data-testid="hard_skill_rating"
@@ -172,13 +180,16 @@ const ReviewTheApplicantModal = ({
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <TermsMessage />
+                        <Grid item sx={{ width: '90%', margin: '20px auto' }}>
+                            <TermsMessage />
+                        </Grid>
+
                         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                         <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 4 }}>
-                            <Grid item md={2} onClick={handleClose}>
+                            <Grid item lg={2} md={3} sm={3} xs={4} onClick={handleClose}>
                                 <Button variant="outlined">Cancel</Button>
                             </Grid>
-                            <Grid item md={2}>
+                            <Grid item lg={2} md={3} sm={3} xs={4}>
                                 <Button variant="contained" type="submit">
                                     Submit
                                 </Button>

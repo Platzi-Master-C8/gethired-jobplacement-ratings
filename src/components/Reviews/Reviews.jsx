@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Box, Pagination, Stack } from '@mui/material';
 import { ReviewCard } from '../ReviewCard';
 import { FilterReviews } from '../FilterReviews';
@@ -8,7 +7,7 @@ import { SideInfo } from '../SideInfo';
 import api from '../../services/api';
 import config from '../../config';
 
-const Reviews = ({ isMobile }) => {
+const Reviews = () => {
     const [reasons, setReasons] = useState([]);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -89,7 +88,7 @@ const Reviews = ({ isMobile }) => {
                     <ReviewCard key={review.id} review={review} reasons={reasons} />
                 ))}
             </Box>
-            <SideInfo isMobile={isMobile} />
+            <SideInfo />
             <Box
                 sx={{
                     mb: 3,
@@ -109,10 +108,6 @@ const Reviews = ({ isMobile }) => {
             </Box>
         </Fragment>
     );
-};
-
-Reviews.propTypes = {
-    isMobile: PropTypes.bool.isRequired,
 };
 
 export default Reviews;

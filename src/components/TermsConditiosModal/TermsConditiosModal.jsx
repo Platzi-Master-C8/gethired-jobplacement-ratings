@@ -1,22 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
-import { Box, Grid, Link, Modal, Typography } from '@mui/material';
+import { Box, Grid, Link, Modal, Typography, Button } from '@mui/material';
 
-const boxStyles = {
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
+
+const boxStyles = (isMobile) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '65%',
+    width: isMobile.medium ? '75%' : '65%',
     height: '75%',
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
     overflow: 'auto',
-};
+});
 
 const TermsConditiosModal = () => {
     const [open, setOpen] = useState(false);
+
+    const isMobile = useMediaQueryContext();
 
     return (
         <div>
@@ -36,7 +40,7 @@ const TermsConditiosModal = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={boxStyles}>
+                <Box sx={boxStyles(isMobile)}>
                     <Typography variant="h2" sx={{ textAlign: 'center', mb: 2 }}>
                         Terminos y Condiciones
                     </Typography>
@@ -70,6 +74,11 @@ const TermsConditiosModal = () => {
                         molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
                         voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
                     </Typography>
+                    <Grid container sx={{ alignItems: 'center', justifyContent: 'center', marginTop: 4 }}>
+                        <Button variant="contained" onClick={() => setOpen(false)}>
+                            Return
+                        </Button>
+                    </Grid>
                 </Box>
             </Modal>
         </div>

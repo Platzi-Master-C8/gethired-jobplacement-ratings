@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
@@ -8,6 +7,8 @@ import { Grid, Box, Typography, Button, SwipeableDrawer } from '@mui/material';
 
 import { RatingItem } from '../RatingItem';
 
+import { useMediaQueryContext } from '../../context/MediaQueryContext';
+
 import api from '../../services/api';
 
 const globalStyles = (isMobile) => ({
@@ -15,7 +16,7 @@ const globalStyles = (isMobile) => ({
         height: '30rem',
         top: '20%',
         borderRadius: '20px',
-        width: isMobile ? '90%' : '25rem',
+        width: isMobile.small ? '90%' : '25rem',
     },
 });
 
@@ -33,11 +34,13 @@ const GridFlex = styled(Grid)(() => ({
     alignItems: 'center',
 }));
 
-const SideInfo = ({ isMobile }) => {
+const SideInfo = () => {
     const [open, setOpen] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [review, setReview] = useState({});
     const [error, setError] = useState(null);
+
+    const isMobile = useMediaQueryContext();
 
     useEffect(() => {
         api.companyEvaluations
@@ -114,10 +117,6 @@ const SideInfo = ({ isMobile }) => {
             </SwipeableDrawer>
         </Box>
     );
-};
-
-SideInfo.propTypes = {
-    isMobile: PropTypes.bool.isRequired,
 };
 
 export default SideInfo;

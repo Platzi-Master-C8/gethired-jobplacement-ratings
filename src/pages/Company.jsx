@@ -10,11 +10,7 @@ import { Reviews } from '../components/Reviews';
 import { Overview } from '../components/Overview';
 import { Jobs } from '../components/Jobs';
 
-import { useMediaQuery } from '../hooks';
-
 const Company = () => {
-    const isMobile = useMediaQuery('(max-width: 480px)');
-
     return (
         <Container>
             <Header isLogged />
@@ -22,7 +18,7 @@ const Company = () => {
             <CompanyTabs
                 tabsOptions={[
                     { tabKey: 'Overview', tabContent: <Overview /> },
-                    { tabKey: 'Reviews', tabContent: <Reviews isMobile={isMobile} /> },
+                    { tabKey: 'Reviews', tabContent: <Reviews /> },
                     { tabKey: 'Jobs', tabContent: <Jobs /> },
                 ]}
             />
