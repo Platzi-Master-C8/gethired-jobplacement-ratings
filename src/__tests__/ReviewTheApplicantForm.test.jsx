@@ -1,6 +1,14 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { ReviewTheApplicantForm } from '../components/ReviewTheApplicantForm';
+import MediaQueyProvider from '../context/MediaQueryContext';
+
+const renderComponent = () =>
+    render(
+        <MediaQueyProvider>
+            <ReviewTheApplicantForm />
+        </MediaQueyProvider>,
+    );
 
 describe('Component <ReviewTheApplicantForm/>', () => {
     beforeEach(() => {
@@ -22,19 +30,19 @@ describe('Component <ReviewTheApplicantForm/>', () => {
     });
 
     test('renders ReviewTheApplicantForm', () => {
-        const { asFragment } = render(<ReviewTheApplicantForm />);
+        const { asFragment } = renderComponent();
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('the modal opens correctly', () => {
-        const subject = render(<ReviewTheApplicantForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText('Review the applicant'));
         expect(subject.getByText('Applicant name')).toBeInTheDocument();
     });
 
     test('it does close the Modal', () => {
-        const subject = render(<ReviewTheApplicantForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText('Review the applicant'));
         expect(subject.getByText('Applicant name')).toBeInTheDocument();
@@ -44,7 +52,7 @@ describe('Component <ReviewTheApplicantForm/>', () => {
     });
 
     test('it does not send when try to send without fill anything', () => {
-        const subject = render(<ReviewTheApplicantForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText('Review the applicant'));
         expect(subject.getByText('Applicant name')).toBeInTheDocument();
@@ -54,7 +62,7 @@ describe('Component <ReviewTheApplicantForm/>', () => {
     });
 
     test('it allows to fill the inputs', () => {
-        const subject = render(<ReviewTheApplicantForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText('Review the applicant'));
         expect(subject.getByText('Applicant name')).toBeInTheDocument();
@@ -65,7 +73,7 @@ describe('Component <ReviewTheApplicantForm/>', () => {
     });
 
     test('it shows and error mensagge when the raitings are not selected', () => {
-        const subject = render(<ReviewTheApplicantForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText('Review the applicant'));
         expect(subject.getByText('Applicant name')).toBeInTheDocument();

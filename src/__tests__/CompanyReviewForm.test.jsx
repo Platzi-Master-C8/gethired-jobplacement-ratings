@@ -2,6 +2,14 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
 import { CompanyReviewForm } from 'Components/CompanyReviewForm';
+import MediaQueyProvider from '../context/MediaQueryContext';
+
+const renderComponent = () =>
+    render(
+        <MediaQueyProvider>
+            <CompanyReviewForm />
+        </MediaQueyProvider>,
+    );
 
 describe('Component <CompanyReviewForm/>', () => {
     beforeEach(() => {
@@ -37,12 +45,12 @@ describe('Component <CompanyReviewForm/>', () => {
     });
 
     test('renders CompanyReviewForm', () => {
-        const { asFragment } = render(<CompanyReviewForm />);
+        const { asFragment } = renderComponent();
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('it opens the modal', () => {
-        const subject = render(<CompanyReviewForm />);
+        const subject = renderComponent();
 
         expect(subject.container.querySelectorAll('h1').length).toBe(0);
 
@@ -52,7 +60,7 @@ describe('Component <CompanyReviewForm/>', () => {
     });
 
     test('it does close the Modal', () => {
-        const subject = render(<CompanyReviewForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText(/Write a Review/i));
         expect(subject.getByText(/Review the Company/i)).toBeInTheDocument();
@@ -62,7 +70,7 @@ describe('Component <CompanyReviewForm/>', () => {
     });
 
     test('it does not send when try to send without fill anything', () => {
-        const subject = render(<CompanyReviewForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText(/Write a Review/i));
         expect(subject.getByText(/Review the Company/i)).toBeInTheDocument();
@@ -72,7 +80,7 @@ describe('Component <CompanyReviewForm/>', () => {
     });
 
     test('it allows to fill the inputs', () => {
-        const subject = render(<CompanyReviewForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText(/Write a Review/i));
         expect(subject.getByText(/Review the Company/i)).toBeInTheDocument();
@@ -98,7 +106,7 @@ describe('Component <CompanyReviewForm/>', () => {
     });
 
     test('it shows and error mensagge when the raitings are not selected', () => {
-        const subject = render(<CompanyReviewForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText(/Write a Review/i));
         expect(subject.getByText(/Review the Company/i)).toBeInTheDocument();
@@ -145,7 +153,7 @@ describe('Component <CompanyReviewForm/>', () => {
     });
 
     test('it checks the still working option', () => {
-        const subject = render(<CompanyReviewForm />);
+        const subject = renderComponent();
 
         fireEvent.click(subject.getByText(/Write a Review/i));
 

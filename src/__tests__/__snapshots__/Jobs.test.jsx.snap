@@ -12,7 +12,7 @@ exports[`component <Jobs/> renders the Jobs Component 1`] = `
           tabindex="0"
           type="button"
         >
-          Review the applicant 
+          Review the applicant
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />

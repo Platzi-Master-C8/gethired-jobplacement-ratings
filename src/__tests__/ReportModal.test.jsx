@@ -18,7 +18,9 @@ describe('<ReportModal />', () => {
     });
 
     test('Modal fill form', () => {
-        const { getByText, getByRole, getByLabelText } = renderComponent({});
+        const { getByText, getByRole, getByLabelText } = renderComponent({
+            reasons: [{ name: 'Suspicious, spam or fake', id: 1 }],
+        });
 
         const reasonInput = getByLabelText(/describe the issue/i);
         const emailInput = getByLabelText(/email/i);
