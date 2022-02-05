@@ -1,28 +1,31 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import SideInfo from '../components/SideInfo/SideInfo';
-
-global.window = {};
+import MediaQueyProvider from '../context/MediaQueryContext';
 
 const defaultProps = { isMobile: false };
-const renderComponent = (props = {}) => render(<SideInfo {...defaultProps} {...props} />);
+const renderComponent = (props = {}) =>
+    render(
+        <MediaQueyProvider>
+            <SideInfo {...defaultProps} {...props} />
+        </MediaQueyProvider>,
+    );
 
 describe('component <SideInfo/>', () => {
-    test('renders SideInfo', () => {
+    it('renders SideInfo', () => {
         const { asFragment } = renderComponent();
         expect(asFragment()).toMatchSnapshot();
     });
 
-    test('renders the button', () => {
+    it('renders the button', () => {
         const component = renderComponent();
         component.container.querySelectorAll('button');
     });
 
-    /* test('opens the drawer', () => {
+    xit('opens the drawer', () => {
         const component = renderComponent();
-        
-        fireEvent.click(component.container.querySelectorAll('button'));
 
+        fireEvent.click(component.getByRole('button'));
         component.getByText('Overall Rating');
-    }); */
+    });
 });

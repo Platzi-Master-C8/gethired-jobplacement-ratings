@@ -46,9 +46,14 @@ const api = {
       return new Promise(resolve => resolve(...overallReviews));
     }
   },
+  applicantReview: {
+    sendReview(applicantId, data = {}) {
+      return sendData(`applicants/${applicantId}/applicant-evaluation`, data);
+    },
+  },
   companyReports: {
     sendReport(companyId, data = {}) {
-      return sendData(`companyReport/${companyId}`, data);
+      return sendData(`companies/${companyId}/recruitment-process-evaluation`, data);
     },
   }
 };

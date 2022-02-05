@@ -22,7 +22,7 @@ const closeButton = {
     justifyContent: 'flex-end',
 };
 
-const SendModal = ({ open, error, loading, handleClose, message = 'Thank you for your time!' }) => {
+const SendModal = ({ open, error, loading, handleClose, message }) => {
     if (loading) {
         return (
             <Modal
@@ -118,10 +118,16 @@ const SendModal = ({ open, error, loading, handleClose, message = 'Thank you for
 
 SendModal.propTypes = {
     open: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool.isRequired,
+    loading: PropTypes.bool,
+    error: PropTypes.bool,
     handleClose: PropTypes.func.isRequired,
-    message: PropTypes.string.isRequired,
+    message: PropTypes.string,
+};
+
+SendModal.defaultProps = {
+    loading: true,
+    error: false,
+    message: 'Thank you for your time!',
 };
 
 export default SendModal;

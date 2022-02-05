@@ -46,7 +46,23 @@ const StyledGrid = styled(Grid)`
     }
 `;
 
-const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review, handleValidate, errorMessage }) => {
+const LengthMessage = styled(Box)`
+    width: 90%;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+const ReviewApplicationProcessModal = ({
+    open,
+    handleInput,
+    handleClose,
+    review,
+    handleValidate,
+    errorMessage,
+    lengthError,
+}) => {
     const isMobile = useMediaQueryContext();
 
     return (
@@ -89,16 +105,16 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     </Typography>
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
-                                            id="salary_rating"
-                                            data-testid="salary_rating"
-                                            name="salary_rating"
+                                            id="salary_evaluation_rating"
+                                            data-testid="salary_evaluation_rating"
+                                            name="salary_evaluation_rating"
                                             row
-                                            value={review.salary_rating}
+                                            value={review.salary_evaluation_rating}
                                             onChange={handleInput}
                                         >
-                                            <FormControlLabel value={2} control={<Radio />} label="High" />
-                                            <FormControlLabel value={1} control={<Radio />} label="Average" />
-                                            <FormControlLabel value={0} control={<Radio />} label="Low" />
+                                            <FormControlLabel value="High" control={<Radio />} label="High" />
+                                            <FormControlLabel value="Average" control={<Radio />} label="Average" />
+                                            <FormControlLabel value="Low" control={<Radio />} label="Low" />
                                         </RadioGroup>
                                     </FormControl>
                                 </StyledGrid>
@@ -126,16 +142,16 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     </Typography>
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
-                                            id="response_time_rating"
-                                            data-testid="response_time_rating"
-                                            name="response_time_rating"
+                                            id="interview_response_time_rating"
+                                            data-testid="interview_response_time_rating"
+                                            name="interview_response_time_rating"
                                             row
-                                            value={review.response_time_rating}
+                                            value={review.interview_response_time_rating}
                                             onChange={handleInput}
                                         >
-                                            <FormControlLabel value={2} control={<Radio />} label="Good" />
-                                            <FormControlLabel value={1} control={<Radio />} label="Regular" />
-                                            <FormControlLabel value={0} control={<Radio />} label="Bad" />
+                                            <FormControlLabel value="Good" control={<Radio />} label="Good" />
+                                            <FormControlLabel value="Regular" control={<Radio />} label="Regular" />
+                                            <FormControlLabel value="Bad" control={<Radio />} label="Bad" />
                                         </RadioGroup>
                                     </FormControl>
                                 </StyledGrid>
@@ -152,9 +168,9 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                             value={review.job_description_rating}
                                             onChange={handleInput}
                                         >
-                                            <FormControlLabel value={2} control={<Radio />} label="High" />
-                                            <FormControlLabel value={1} control={<Radio />} label="Average" />
-                                            <FormControlLabel value={0} control={<Radio />} label="Low" />
+                                            <FormControlLabel value="Good" control={<Radio />} label="Good" />
+                                            <FormControlLabel value="Regular" control={<Radio />} label="Regular" />
+                                            <FormControlLabel value="Bad" control={<Radio />} label="Bad" />
                                         </RadioGroup>
                                     </FormControl>
                                 </StyledGrid>
@@ -164,11 +180,11 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     </Typography>
                                     <FormControl component="fieldset" required>
                                         <RadioGroup
-                                            id="is_regulated"
-                                            data-testid="is_regulated"
-                                            name="is_regulated"
+                                            id="is_legally_company"
+                                            data-testid="is_legally_company"
+                                            name="is_legally_company"
                                             row
-                                            value={review.is_regulated}
+                                            value={review.is_legally_company}
                                             onChange={handleInput}
                                         >
                                             <FormControlLabel value={1} control={<Radio />} label="Yes" />
@@ -188,12 +204,20 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                     <OutlinedInput
                                         multiline
                                         rows={6}
-                                        id="improvements"
-                                        name="improvements"
-                                        value={review.improvements}
+                                        id="improvement_content"
+                                        name="improvement_content"
+                                        value={review.improvement_content}
                                         onChange={handleInput}
                                     />
                                 </FormControl>
+                                <LengthMessage>
+                                    <Typography variant="caption" sx={{ color: 'rgb(255, 117, 117)' }}>
+                                        {lengthError || ''}
+                                    </Typography>
+                                    <Typography variant="caption">
+                                        {review?.improvement_content?.length || 0}
+                                    </Typography>
+                                </LengthMessage>
                             </Grid>
                             <Grid item md={12}>
                                 <Typography variant="subtitle1" sx={{ fontSize: 16, margin: '15px 0' }}>
@@ -202,24 +226,24 @@ const ReviewApplicationProcessModal = ({ open, handleInput, handleClose, review,
                                 <FormControl sx={{ width: '20%', marginRight: '10px' }}>
                                     <OutlinedInput
                                         type="number"
-                                        id="end_process"
-                                        name="end_process"
-                                        value={review.end_process}
+                                        id="amount_of_recruitment_time"
+                                        name="amount_of_recruitment_time"
+                                        value={review.amount_of_recruitment_time}
                                         onChange={handleInput}
                                     />
                                 </FormControl>
                                 <FormControl sx={{ width: isMobile.medium ? '50%' : '20%' }} required>
                                     <Select
-                                        labelId="time_measurement"
-                                        id="time_measurement"
-                                        name="time_measurement"
-                                        value={review.time_measurement}
+                                        labelId="recruitment_process_period"
+                                        id="recruitment_process_period"
+                                        name="recruitment_process_period"
+                                        value={review.recruitment_process_period}
                                         onChange={handleInput}
                                     >
-                                        <MenuItem value={0}>Year(s)</MenuItem>
-                                        <MenuItem value={1}>Month(s)</MenuItem>
-                                        <MenuItem value={2}>Day(s)</MenuItem>
-                                        <MenuItem value={3}>Hour(s)</MenuItem>
+                                        <MenuItem value="Year">Year(s)</MenuItem>
+                                        <MenuItem value="Month">Month(s)</MenuItem>
+                                        <MenuItem value="Day">Day(s)</MenuItem>
+                                        <MenuItem value="Hour">Hour(s)</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -257,6 +281,7 @@ ReviewApplicationProcessModal.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     review: PropTypes.object.isRequired,
     errorMessage: PropTypes.string.isRequired,
+    lengthError: PropTypes.string.isRequired,
 };
 
 export default ReviewApplicationProcessModal;

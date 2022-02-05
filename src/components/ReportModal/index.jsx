@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import {
     Box,
@@ -42,12 +43,21 @@ const initialState = {
     description: '',
 };
 
+const LengthMessage = styled(Box)`
+    width: 90%;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+
 export const ReportModal = ({ open, handleClose, review_id, reasons }) => {
     const [form, setForm] = useState(initialState);
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formError, setFormError] = useState(false);
+    const [lengthError, setLengthError] = useState('');
 
     const handleInput = (e) => {
         const { name, value } = e.target;
@@ -65,12 +75,23 @@ export const ReportModal = ({ open, handleClose, review_id, reasons }) => {
     };
 
     const validateForm = () => {
+        if (form.description.length < 10) {
+            setLengthError('Field should be greater than 10');
+            setLoading(false);
+            return false;
+        }
+        if (form.description.length > 70) {
+            setLengthError('Field should be less than 70');
+            setLoading(false);
+            return false;
+        }
         if (!form.reason || !form.email || !form.description) {
             setFormError(true);
             setLoading(false);
             return false;
         }
         setFormError(false);
+        setLengthError('');
         return true;
     };
 
@@ -149,6 +170,12 @@ export const ReportModal = ({ open, handleClose, review_id, reasons }) => {
                             value={form.description}
                             label="Describe the issue"
                         />
+                        <LengthMessage>
+                            <Typography variant="caption" sx={{ color: 'rgb(255, 117, 117)' }}>
+                                {lengthError || ''}
+                            </Typography>
+                            <Typography variant="caption">{form?.description?.length || 0}</Typography>
+                        </LengthMessage>
                     </Box>
                     <Box sx={{ display: 'grid', gap: '8px' }}>
                         <Typography>Your email address *</Typography>
@@ -192,8 +219,13 @@ export const ReportModal = ({ open, handleClose, review_id, reasons }) => {
 ReportModal.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
-    review_id: PropTypes.string.isRequired,
-    reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
+    review_id: PropTypes.number.isRequired,
+    reasons: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired,
+        }),
+    ).isRequired,
 };
 
 export default ReportModal;

@@ -169,17 +169,27 @@ SubheaderReview.propTypes = {
 };
 
 ActionsReview.propTypes = {
-    review_id: PropTypes.string.isRequired,
+    review_id: PropTypes.number.isRequired,
     utility_counter: PropTypes.number.isRequired,
     non_utility_counter: PropTypes.number.isRequired,
-    reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
+    reasons: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired,
+        }),
+    ).isRequired,
 };
 
 ReviewCard.propTypes = {
-    reasons: PropTypes.arrayOf(PropTypes.string).isRequired,
+    reasons: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired,
+        }),
+    ).isRequired,
     review: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        company_id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        company_id: PropTypes.number.isRequired,
         content_type: PropTypes.string.isRequired,
         created_at: PropTypes.string.isRequired,
         is_still_working_here: PropTypes.oneOf([0, 1]).isRequired,

@@ -11,7 +11,7 @@ exports[`Component <ReviewTheApplicantForm/> renders ReviewTheApplicantForm 1`] 
         tabindex="0"
         type="button"
       >
-        Review the applicant 
+        Review the applicant
         <span
           class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
