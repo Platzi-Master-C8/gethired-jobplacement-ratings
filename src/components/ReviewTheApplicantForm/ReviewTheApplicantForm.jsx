@@ -13,7 +13,7 @@ const ReviewTheApplicantForm = ({ company_id, applicant_id }) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const initialState = {
-        applicant_id,
+        company_id,
         applicant_name: '',
         is_hired: null,
         communication_rating: 0,
@@ -42,7 +42,7 @@ const ReviewTheApplicantForm = ({ company_id, applicant_id }) => {
         setSended(true);
         setIsLoading(true);
         api.applicantReview
-            .sendReview(company_id, review)
+            .sendReview(applicant_id, review)
             .then((res) => {
                 if (res && res.ok) {
                     setIsLoading(false);
