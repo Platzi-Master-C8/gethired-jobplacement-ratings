@@ -1,6 +1,7 @@
 import config from '../config';
 import list from '../data/listReviews';
 import overallReviews from '../data/overallReviews';
+import { countries } from '../data/countries'
 
 const getData = (endpoint, options) => {
   const ops = {
@@ -55,6 +56,14 @@ const api = {
     sendReport(companyId, data = {}) {
       return sendData(`companies/${companyId}/recruitment-process-evaluation`, data);
     },
+  },
+  applicantRegistration: {
+    mockDataCountries(){
+      return new Promise(resolve => resolve(countries))
+    },
+    sedApplicantData(applicantData){
+      return sendData('applicants', applicantData);
+    }
   }
 };
 
