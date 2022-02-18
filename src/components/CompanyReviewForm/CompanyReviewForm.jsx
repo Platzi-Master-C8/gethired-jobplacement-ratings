@@ -62,10 +62,10 @@ const CompanyReviewForm = () => {
     //     ];
 
     //     const avg = calculateAverage(raitings);
-    //     const weighted_average_per_evaluation = baseFive(avg, 2);
+    //     const rating = baseFive(avg, 2);
 
     //     return {
-    //         weighted_average_per_evaluation,
+    //         rating,
     //         ...oReview,
     //     };
     // };

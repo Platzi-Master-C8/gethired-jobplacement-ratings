@@ -4,6 +4,7 @@ import { ReviewCard } from '../ReviewCard';
 import { FilterReviews } from '../FilterReviews';
 import { SideInfo } from '../SideInfo';
 
+import { sortName } from '../../utils';
 import api from '../../services/api';
 import config from '../../config';
 
@@ -13,9 +14,10 @@ const Reviews = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [page, setPage] = useState(1);
     const [reviewsCount, setReviewsCount] = useState(0);
-    const [list, setList] = useState([]);
     const [data, setData] = useState([]);
     const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'asc' });
+    const [filterValue, setFilterValue] = useState('job_title');
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         fetch(`${config.api}reporting-reason-types`)
@@ -26,20 +28,24 @@ const Reviews = () => {
     const toggleSortCriteria = (sortKey) => {
         const orientation =
             sortCriteria.sortKey === sortKey ? (sortCriteria.orientation === 'asc' ? 'desc' : 'asc') : 'asc';
-        const sortedList = list.sort((a, b) =>
-            a[sortKey] > b[sortKey] ? (orientation === 'asc' ? 1 : -1) : orientation === 'asc' ? -1 : 1,
-        );
-        setList(sortedList);
         setSortCriteria({ sortKey, orientation });
+    };
+
+    const handleQueries = () => {
+        const sortQuery = `&${sortName(sortCriteria.sortKey).toLowerCase()}=${sortCriteria.orientation}`;
+        const filterQuery = `&${filterValue}=${searchQuery}`;
+        let queries = sortQuery;
+        if (searchQuery.length > 0) queries += filterQuery;
+
+        return queries;
     };
 
     useEffect(() => {
         api.companyEvaluations
-            .listReviews(1, page)
+            .listReviews(1, page, handleQueries())
             .then((response) => response.json())
             .then((result) => {
                 setIsLoaded(true);
-                setList(result.items);
                 setData(result.items);
                 setReviewsCount(result.total);
             })
@@ -47,9 +53,8 @@ const Reviews = () => {
                 setIsLoaded(true);
                 setError(e);
             });
-        toggleSortCriteria(sortCriteria.sortKey);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page]);
+    }, [page, sortCriteria, searchQuery]);
 
     const handlePage = (e, v) => {
         setIsLoaded(false);
@@ -58,7 +63,8 @@ const Reviews = () => {
     };
 
     const handleSearch = (query, attribute) => {
-        setList(data.filter((x) => x[attribute].toLowerCase().includes(query.toLowerCase().trim())));
+        setFilterValue(attribute);
+        setSearchQuery(query);
     };
 
     if (error) {
@@ -71,7 +77,7 @@ const Reviews = () => {
     return (
         <Fragment>
             <FilterReviews
-                reviewsQuantity={list.length}
+                reviewsQuantity={data.length}
                 reviewsCount={reviewsCount}
                 handleSearch={handleSearch}
                 sortCriteria={sortCriteria}
@@ -86,7 +92,7 @@ const Reviews = () => {
                     my: 2,
                 }}
             >
-                {list.map((review) => (
+                {data.map((review) => (
                     <ReviewCard key={review.id} review={review} reasons={reasons} />
                 ))}
             </Box>

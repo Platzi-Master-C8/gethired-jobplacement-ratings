@@ -25,8 +25,8 @@ const sendData = (endpoint, data) => {
 
 const api = {
   companyEvaluations: {
-    listReviews(companyId, page, options = {}) {
-      return getData(`companies/${companyId}/company-evaluations?page=${page}&size=10`, options);
+    listReviews(companyId, page, queries, options = {}) {
+      return getData(`companies/${companyId}/company-evaluations?page=${page}&size=10${queries}`, options);
     },
     sendReview(companyId, data = {}) {
       return sendData(`companies/${companyId}/company-evaluation`, data);
@@ -40,7 +40,7 @@ const api = {
         jobTitle: review.job_title,
         nonUtilityCounter: review.non_utility_counter,
         utilityCounter: review.utility_counter,
-        weightedAveragePerEvaluation: review.weighted_average_per_evaluation,
+        weightedAveragePerEvaluation: review.rating,
       }));
     },
     mockDataOverallReview() {

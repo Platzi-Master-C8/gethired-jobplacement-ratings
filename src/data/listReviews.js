@@ -1,6 +1,6 @@
 const list = [{
   'id': 1,
-  'weighted_average_per_evaluation': 3,
+  'rating': 3,
   'job_title': 'Compensation Analyst',
   'start_date': '8/3/2021',
   'end_date': '7/9/2021',
@@ -11,7 +11,7 @@ const list = [{
   'created_at': '29/11/2021'
 }, {
   'id': 2,
-  'weighted_average_per_evaluation': 5,
+  'rating': 5,
   'job_title': 'Account Executive',
   'start_date': '10/11/2021',
   'end_date': '10/21/2021',
@@ -22,7 +22,7 @@ const list = [{
   'created_at': '12/2/2021'
 }, {
   'id': 3,
-  'weighted_average_per_evaluation': 5,
+  'rating': 5,
   'job_title': 'Assistant Manager',
   'start_date': '3/29/2021',
   'end_date': '6/30/2021',
@@ -33,7 +33,7 @@ const list = [{
   'created_at': '25/9/2021'
 }, {
   'id': 4,
-  'weighted_average_per_evaluation': 2,
+  'rating': 2,
   'job_title': 'Research Associate',
   'start_date': '5/23/2021',
   'end_date': '11/8/2021',
@@ -44,7 +44,7 @@ const list = [{
   'created_at': '21/12/2020'
 }, {
   'id': 5,
-  'weighted_average_per_evaluation': 3,
+  'rating': 3,
   'job_title': 'Developer III',
   'start_date': '10/31/2021',
   'end_date': '9/26/2021',
@@ -55,7 +55,7 @@ const list = [{
   'created_at': '20/8/2021'
 }, {
   'id': 6,
-  'weighted_average_per_evaluation': 2,
+  'rating': 2,
   'job_title': 'Civil Engineer',
   'start_date': '5/20/2021',
   'end_date': '7/22/2021',
@@ -66,7 +66,7 @@ const list = [{
   'created_at': '25/12/2020'
 }, {
   'id': 7,
-  'weighted_average_per_evaluation': 2,
+  'rating': 2,
   'job_title': 'Project Manager',
   'start_date': '12/12/2020',
   'end_date': '6/16/2021',
@@ -77,7 +77,7 @@ const list = [{
   'created_at': '2/7/2021'
 }, {
   'id': 8,
-  'weighted_average_per_evaluation': 3,
+  'rating': 3,
   'job_title': 'Assistant Professor',
   'start_date': '3/14/2021',
   'end_date': '9/24/2021',
@@ -88,7 +88,7 @@ const list = [{
   'created_at': '21/5/2021'
 }, {
   'id': 9,
-  'weighted_average_per_evaluation': 5,
+  'rating': 5,
   'job_title': 'Chief Design Engineer',
   'start_date': '7/29/2021',
   'end_date': '5/11/2021',
@@ -99,7 +99,7 @@ const list = [{
   'created_at': '26/9/2021'
 }, {
   'id': 10,
-  'weighted_average_per_evaluation': 1,
+  'rating': 1,
   'job_title': 'Programmer Analyst IV',
   'start_date': '11/8/2021',
   'end_date': '9/21/2021',
