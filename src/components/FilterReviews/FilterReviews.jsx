@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { Box, Button, InputLabel, FormControl, MenuItem, TextField, Typography, Select } from '@mui/material';
+import { sortName } from '../../utils';
 
 const FilterReviewsWrapper = styled.div`
     background-color: #ddd;
@@ -54,7 +55,7 @@ const SortBox = styled(RowBox)`
     }
 `;
 
-const sortOptions = ['utility_counter', 'weighted_average_per_evaluation', 'created_at'];
+const sortOptions = ['utility_counter', 'rating', 'created_at'];
 
 const FilterReviews = ({ reviewsQuantity, reviewsCount, handleSearch, sortCriteria, toggleSortCriteria }) => {
     const [filterValue, setFilterValue] = useState('job_title');
@@ -62,10 +63,6 @@ const FilterReviews = ({ reviewsQuantity, reviewsCount, handleSearch, sortCriter
 
     const handleEnter = (e) => {
         if (e.key === 'Enter') handleSearch(searchQuery, filterValue);
-    };
-
-    const sortName = (sortKey) => {
-        return sortKey === 'created_at' ? 'Date' : sortKey === 'utility_counter' ? 'Helpfulness' : 'Rating';
     };
 
     return (

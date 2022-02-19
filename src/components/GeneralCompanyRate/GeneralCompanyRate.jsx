@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardMedia, Grid, Typography } from '@mui/material';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
@@ -6,7 +7,7 @@ import { Box } from '@mui/system';
 import { CompanyReviewForm } from '../CompanyReviewForm';
 import './GeneralCompanyRate.scss';
 
-const GeneralCompanyRate = () => (
+const GeneralCompanyRate = ({ data }) => (
     <Card elevation={0} sx={{ padding: '40px' }}>
         <Grid container spacing={2}>
             <Grid item sm={12} md={3}>
@@ -19,15 +20,15 @@ const GeneralCompanyRate = () => (
                 />
             </Grid>
             <Grid item sm={12} md={5}>
-                <Typography variant="h1">Company</Typography>
+                <Typography variant="h1">{data.company_information.name}</Typography>
                 <Box sx={{ display: 'flex', alignContent: 'flex-end', gap: '5px' }}>
-                    <Typography variant="subtitle1">4.2</Typography>
+                    <Typography variant="subtitle1">{data.company_rating}</Typography>
                     <StarRateIcon />
                     <StarRateIcon />
                     <StarRateIcon />
                     <StarRateIcon />
                     <StarHalfIcon />
-                    <Typography variant="overline">123 reviews</Typography>
+                    <Typography variant="overline">{data.total_reviews}</Typography>
                 </Box>
             </Grid>
             <Grid item sm={12} md={4} sx={{ display: 'grid', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
@@ -36,5 +37,27 @@ const GeneralCompanyRate = () => (
         </Grid>
     </Card>
 );
+
+GeneralCompanyRate.propTypes = {
+    data: PropTypes.shape({
+        company_information: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            email: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            address: PropTypes.string.isRequired,
+            website: PropTypes.string.isRequired,
+            country: PropTypes.string.isRequired,
+            city: PropTypes.string.isRequired,
+            active: PropTypes.bool.isRequired,
+        }).isRequired,
+        company_rating: PropTypes.number.isRequired,
+        total_reviews: PropTypes.number.isRequired,
+        gral_career_development_rating: PropTypes.number.isRequired,
+        gral_diversity_equal_opportunity_rating: PropTypes.number.isRequired,
+        gral_working_environment_rating: PropTypes.number.isRequired,
+        gral_salary_rating: PropTypes.number.isRequired,
+    }).isRequired,
+};
 
 export default GeneralCompanyRate;

@@ -15,3 +15,11 @@ export const calculateAverage = (array) => {
 export const baseFive = (value, base) => {
     return parseFloat((value * 5 / base).toFixed(1));
 }
+
+export const sortName = (sortKey) => {
+    return sortKey === 'created_at' ? 'Date' : sortKey === 'utility_counter' ? 'Helpfulness' : 'Rating';
+};
+
+export const goToEnterprise = () => {
+    window.open('https://platzi-master-c8.github.io/');
+};

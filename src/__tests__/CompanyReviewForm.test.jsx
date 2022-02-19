@@ -17,7 +17,7 @@ describe('Component <CompanyReviewForm/>', () => {
             Promise.resolve({
                 json: () =>
                     Promise.resolve({
-                        weighted_average_per_evaluation: 5,
+                        rating: 5,
                         company_id: 1,
                         job_title: 'Frontend Developer',
                         applicant_email: 'example@mail.com',

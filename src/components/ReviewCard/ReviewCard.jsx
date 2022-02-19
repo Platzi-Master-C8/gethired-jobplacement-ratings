@@ -130,13 +130,13 @@ const ReviewCard = ({ review, reasons }) => {
         utility_counter,
         non_utility_counter,
         is_still_working_here,
-        weighted_average_per_evaluation,
+        rating,
     } = review;
 
     return (
         <Card sx={{ border: 1, minHeight: 350, maxHeight: 350 }}>
             <CardHeader
-                title={<HeaderReview rating={weighted_average_per_evaluation || -1} />}
+                title={<HeaderReview rating={rating || -1} />}
                 subheader={
                     <SubheaderReview
                         created_at={created_at}
@@ -196,7 +196,7 @@ ReviewCard.propTypes = {
         job_title: PropTypes.string.isRequired,
         non_utility_counter: PropTypes.number.isRequired,
         utility_counter: PropTypes.number.isRequired,
-        weighted_average_per_evaluation: PropTypes.number,
+        rating: PropTypes.number,
     }).isRequired,
 };
 

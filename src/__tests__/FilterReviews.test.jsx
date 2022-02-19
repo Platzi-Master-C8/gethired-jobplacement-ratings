@@ -80,7 +80,7 @@ describe('Component <FilterReviews/>', () => {
 
     test('it allows to sort the list of reviews by Rating', () => {
         const toggleSortCriteria = jest.fn();
-        const sortCriteria = { sortKey: 'weighted_average_per_evaluation', orientation: 'asc' };
+        const sortCriteria = { sortKey: 'rating', orientation: 'asc' };
         const subject = renderComponent({ toggleSortCriteria, sortCriteria });
 
         const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
@@ -94,7 +94,7 @@ describe('Component <FilterReviews/>', () => {
     });
 
     test('once the list is sorted the rating the button changes', () => {
-        const sortCriteria = { sortKey: 'weighted_average_per_evaluation', orientation: 'desc' };
+        const sortCriteria = { sortKey: 'rating', orientation: 'desc' };
         const subject = renderComponent({ sortCriteria });
 
         const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
