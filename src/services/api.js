@@ -24,6 +24,11 @@ const sendData = (endpoint, data) => {
 }
 
 const api = {
+  companyRaiting: {
+    getData(companyId) {
+      return getData(`companies/${companyId}/general-ratings`);
+    },
+  },
   companyEvaluations: {
     listReviews(companyId, page, queries, options = {}) {
       return getData(`companies/${companyId}/company-evaluations?page=${page}&size=10${queries}`, options);

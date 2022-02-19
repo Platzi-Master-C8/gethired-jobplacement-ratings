@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
@@ -8,8 +9,6 @@ import { Grid, Box, Typography, Button, SwipeableDrawer } from '@mui/material';
 import { RatingItem } from '../RatingItem';
 
 import { useMediaQueryContext } from '../../context/MediaQueryContext';
-
-import api from '../../services/api';
 
 const globalStyles = (isMobile) => ({
     '.MuiDrawer-root > .MuiPaper-root': {
@@ -34,39 +33,14 @@ const GridFlex = styled(Grid)(() => ({
     alignItems: 'center',
 }));
 
-const SideInfo = () => {
+const SideInfo = ({ info }) => {
     const [open, setOpen] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [review, setReview] = useState({});
-    const [error, setError] = useState(null);
 
     const isMobile = useMediaQueryContext();
-
-    useEffect(() => {
-        api.companyEvaluations
-            .mockDataOverallReview()
-            .then((res) => res)
-            .then((data) => {
-                setReview(data);
-                setIsLoaded(true);
-            })
-            .catch((err) => {
-                setError(err);
-                setIsLoaded(true);
-            });
-    }, []);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
-
-    if (!isLoaded) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error</div>;
-    }
 
     return (
         <Box>
@@ -93,12 +67,12 @@ const SideInfo = () => {
                                 Overall Rating
                             </Typography>
                             <Typography variant="body1" fontSize={16}>
-                                Based on {review.total_reviews} reviews
+                                Based on {info.total_reviews} reviews
                             </Typography>
                         </Grid>
                         <GridFlex item>
                             <Typography variant="h1" fontSize={25} margin="0 7px">
-                                {review.overall_rating}
+                                {info.company_rating}
                             </Typography>
                             <StarIcon sx={{ color: '#edd309', fontSize: '30px' }} />
                         </GridFlex>
@@ -107,16 +81,40 @@ const SideInfo = () => {
                         <Typography variant="h2" fontSize={17} fontWeight={700}>
                             Rating by category
                         </Typography>
-                        <RatingItem title="Job advancements" rating={review.job_advancements} />
-                        <RatingItem title="Benefits and perks" rating={review.benefits} />
-                        <RatingItem title="Work/life balance" rating={review.work_life_balance} />
-                        <RatingItem title="Working Enviorment" rating={review.working_eviorment} />
-                        <RatingItem title="Culture" rating={review.culture} />
+                        <RatingItem title="Carrer development" rating={info.gral_career_development_rating} />
+                        <RatingItem
+                            title="Diversity and Equal Opportunity"
+                            rating={info.gral_diversity_equal_opportunity_rating}
+                        />
+                        <RatingItem title="Working Environment" rating={info.gral_working_environment_rating} />
+                        <RatingItem title="Salary" rating={info.gral_salary_rating} />
                     </Grid>
                 </GridContainer>
             </SwipeableDrawer>
         </Box>
     );
+};
+
+SideInfo.propTypes = {
+    info: PropTypes.shape({
+        company_information: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            email: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            address: PropTypes.string.isRequired,
+            website: PropTypes.string.isRequired,
+            country: PropTypes.string.isRequired,
+            city: PropTypes.string.isRequired,
+            active: PropTypes.bool.isRequired,
+        }).isRequired,
+        company_rating: PropTypes.number.isRequired,
+        total_reviews: PropTypes.number.isRequired,
+        gral_career_development_rating: PropTypes.number.isRequired,
+        gral_diversity_equal_opportunity_rating: PropTypes.number.isRequired,
+        gral_working_environment_rating: PropTypes.number.isRequired,
+        gral_salary_rating: PropTypes.number.isRequired,
+    }).isRequired,
 };
 
 export default SideInfo;

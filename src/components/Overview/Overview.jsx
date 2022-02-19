@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Typography, Avatar, Rating, IconButton } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import styled from 'styled-components';
@@ -18,7 +19,7 @@ const ChartContainer = styled(Grid)`
     }
 `;
 
-const Overview = () => {
+const Overview = ({ info }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [review, setReview] = useState({});
     const [display, setDisplay] = useState(false);
@@ -55,21 +56,17 @@ const Overview = () => {
                     sx={{ width: 100, height: 100, marginBottom: '50px' }}
                 />
                 <Grid item>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet debitis, porro modi minima sit
-                        magnam tenetur. Necessitatibus ipsa velit quisquam eveniet culpa iure blanditiis eius, enim
-                        impedit quod sequi praesentium!
-                    </Typography>
+                    <Typography>{info.company_information.description}</Typography>
                 </Grid>
             </Grid>
             <Grid item md={6} sm={12}>
                 <ChartContainer>
-                    <RadarChart />
+                    <RadarChart info={info} />
                 </ChartContainer>
                 <Grid>
-                    <Typography variant="h1">{review.overall_rating}</Typography>
-                    <Rating readOnly value={review.overall_rating} precision={0.5} />
-                    <Typography>{review.total_reviews} ratings</Typography>
+                    <Typography variant="h1">{info.company_rating}</Typography>
+                    <Rating readOnly value={info.company_rating} precision={0.5} />
+                    <Typography>{info.total_reviews} ratings</Typography>
                     <IconButton onClick={() => setDisplay(!display)}>
                         <ArrowDropDownIcon sx={{ fontSize: '4rem' }} />
                     </IconButton>
@@ -79,11 +76,13 @@ const Overview = () => {
                 <Typography variant="h1" fontSize={20} fontWeight={700}>
                     Rating by category
                 </Typography>
-                <RatingItem title="Job advancements" rating={review.job_advancements} />
-                <RatingItem title="Benefits and perks" rating={review.benefits} />
-                <RatingItem title="Work/life balance" rating={review.work_life_balance} />
-                <RatingItem title="Working Enviorment" rating={review.working_eviorment} />
-                <RatingItem title="Culture" rating={review.culture} />
+                <RatingItem title="Carrer development" rating={info.gral_career_development_rating} />
+                <RatingItem
+                    title="Diversity and Equal Opportunity"
+                    rating={info.gral_diversity_equal_opportunity_rating}
+                />
+                <RatingItem title="Working Environment" rating={info.gral_working_environment_rating} />
+                <RatingItem title="Salary" rating={info.gral_salary_rating} />
             </Grid>
             {display && (
                 <Grid item md={12} sx={{ display }}>
@@ -92,6 +91,28 @@ const Overview = () => {
             )}
         </Grid>
     );
+};
+
+Overview.propTypes = {
+    info: PropTypes.shape({
+        company_information: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            email: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            address: PropTypes.string.isRequired,
+            website: PropTypes.string.isRequired,
+            country: PropTypes.string.isRequired,
+            city: PropTypes.string.isRequired,
+            active: PropTypes.bool.isRequired,
+        }).isRequired,
+        company_rating: PropTypes.number.isRequired,
+        total_reviews: PropTypes.number.isRequired,
+        gral_career_development_rating: PropTypes.number.isRequired,
+        gral_diversity_equal_opportunity_rating: PropTypes.number.isRequired,
+        gral_working_environment_rating: PropTypes.number.isRequired,
+        gral_salary_rating: PropTypes.number.isRequired,
+    }).isRequired,
 };
 
 export default Overview;
