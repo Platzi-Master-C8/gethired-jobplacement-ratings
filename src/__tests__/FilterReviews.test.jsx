@@ -5,7 +5,7 @@ import { FilterReviews } from 'Components/FilterReviews';
 
 const defaultProps = {
     handleSearch: () => {},
-    sortCriteria: { sortKey: 'created_at', orientation: 'asc' },
+    sortCriteria: { sortKey: 'created_at', orientation: 'ASC' },
     toggleSortCriteria: () => {},
 };
 
@@ -55,7 +55,7 @@ describe('Component <FilterReviews/>', () => {
 
     test('it allows to sort the list of reviews by Helpfulness', () => {
         const toggleSortCriteria = jest.fn();
-        const sortCriteria = { sortKey: 'utility_counter', orientation: 'asc' };
+        const sortCriteria = { sortKey: 'utility_counter', orientation: 'ASC' };
         const subject = renderComponent({ toggleSortCriteria, sortCriteria });
 
         const sortByHelpfulnessButton = subject.container.querySelectorAll('button')[1];
@@ -69,7 +69,7 @@ describe('Component <FilterReviews/>', () => {
     });
 
     test('once the list is sorted the helpfulness the button changes', () => {
-        const sortCriteria = { sortKey: 'utility_counter', orientation: 'desc' };
+        const sortCriteria = { sortKey: 'utility_counter', orientation: 'DESC' };
         const subject = renderComponent({ sortCriteria });
 
         const sortByHelpfulnessButton = subject.container.querySelectorAll('button')[1];
@@ -80,7 +80,7 @@ describe('Component <FilterReviews/>', () => {
 
     test('it allows to sort the list of reviews by Rating', () => {
         const toggleSortCriteria = jest.fn();
-        const sortCriteria = { sortKey: 'rating', orientation: 'asc' };
+        const sortCriteria = { sortKey: 'rating', orientation: 'ASC' };
         const subject = renderComponent({ toggleSortCriteria, sortCriteria });
 
         const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
@@ -94,7 +94,7 @@ describe('Component <FilterReviews/>', () => {
     });
 
     test('once the list is sorted the rating the button changes', () => {
-        const sortCriteria = { sortKey: 'rating', orientation: 'desc' };
+        const sortCriteria = { sortKey: 'rating', orientation: 'DESC' };
         const subject = renderComponent({ sortCriteria });
 
         const sortByRaitingButton = subject.container.querySelectorAll('button')[2];
@@ -118,7 +118,7 @@ describe('Component <FilterReviews/>', () => {
     });
 
     test('once the list is sorted the date the button changes', () => {
-        const sortCriteria = { sortKey: 'created_at', orientation: 'desc' };
+        const sortCriteria = { sortKey: 'created_at', orientation: 'DESC' };
         const subject = renderComponent({ sortCriteria });
 
         const sortByDateButton = subject.container.querySelectorAll('button')[3];

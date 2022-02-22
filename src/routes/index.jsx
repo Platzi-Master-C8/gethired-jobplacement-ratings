@@ -10,7 +10,7 @@ const Routes = () => (
     <BrowserRouter basename="/gethired-jobplacement-ratings">
         <Layout>
             <Switch>
-                <Route path="/" element={<Company />} />
+                <Route path="/:companyId" element={<Company />} />
                 <Route path="*" element={<NotFound />} />
             </Switch>
         </Layout>
