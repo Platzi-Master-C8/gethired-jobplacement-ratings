@@ -117,7 +117,7 @@ const FilterReviews = ({ reviewsQuantity, reviewsCount, handleSearch, sortCriter
                                 variant={sortCriteria.sortKey === sortOption ? 'contained' : 'outlined'}
                                 endIcon={
                                     sortCriteria.sortKey === sortOption ? (
-                                        sortCriteria.orientation === 'desc' ? (
+                                        sortCriteria.orientation === 'DESC' ? (
                                             <ArrowUpwardIcon />
                                         ) : (
                                             <ArrowDownwardIcon />

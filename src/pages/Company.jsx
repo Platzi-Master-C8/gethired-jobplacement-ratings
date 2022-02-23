@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
-import NotFound from 'Pages/NotFound';
+import { useParams } from 'react-router-dom';
 
+import NotFound from 'Pages/NotFound';
 import { GeneralCompanyRate } from '../components/GeneralCompanyRate';
 import CompanyTabs from '../components/CompanyTabs';
 
@@ -13,13 +14,15 @@ import { Overview } from '../components/Overview';
 // import { Jobs } from '../components/Jobs';
 
 const Company = () => {
+    const { companyId } = useParams();
+
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(false);
     const [data, setData] = useState();
 
     useEffect(() => {
         api.companyRaiting
-            .getData(1)
+            .getData(companyId)
             .then((response) => response.json())
             .then((result) => {
                 setIsLoaded(true);
@@ -29,14 +32,14 @@ const Company = () => {
                 setIsLoaded(true);
                 setError(true);
             });
-    });
+    }, [companyId]);
 
     if (!isLoaded) {
         return <div>Loading...</div>;
     }
 
     return error || !data?.company_information ? (
-        <NotFound />
+        <NotFound noData />
     ) : (
         <Container>
             <GeneralCompanyRate data={data} />

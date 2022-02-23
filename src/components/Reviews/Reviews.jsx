@@ -16,7 +16,7 @@ const Reviews = ({ info }) => {
     const [page, setPage] = useState(1);
     const [reviewsCount, setReviewsCount] = useState(0);
     const [data, setData] = useState([]);
-    const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'asc' });
+    const [sortCriteria, setSortCriteria] = useState({ sortKey: 'created_at', orientation: 'ASC' });
     const [filterValue, setFilterValue] = useState('job_title');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -28,7 +28,7 @@ const Reviews = ({ info }) => {
 
     const toggleSortCriteria = (sortKey) => {
         const orientation =
-            sortCriteria.sortKey === sortKey ? (sortCriteria.orientation === 'asc' ? 'desc' : 'asc') : 'asc';
+            sortCriteria.sortKey === sortKey ? (sortCriteria.orientation === 'ASC' ? 'DESC' : 'ASC') : 'ASC';
         setSortCriteria({ sortKey, orientation });
     };
 
