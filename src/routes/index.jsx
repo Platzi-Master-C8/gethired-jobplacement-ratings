@@ -7,7 +7,7 @@ import NotFound from 'Pages/NotFound';
 import Layout from 'Components/Layout';
 
 const Routes = () => (
-    <BrowserRouter>
+    <BrowserRouter basename="/company">
         <Layout>
             <Switch>
                 <Route path="/:companyId" element={<Company />} />

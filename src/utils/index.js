@@ -21,5 +21,5 @@ export const sortName = (sortKey) => {
 };
 
 export const goToEnterprise = () => {
-    window.open('https://platzi-master-c8.github.io/');
+    window.open('https://get-hired.work/');
 };
