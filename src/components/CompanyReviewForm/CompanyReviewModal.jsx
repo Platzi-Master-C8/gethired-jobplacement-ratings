@@ -146,7 +146,7 @@ const CompanyReviewForm = ({ open, handleClose, handleValidate, modalError, revi
                         <StyledGrid container sx={{ alignItems: 'center' }}>
                             <Grid item md={6} sm={12} xs={12}>
                                 <Typography variant="subtitle1" sx={subtitleStyles}>
-                                    Diversity and Equal Opportunity
+                                    Equal Opportunity
                                 </Typography>
                             </Grid>
                             <Grid item md={6} sm={12} xs={12}>

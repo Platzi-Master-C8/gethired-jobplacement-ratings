@@ -82,10 +82,7 @@ const SideInfo = ({ info }) => {
                             Rating by category
                         </Typography>
                         <RatingItem title="Carrer development" rating={info.gral_career_development_rating} />
-                        <RatingItem
-                            title="Diversity and Equal Opportunity"
-                            rating={info.gral_diversity_equal_opportunity_rating}
-                        />
+                        <RatingItem title="Equal Opportunity" rating={info.gral_diversity_equal_opportunity_rating} />
                         <RatingItem title="Working Environment" rating={info.gral_working_environment_rating} />
                         <RatingItem title="Salary" rating={info.gral_salary_rating} />
                     </Grid>

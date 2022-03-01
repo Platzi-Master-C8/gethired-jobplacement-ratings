@@ -121,7 +121,9 @@ const CompanyReviewForm = () => {
     return (
         <div>
             <Grid item md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
-                <Button onClick={handleOpen}>Write a Review</Button>
+                <Button onClick={handleOpen} variant="outlined">
+                    Write a Review
+                </Button>
             </Grid>
             {!sended ? (
                 <CompanyReviewModal

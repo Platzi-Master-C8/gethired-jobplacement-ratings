@@ -6,7 +6,7 @@ import { Radar } from 'react-chartjs-2';
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 const RadarData = (info) => ({
-    labels: ['Carrer development', 'Diversity and Equal Opportunity', 'Working Environment', 'Salary'],
+    labels: ['Carrer development', 'Equal Opportunity', 'Working Environment', 'Salary'],
     datasets: [
         {
             label: 'March',
