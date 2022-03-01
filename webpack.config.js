@@ -11,8 +11,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
-        chunkFilename: '[name].bundle.js',
-        publicPath: '/'
+        chunkFilename: '[name].bundle.js'
     },
     resolve: {
         extensions: ['.js', '.jsx'],
@@ -30,7 +29,6 @@ module.exports = {
         watchFiles: ['./src/**'],
         historyApiFallback: true,
     },
-
     optimization: {
         minimize: true,
         runtimeChunk: true,
