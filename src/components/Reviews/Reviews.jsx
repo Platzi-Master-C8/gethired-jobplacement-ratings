@@ -43,12 +43,12 @@ const Reviews = ({ info }) => {
 
     useEffect(() => {
         api.companyEvaluations
-            .listReviews(1, page, handleQueries())
+            .listReviews(info.company_information.id, page, handleQueries())
             .then((response) => response.json())
             .then((result) => {
                 setIsLoaded(true);
-                setData(result.items);
-                setReviewsCount(result.total);
+                setData(result.items || []);
+                setReviewsCount(result.total || 0);
             })
             .catch((e) => {
                 setIsLoaded(true);

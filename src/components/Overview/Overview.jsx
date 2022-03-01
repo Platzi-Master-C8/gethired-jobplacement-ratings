@@ -66,7 +66,7 @@ const Overview = ({ info }) => {
                 <Grid>
                     <Typography variant="h1">{info.company_rating}</Typography>
                     <Rating readOnly value={info.company_rating} precision={0.5} />
-                    <Typography>{info.total_reviews} ratings</Typography>
+                    <Typography>{info.total_reviews} reviews</Typography>
                     <IconButton onClick={() => setDisplay(!display)}>
                         <ArrowDropDownIcon sx={{ fontSize: '4rem' }} />
                     </IconButton>

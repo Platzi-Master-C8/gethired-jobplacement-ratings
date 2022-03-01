@@ -1551,10 +1551,10 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
-"@master-c8/commons@^0.1.8":
-  "integrity" "sha512-1SH8WD7YEsV0YKE9OYZnmSW15Mf9gOI2X8kABY975UGx0tb3Xj9FvPfWKVuDAUmq7oBk4E4OaKyZy5Ub8K8E9Q=="
-  "resolved" "https://registry.npmjs.org/@master-c8/commons/-/commons-0.1.8.tgz"
-  "version" "0.1.8"
+"@master-c8/commons@^0.1.10":
+  "integrity" "sha512-fCEZfGj3Z6TyvD5h8bcE2hB/KAeA/qZ5zyeLSDac+a7eFH4heGcCeoEhRcHNP0GlUAeyJ7HGFD7Qad8Afp/piA=="
+  "resolved" "https://registry.npmjs.org/@master-c8/commons/-/commons-0.1.10.tgz"
+  "version" "0.1.10"
   dependencies:
     "@master-c8/icons" "0.1.3"
     "@master-c8/theme" "0.1.9"

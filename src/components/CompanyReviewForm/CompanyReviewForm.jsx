@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Button, Grid } from '@mui/material';
 import { SendModal } from '../SendModal';
 import CompanyReviewModal from './CompanyReviewModal';
 import api from '../../services/api';
-// import { baseFive, calculateAverage, labelsToValueRaitings } from '../../utils';
 
-const CompanyReviewForm = () => {
+const CompanyReviewForm = ({ company_id }) => {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -14,7 +14,7 @@ const CompanyReviewForm = () => {
     const [sended, setSended] = useState(false);
 
     const initialReviewState = {
-        company_id: 1,
+        company_id,
         job_title: '',
         applicant_email: '',
         content_type: '',
@@ -53,29 +53,11 @@ const CompanyReviewForm = () => {
         handleInput(e);
     };
 
-    // const averageReview = (oReview) => {
-    //     const raitings = [
-    //         labelsToValueRaitings(review.career_development_rating),
-    //         labelsToValueRaitings(review.diversity_equal_opportunity_rating),
-    //         labelsToValueRaitings(review.working_environment_rating),
-    //         labelsToValueRaitings(review.salary_rating),
-    //     ];
-
-    //     const avg = calculateAverage(raitings);
-    //     const rating = baseFive(avg, 2);
-
-    //     return {
-    //         rating,
-    //         ...oReview,
-    //     };
-    // };
-
     const handleSubmit = () => {
         setSended(true);
         setIsLoading(true);
-        // const body = averageReview(review);
         api.companyEvaluations
-            .sendReview(1, review)
+            .sendReview(company_id, review)
             .then((res) => {
                 if (res && res.ok) {
                     setIsLoading(false);
@@ -140,6 +122,10 @@ const CompanyReviewForm = () => {
             )}
         </div>
     );
+};
+
+CompanyReviewForm.propTypes = {
+    company_id: PropTypes.number.isRequired,
 };
 
 export default CompanyReviewForm;
