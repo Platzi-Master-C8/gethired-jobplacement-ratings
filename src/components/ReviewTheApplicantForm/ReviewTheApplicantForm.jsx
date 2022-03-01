@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Button } from '@mui/material';
 import { SendModal } from '../SendModal';
 import ReviewTheApplicantModal from './ReviewTheApplicantModal';
 import api from '../../services/api';
 
-const ReviewTheApplicantForm = () => {
+const ReviewTheApplicantForm = ({ company_id, applicant_id }) => {
     const [open, setOpen] = useState(false);
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -12,6 +13,7 @@ const ReviewTheApplicantForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const initialState = {
+        company_id,
         applicant_name: '',
         is_hired: null,
         communication_rating: 0,
@@ -39,10 +41,9 @@ const ReviewTheApplicantForm = () => {
     const handleSubmit = () => {
         setSended(true);
         setIsLoading(true);
-        api.companyEvaluations
-            .sendReview(0, review)
+        api.applicantReview
+            .sendReview(applicant_id, review)
             .then((res) => {
-                console.log(`res: ${res}`);
                 if (res && res.ok) {
                     setIsLoading(false);
                     setError(false);
@@ -52,12 +53,10 @@ const ReviewTheApplicantForm = () => {
                 }
                 setReview(initialState);
             })
-            .catch((err) => {
-                console.log(`error: ${err}`);
+            .catch(() => {
                 setIsLoading(false);
                 setError(true);
             });
-        console.log(review);
     };
 
     const handleValidate = (e) => {
@@ -88,8 +87,8 @@ const ReviewTheApplicantForm = () => {
 
     return (
         <div>
-            <Grid item md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
-                <Button onClick={handleOpen}>Review the applicant </Button>
+            <Grid item md={12}>
+                <Button onClick={handleOpen}>Review the applicant</Button>
             </Grid>
             {!sended ? (
                 <ReviewTheApplicantModal
@@ -104,9 +103,18 @@ const ReviewTheApplicantForm = () => {
             ) : (
                 <SendModal open={open} loading={isLoading} error={error} handleClose={handleCloseSended} />
             )}
-            ;
         </div>
     );
+};
+
+ReviewTheApplicantForm.propTypes = {
+    company_id: PropTypes.number,
+    applicant_id: PropTypes.number,
+};
+
+ReviewTheApplicantForm.defaultProps = {
+    company_id: 0,
+    applicant_id: 0,
 };
 
 export default ReviewTheApplicantForm;

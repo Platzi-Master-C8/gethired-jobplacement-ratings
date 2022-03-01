@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, CircularProgress, Grid, Modal, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const boxStyles = {
@@ -10,12 +9,12 @@ const boxStyles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '30%',
-    height: '20%',
+    width: '17rem',
+    height: '11rem',
     bgcolor: 'white',
     boxShadow: 24,
     borderRadius: '12px',
-    overflow: 'auto',
+    overflow: 'hidden',
 };
 
 const closeButton = {
@@ -23,7 +22,7 @@ const closeButton = {
     justifyContent: 'flex-end',
 };
 
-const SendModal = ({ open, loading, error, handleClose }) => {
+const SendModal = ({ open, error, loading, handleClose, message }) => {
     if (loading) {
         return (
             <Modal
@@ -96,24 +95,19 @@ const SendModal = ({ open, loading, error, handleClose }) => {
                 {!error && (
                     <Grid
                         container
-                        spacing={2}
+                        spacing={3}
                         direction="column"
                         alignItems="center"
                         justifyContent="center"
-                        sx={{ padding: '20px' }}
+                        sx={{ padding: '20px', textAlign: 'center' }}
                     >
-                        <Grid container item spacing={1}>
-                            <Grid item>
-                                <Typography variant="subtitle1">Submitted successfully</Typography>
-                            </Grid>
-                            <Grid item>
-                                <CheckCircleOutlineIcon color="success" />
-                            </Grid>
+                        <Grid item>
+                            <Typography variant="subtitle1">{message}</Typography>
                         </Grid>
-                        <Grid container item>
-                            <Typography variant="subtitle2">
-                                The applicant will soon be able to see the feedback of their process
-                            </Typography>
+                        <Grid item>
+                            <Button variant="contained" onClick={handleClose}>
+                                Return
+                            </Button>
                         </Grid>
                     </Grid>
                 )}
@@ -124,9 +118,16 @@ const SendModal = ({ open, loading, error, handleClose }) => {
 
 SendModal.propTypes = {
     open: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
-    error: PropTypes.bool.isRequired,
+    loading: PropTypes.bool,
+    error: PropTypes.bool,
     handleClose: PropTypes.func.isRequired,
+    message: PropTypes.string,
+};
+
+SendModal.defaultProps = {
+    loading: true,
+    error: false,
+    message: 'Thank you for your time!',
 };
 
 export default SendModal;

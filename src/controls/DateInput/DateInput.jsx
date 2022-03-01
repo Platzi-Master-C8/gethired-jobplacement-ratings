@@ -10,7 +10,7 @@ import DatePicker from '@mui/lab/DatePicker';
 
 const DateInput = ({ value, onChange, label, name, disabled, withTime, justTime, ...props }) => {
     const handleChange = (val) => {
-        const e = { target: { value: moment(val).format(), name } };
+        const e = { target: { value: moment(val).format('YYYY-MM-DD'), name } };
         onChange(e);
     };
 

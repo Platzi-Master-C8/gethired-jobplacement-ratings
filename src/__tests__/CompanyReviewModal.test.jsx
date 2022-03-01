@@ -2,6 +2,7 @@ import React from 'react';
 
 import * as driver from '@testing-library/react';
 import CompanyReviewModal from 'Components/CompanyReviewForm/CompanyReviewModal';
+import MediaQueyProvider from '../context/MediaQueryContext';
 
 const defaultProps = {
     open: true,
@@ -13,12 +14,17 @@ const defaultProps = {
     handleCheck: () => {},
 };
 
-const render = (props = {}) => driver.render(<CompanyReviewModal {...defaultProps} {...props} />);
+const render = (props = {}) =>
+    driver.render(
+        <MediaQueyProvider>
+            <CompanyReviewModal {...defaultProps} {...props} />
+        </MediaQueyProvider>,
+    );
 
 describe('Component <CompanyReviewModal/>', () => {
     test('renders CompanyReviewModal', () => {
-        const subject = render();
-        expect(subject.getByText(/Review the Company/i)).toBeInTheDocument();
+        const { asFragment } = render({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('it does close the Modal', () => {

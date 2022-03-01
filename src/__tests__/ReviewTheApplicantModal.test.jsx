@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import ReviewTheApplicantModal from '../components/ReviewTheApplicantForm/ReviewTheApplicantModal';
+import MediaQueyProvider from '../context/MediaQueryContext';
 
 describe('component <ReviewTheApplicantModal/>', () => {
     const defaultProps = {
@@ -12,11 +13,16 @@ describe('component <ReviewTheApplicantModal/>', () => {
         handleInput: () => {},
     };
 
-    const renderComponent = (props = {}) => render(<ReviewTheApplicantModal {...defaultProps} {...props} />);
+    const renderComponent = (props = {}) =>
+        render(
+            <MediaQueyProvider>
+                <ReviewTheApplicantModal {...defaultProps} {...props} />
+            </MediaQueyProvider>,
+        );
 
     test('renders ReviewTheApplicantModal', () => {
-        const component = renderComponent();
-        component.getByText('Review the Applicant');
+        const { asFragment } = renderComponent({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('input works', () => {

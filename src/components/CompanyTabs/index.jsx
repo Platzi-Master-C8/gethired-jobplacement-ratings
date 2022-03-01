@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Box } from '@mui/material';
-import { Reviews } from '../Reviews';
 
 const TabPanel = ({ children, value, index }) => {
     return (
@@ -22,32 +21,38 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-const CompanyTabs = () => {
-    const [value, setValue] = useState(1);
+const CompanyTabs = ({ tabsOptions }) => {
+    const [value, setValue] = useState(0);
 
     const handleChange = (_event, newValue) => {
         setValue(newValue);
     };
+
     return (
         <Box sx={{ width: '100%' }}>
             <Box>
                 <Tabs value={value} onChange={handleChange}>
-                    <Tab label="Overview" />
-                    <Tab label="Reviews" />
-                    <Tab label="Jobs" />
+                    {tabsOptions.map((option) => (
+                        <Tab key={`TabButton-${option.tabKey}`} label={option.tabKey} />
+                    ))}
                 </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
-                Overview
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <Reviews />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                Jobs
-            </TabPanel>
+            {tabsOptions.map((option, i) => (
+                <TabPanel key={`TabContent-${option.tabKey}`} value={value} index={i}>
+                    {option.tabContent}
+                </TabPanel>
+            ))}
         </Box>
     );
+};
+
+CompanyTabs.propTypes = {
+    tabsOptions: PropTypes.arrayOf(
+        PropTypes.shape({
+            tabKey: PropTypes.string.isRequired,
+            tabContent: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+        }),
+    ).isRequired,
 };
 
 export default CompanyTabs;

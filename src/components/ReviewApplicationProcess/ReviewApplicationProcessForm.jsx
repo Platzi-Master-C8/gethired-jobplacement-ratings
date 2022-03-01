@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Grid } from '@mui/material';
 import api from '../../services/api';
 import { SendModal } from '../SendModal';
 import ReviewApplicationProcessModal from './ReviewApplicationProcessModal';
 
-const ReviewApplicationProcessForm = () => {
+const ReviewApplicationProcessForm = ({ company_id, applicant_id }) => {
     const [open, setOpen] = useState(false);
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [sended, setSended] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [lengthError, setLengthError] = useState('');
 
     const initialState = {
+        applicant_id,
         job_title: '',
-        salary_rating: null,
+        improvement_content: '',
+        salary_evaluation_rating: null,
         allows_remote_work: null,
-        response_time_rating: null,
+        interview_response_time_rating: null,
         job_description_rating: null,
-        is_regulated: null,
-        end_process: 1,
-        time_measurement: 1,
-        improvements: '',
+        is_legally_company: null,
+        amount_of_recruitment_time: 1,
+        recruitment_process_period: 'Month',
     };
 
     const [review, setReview] = useState(initialState);
@@ -39,10 +42,9 @@ const ReviewApplicationProcessForm = () => {
 
     const handleSubmit = () => {
         setSended(true);
-        api.companyEvaluations
-            .sendReview(0, review)
+        api.companyReports
+            .sendReport(company_id, review)
             .then((res) => {
-                console.log(`res: ${res}`);
                 if (res && res.ok) {
                     setIsLoading(false);
                     setError(false);
@@ -52,8 +54,7 @@ const ReviewApplicationProcessForm = () => {
                 }
                 setReview(initialState);
             })
-            .catch((err) => {
-                console.log(`error: ${err}`);
+            .catch(() => {
                 setIsLoading(false);
                 setError(true);
             });
@@ -63,37 +64,40 @@ const ReviewApplicationProcessForm = () => {
         e.preventDefault();
         const {
             job_title,
-            salary_rating,
+            improvement_content,
+            salary_evaluation_rating,
             allows_remote_work,
-            response_time_rating,
+            interview_response_time_rating,
             job_description_rating,
-            is_regulated,
-            end_process,
-            time_measurement,
-            improvements,
+            is_legally_company,
+            amount_of_recruitment_time,
+            recruitment_process_period,
         } = review;
 
-        if (
+        if (improvement_content.length < 100) setLengthError('Field should be greater than 100');
+        else if (improvement_content.length > 250) setLengthError('Field should be less than 250');
+        else if (
             !job_title ||
-            !salary_rating ||
+            !improvement_content ||
+            !salary_evaluation_rating ||
             !allows_remote_work ||
-            !response_time_rating ||
+            !interview_response_time_rating ||
             !job_description_rating ||
-            !is_regulated ||
-            !end_process ||
-            !time_measurement ||
-            !improvements
+            !is_legally_company ||
+            !amount_of_recruitment_time ||
+            !recruitment_process_period
         ) {
             setErrorMessage('Please Complete all the fields');
         } else {
             setErrorMessage('');
+            setLengthError('');
             handleSubmit();
         }
     };
 
     return (
         <div>
-            <Grid item md={12} sx={{ display: 'grid', justifyContent: 'flex-end' }}>
+            <Grid item md={12}>
                 <Button onClick={handleOpen}>Review your application process</Button>
             </Grid>
             {!sended ? (
@@ -104,12 +108,23 @@ const ReviewApplicationProcessForm = () => {
                     review={review}
                     handleValidate={handleValidate}
                     errorMessage={errorMessage}
+                    lengthError={lengthError}
                 />
             ) : (
                 <SendModal open={open} loading={isLoading} error={error} handleClose={handleCloseSended} />
             )}
         </div>
     );
+};
+
+ReviewApplicationProcessForm.propTypes = {
+    company_id: PropTypes.number,
+    applicant_id: PropTypes.number,
+};
+
+ReviewApplicationProcessForm.defaultProps = {
+    company_id: 0,
+    applicant_id: 0,
 };
 
 export default ReviewApplicationProcessForm;

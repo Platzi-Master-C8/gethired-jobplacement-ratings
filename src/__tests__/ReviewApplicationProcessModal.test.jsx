@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import ReviewApplicationProcessModal from '../components/ReviewApplicationProcess/ReviewApplicationProcessModal';
+import MediaQueyProvider from '../context/MediaQueryContext';
 
 describe('component <ReviewApplicationProcessModal/>', () => {
     const defaultProps = {
@@ -12,11 +13,16 @@ describe('component <ReviewApplicationProcessModal/>', () => {
         handleInput: () => {},
     };
 
-    const renderComponent = (props = {}) => render(<ReviewApplicationProcessModal {...defaultProps} {...props} />);
+    const renderComponent = (props = {}) =>
+        render(
+            <MediaQueyProvider>
+                <ReviewApplicationProcessModal {...defaultProps} {...props} />
+            </MediaQueyProvider>,
+        );
 
     test('renders ReviewApplicationProcessModal', () => {
-        const component = renderComponent();
-        component.getByText('Review your Application Process');
+        const { asFragment } = renderComponent({});
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('input works', () => {
