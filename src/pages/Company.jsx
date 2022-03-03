@@ -16,6 +16,7 @@ import { Overview } from '../components/Overview';
 const Company = () => {
     const { companyId } = useParams();
 
+    const [reload, setReload] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(false);
     const [data, setData] = useState();
@@ -32,7 +33,7 @@ const Company = () => {
                 setIsLoaded(true);
                 setError(true);
             });
-    }, [companyId]);
+    }, [companyId, reload]);
 
     if (!isLoaded) {
         return <div>Loading...</div>;
@@ -42,11 +43,14 @@ const Company = () => {
         <NotFound noData />
     ) : (
         <Container>
-            <GeneralCompanyRate data={data} />
+            <GeneralCompanyRate data={data} handleReload={() => setReload(!reload)} />
             <CompanyTabs
                 tabsOptions={[
                     { tabKey: 'Overview', tabContent: <Overview info={data} /> },
-                    { tabKey: 'Reviews', tabContent: <Reviews info={data} /> },
+                    {
+                        tabKey: 'Reviews',
+                        tabContent: <Reviews info={data} handleReload={() => setReload(!reload)} reload={reload} />,
+                    },
                     // { tabKey: 'Jobs', tabContent: <Jobs /> },
                 ]}
             />

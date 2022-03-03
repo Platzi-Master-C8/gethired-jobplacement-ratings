@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { CompanyReviewForm } from '../CompanyReviewForm';
 import './GeneralCompanyRate.scss';
 
-const GeneralCompanyRate = ({ data }) => (
+const GeneralCompanyRate = ({ data, handleReload }) => (
     <Card elevation={0} sx={{ padding: '40px' }}>
         <Grid container spacing={2}>
             <Grid item sm={12} md={3}>
@@ -26,7 +26,7 @@ const GeneralCompanyRate = ({ data }) => (
                 </Box>
             </Grid>
             <Grid item sm={12} md={4} sx={{ display: 'grid', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                <CompanyReviewForm company_id={data.company_information.id} />
+                <CompanyReviewForm company_id={data.company_information.id} handleReload={handleReload} />
             </Grid>
         </Grid>
     </Card>
@@ -52,6 +52,7 @@ GeneralCompanyRate.propTypes = {
         gral_working_environment_rating: PropTypes.number.isRequired,
         gral_salary_rating: PropTypes.number.isRequired,
     }).isRequired,
+    handleReload: PropTypes.func.isRequired,
 };
 
 export default GeneralCompanyRate;

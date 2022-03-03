@@ -9,7 +9,7 @@ import { sortName } from '../../utils';
 import api from '../../services/api';
 import config from '../../config';
 
-const Reviews = ({ info }) => {
+const Reviews = ({ info, handleReload, reload }) => {
     const [reasons, setReasons] = useState([]);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -55,7 +55,7 @@ const Reviews = ({ info }) => {
                 setError(e);
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, sortCriteria, searchQuery]);
+    }, [page, sortCriteria, searchQuery, reload]);
 
     const handlePage = (e, v) => {
         setIsLoaded(false);
@@ -94,7 +94,7 @@ const Reviews = ({ info }) => {
                 }}
             >
                 {data.map((review) => (
-                    <ReviewCard key={review.id} review={review} reasons={reasons} />
+                    <ReviewCard key={review.id} review={review} reasons={reasons} handleReload={handleReload} />
                 ))}
             </Box>
             <SideInfo info={info} />
@@ -139,6 +139,8 @@ Reviews.propTypes = {
         gral_working_environment_rating: PropTypes.number.isRequired,
         gral_salary_rating: PropTypes.number.isRequired,
     }).isRequired,
+    handleReload: PropTypes.func.isRequired,
+    reload: PropTypes.bool.isRequired,
 };
 
 export default Reviews;

@@ -6,7 +6,7 @@ import { SendModal } from '../SendModal';
 import CompanyReviewModal from './CompanyReviewModal';
 import api from '../../services/api';
 
-const CompanyReviewForm = ({ company_id }) => {
+const CompanyReviewForm = ({ company_id, handleReload }) => {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -67,6 +67,7 @@ const CompanyReviewForm = ({ company_id }) => {
                     setError(true);
                 }
                 setReview(initialReviewState);
+                handleReload();
             })
             .catch(() => {
                 setIsLoading(false);
@@ -126,6 +127,7 @@ const CompanyReviewForm = ({ company_id }) => {
 
 CompanyReviewForm.propTypes = {
     company_id: PropTypes.number.isRequired,
+    handleReload: PropTypes.func.isRequired,
 };
 
 export default CompanyReviewForm;

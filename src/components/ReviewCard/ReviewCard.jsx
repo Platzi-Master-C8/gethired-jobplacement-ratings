@@ -45,7 +45,7 @@ const SubheaderReview = ({ created_at, is_still_working_here, job_title }) => (
     </Box>
 );
 
-const ActionsReview = ({ review_id, non_utility_counter, utility_counter, reasons }) => {
+const ActionsReview = ({ review_id, non_utility_counter, utility_counter, reasons, handleReload }) => {
     const [utilityError, setUtilityError] = useState(false);
     const [utilitySuccess, setUtilitySuccess] = useState(false);
     const [utility, setUtility] = useState('');
@@ -70,6 +70,7 @@ const ActionsReview = ({ review_id, non_utility_counter, utility_counter, reason
             .then((data) => (data?.id ? setUtilitySuccess(true) : setUtilityError(true)))
             .catch(() => setUtilityError(true));
         setUtility(newValue);
+        handleReload();
     };
 
     const handleCloseSended = () => {
@@ -121,7 +122,7 @@ const ActionsReview = ({ review_id, non_utility_counter, utility_counter, reason
     );
 };
 
-const ReviewCard = ({ review, reasons }) => {
+const ReviewCard = ({ review, reasons, handleReload }) => {
     const {
         job_title,
         created_at,
@@ -153,6 +154,7 @@ const ReviewCard = ({ review, reasons }) => {
                 review_id={id}
                 utility_counter={utility_counter}
                 non_utility_counter={non_utility_counter}
+                handleReload={handleReload}
             />
         </Card>
     );
@@ -178,6 +180,7 @@ ActionsReview.propTypes = {
             id: PropTypes.number.isRequired,
         }),
     ).isRequired,
+    handleReload: PropTypes.func.isRequired,
 };
 
 ReviewCard.propTypes = {
@@ -198,6 +201,7 @@ ReviewCard.propTypes = {
         utility_counter: PropTypes.number.isRequired,
         rating: PropTypes.number,
     }).isRequired,
+    handleReload: PropTypes.func.isRequired,
 };
 
 export default ReviewCard;
