@@ -1,38 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardMedia, Grid, Typography } from '@mui/material';
-import StarRateIcon from '@mui/icons-material/StarRate';
-import StarHalfIcon from '@mui/icons-material/StarHalf';
+import { Card, CardMedia, Grid, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { CompanyReviewForm } from '../CompanyReviewForm';
+import companyLogo from '../../assets/platzi-logo.png';
 import './GeneralCompanyRate.scss';
 
-const GeneralCompanyRate = ({ data }) => (
+const GeneralCompanyRate = ({ data, handleReload }) => (
     <Card elevation={0} sx={{ padding: '40px' }}>
         <Grid container spacing={2}>
             <Grid item sm={12} md={3}>
                 <CardMedia
-                    sx={{ borderRadius: '12px' }}
+                    sx={{ borderRadius: '12px', objectFit: 'contain' }}
                     component="img"
-                    alt="green iguana"
+                    alt="mainCompanyLogo"
                     height="140"
-                    image="https://images.pexels.com/photos/430205/pexels-photo-430205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                    image={companyLogo}
                 />
             </Grid>
             <Grid item sm={12} md={5}>
                 <Typography variant="h1">{data.company_information.name}</Typography>
                 <Box sx={{ display: 'flex', alignContent: 'flex-end', gap: '5px' }}>
                     <Typography variant="subtitle1">{data.company_rating}</Typography>
-                    <StarRateIcon />
-                    <StarRateIcon />
-                    <StarRateIcon />
-                    <StarRateIcon />
-                    <StarHalfIcon />
-                    <Typography variant="overline">{data.total_reviews}</Typography>
+                    <Rating readOnly value={data.company_rating} precision={0.5} />
+                    <Typography variant="overline">{data.total_reviews} reviews</Typography>
                 </Box>
             </Grid>
             <Grid item sm={12} md={4} sx={{ display: 'grid', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                <CompanyReviewForm />
+                <CompanyReviewForm company_id={data.company_information.id} handleReload={handleReload} />
             </Grid>
         </Grid>
     </Card>
@@ -58,6 +53,7 @@ GeneralCompanyRate.propTypes = {
         gral_working_environment_rating: PropTypes.number.isRequired,
         gral_salary_rating: PropTypes.number.isRequired,
     }).isRequired,
+    handleReload: PropTypes.func.isRequired,
 };
 
 export default GeneralCompanyRate;

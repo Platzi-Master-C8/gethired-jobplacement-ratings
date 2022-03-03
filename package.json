@@ -1,6 +1,5 @@
 {
     "name": "gethired-jobplacement-ratings",
-    "homepage": "https://platzi-master-c8.github.io/gethired-jobplacement-ratings",
     "version": "1.0.3",
     "main": "index.js",
     "license": "MIT",
@@ -26,7 +25,7 @@
         "@date-io/moment": "^2.11.0",
         "@emotion/react": "11.6.0",
         "@emotion/styled": "11.6.0",
-        "@master-c8/commons": "^0.1.8",
+        "@master-c8/commons": "^0.1.10",
         "@master-c8/icons": "^0.1.3",
         "@master-c8/theme": "^0.1.9",
         "@mui/icons-material": "^5.1.1",
