@@ -22,10 +22,12 @@ TabPanel.propTypes = {
 };
 
 const CompanyTabs = ({ tabsOptions }) => {
-    const [value, setValue] = useState(0);
+    const selectedTab = localStorage.getItem('selectedTab');
+    const [value, setValue] = useState(parseInt(selectedTab, 2) || 0);
 
     const handleChange = (_event, newValue) => {
         setValue(newValue);
+        localStorage.setItem('selectedTab', newValue);
     };
 
     return (
