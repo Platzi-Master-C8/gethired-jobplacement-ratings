@@ -4,6 +4,7 @@ import { Grid, Typography, Avatar, Rating, IconButton } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import styled from 'styled-components';
 import { RadarChart, LineChart } from '../Charts';
+import companyLogo from '../../assets/platzi-logo.png';
 
 import { RatingItem } from '../RatingItem';
 
@@ -16,6 +17,12 @@ const ChartContainer = styled(Grid)`
 
     @media (max-width: 580px) {
         width: 85vw;
+    }
+`;
+
+const CompanyAvatar = styled(Avatar)`
+    img {
+        object-fit: contain !important;
     }
 `;
 
@@ -50,9 +57,9 @@ const Overview = ({ info }) => {
     return (
         <Grid container spacing={2} textAlign="center">
             <Grid item md={3} sm={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Avatar
-                    alt="Remy Sharp"
-                    src="https://images.pexels.com/photos/430205/pexels-photo-430205.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                <CompanyAvatar
+                    alt="companyLogo"
+                    src={companyLogo}
                     sx={{ width: 100, height: 100, marginBottom: '50px' }}
                 />
                 <Grid item>

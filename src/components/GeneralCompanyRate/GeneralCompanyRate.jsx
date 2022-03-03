@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, CardMedia, Grid, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { CompanyReviewForm } from '../CompanyReviewForm';
+import companyLogo from '../../assets/platzi-logo.png';
 import './GeneralCompanyRate.scss';
 
 const GeneralCompanyRate = ({ data, handleReload }) => (
@@ -10,11 +11,11 @@ const GeneralCompanyRate = ({ data, handleReload }) => (
         <Grid container spacing={2}>
             <Grid item sm={12} md={3}>
                 <CardMedia
-                    sx={{ borderRadius: '12px' }}
+                    sx={{ borderRadius: '12px', objectFit: 'contain' }}
                     component="img"
-                    alt="green iguana"
+                    alt="mainCompanyLogo"
                     height="140"
-                    image="https://images.pexels.com/photos/430205/pexels-photo-430205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                    image={companyLogo}
                 />
             </Grid>
             <Grid item sm={12} md={5}>
