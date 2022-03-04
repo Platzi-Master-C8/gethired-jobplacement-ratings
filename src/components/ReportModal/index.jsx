@@ -121,10 +121,10 @@ export const ReportModal = ({ open, handleClose, review_id, reasons }) => {
     };
 
     return (
-        <Modal open={open} onClose={handleClose}>
+        <Modal open={open} onClose={handleReportModal}>
             <Box sx={ReportModalStyle}>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button title="Close modal" onClick={handleClose} aria-label="Close modal">
+                    <Button title="Close modal" onClick={handleReportModal} aria-label="Close modal">
                         <CloseIcon />
                     </Button>
                 </Box>
